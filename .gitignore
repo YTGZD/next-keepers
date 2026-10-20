@@ -1,0 +1,15 @@
+# Private data: never commit or publish individual marketplace listings
+dashboard/data/listings.json
+dashboard/data/*private*
+private/
+
+# Secrets
+.env
+*.env
+*.pem
+
+# Tooling and system files
+node_modules/
+_site/
+.DS_Store
+Thumbs.db

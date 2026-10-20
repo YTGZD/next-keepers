@@ -1,0 +1,65 @@
+# This file tells GitHub what to do every time you push to the main branch:
+# check the site, then publish it to GitHub Pages. You can also run it by hand
+# from the repo's "Actions" tab ("Run workflow").
+
+name: Publish site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Permissions the job needs: read the code, and publish to Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# If two publishes overlap, let the running one finish and keep only the newest waiting.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      # Safety net: private data must never be published by accident.
+      - name: Refuse to publish private data
+        run: |
+          if [ -e dashboard/data/listings.json ]; then
+            echo "::error::dashboard/data/listings.json is private listing data and must not be published."
+            exit 1
+          fi
+
+      # Check that every data file is valid JSON, so a bad edit cannot break the live dashboard.
+      - name: Check data files are valid JSON
+        run: |
+          for f in dashboard/data/*.json; do
+            python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f" || { echo "::error::Invalid JSON: $f"; exit 1; }
+          done
+
+      # Publish only the website itself (not the README, workflow files, etc.).
+      - name: Assemble the site
+        run: |
+          mkdir _site
+          cp -r index.html assets dashboard _site/
+          touch _site/.nojekyll
+
+      - name: Set up Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
