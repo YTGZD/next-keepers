@@ -88,6 +88,10 @@ html, body { margin: 0; background: #F4F6F3; }
     history.replaceState(null, '', location.pathname);
   }
 </script>
+<!-- Email gate and plan locks: settings in ../assets/js/site-config.js, behaviour in gate.js -->
+<link rel="stylesheet" href="gate.css">
+<script src="../assets/js/site-config.js"></script>
+<script src="gate.js"></script>
 <script src="../assets/js/vendor/d3.min.js"></script>
 <script>window.DASH_SKIP = ["listings"]; // private data: not in this repo, so do not even request it</script>
 <script src="dash-runtime.js"></script>
@@ -1089,6 +1093,7 @@ dash.calc('sba_markets', {
   function applyViews() {
     const cat = catOf();
     document.querySelectorAll('#pg-market section[data-cat]').forEach((s) => { s.hidden = s.dataset.cat !== cat; });
+    if (window.NK_PLANS) window.NK_PLANS.apply(cat);   // plan lock (gate.js): replaces a Searcher-only section with an upgrade panel
     document.querySelectorAll('#lx-subnav button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.cat === cat)));
     VIEWS.forEach((k) => {
       const v = viewOf(k);

@@ -13,12 +13,13 @@ privacy.html               Privacy policy (linked from the form and every footer
 yousef/index.html          Founder page (about Yousef), linked from the landing page footer
 assets/
   img/                     Photos used on the landing page
-  js/landing.js            Landing page behaviour: role buttons, waitlist form, live market numbers
-  js/site-config.js        Settings you may change (the waitlist form address)
+  js/landing.js            Landing page behaviour: role buttons, waitlist form and plan choice, live market numbers
+  js/site-config.js        Settings you may change (form address, dashboard gate, locked sections)
   js/vendor/d3.min.js      Charting library (d3 v7), kept here so the site needs no outside CDN
 dashboard/
   index.html               The market dashboard page
   dash-runtime.js          Small loader that feeds the dashboard from the JSON files below
+  gate.js, gate.css        Email gate and "Searcher plan" locks (see "Free and paid" below)
   mine.js                  Code for the "Your listings" tab (switched off in the public site)
   data/*.json              The dashboard's data, one file per table
 .github/workflows/pages.yml   Publishes the site on every push to main
@@ -66,6 +67,29 @@ If `formEndpoint` is empty, the form tells visitors that sign-ups are not open y
 told they are on a list when they are not. To use a different service (Tally, Basin and similar),
 paste its address there instead. If you change which data the form collects, update
 `privacy.html` to match.
+
+## Free and paid: the dashboard gate and the plans
+
+The pricing cards on the landing page describe three plans: **Explorer** (free), **Searcher**
+($99/month) and **Private Network** (by invitation). Paid plans open at launch; nobody is charged
+anything today, and the cards say so. Choosing Searcher or Private Network on the landing page puts
+the plan on the sign-up, so each entry in Formspree says what the person wants.
+
+What is live now is controlled from `assets/js/site-config.js`:
+
+- `dashboardGate` asks for an email before the dashboard opens (the dashboard stays visible but
+  blurred behind the form). The email goes to the same Formspree form, tagged `source: dashboard`.
+  The browser remembers a marker, not the email, so returning visitors are not asked again.
+- `lockedSections` lists the dashboard sections that show a "Searcher plan" panel instead of
+  their content. Today: `sold` and `local`. Use `[]` to make every section free.
+- `searcherPrice` is the price quoted on that panel. The pricing cards in `index.html` are written
+  by hand, so change the price there as well.
+
+**This is a sign-up step, not security.** A website served from GitHub Pages has no server, so
+anything the page can show can also be downloaded: the dashboard's data files are public files in a
+public repository. That is fine for collecting emails and signalling plans. It is not enough to
+protect data people will pay for. When the paid product (the business database, alerts) launches, it
+needs a real back end with logins, and that data must live there, not in this repository.
 
 ## Adding another page or section
 

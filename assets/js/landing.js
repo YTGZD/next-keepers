@@ -1,7 +1,7 @@
 /*
  * landing.js: the small amount of behaviour the landing page needs.
  *   1. "I am a..." role buttons
- *   2. the waitlist form
+ *   2. the waitlist form, including which plan the visitor is interested in
  *   3. the "market right now" numbers, read from the dashboard's own data files
  *      (dashboard/data/metrics.json and sba_states.json), so the landing page
  *      and the dashboard can never disagree.
@@ -25,6 +25,35 @@
   });
 
   /* ---------- 2. waitlist form ---------- */
+  // Plans a visitor can pick from the pricing cards (or from ?plan=searcher in a link, which the
+  // dashboard's "Searcher" lock uses). The plan travels with the sign-up so we know what they want.
+  var PLANS = {
+    searcher: 'Searcher, $99/month (opens at launch)',
+    private: 'Private Network, by invitation'
+  };
+  var plan = '';
+  var planBox = document.getElementById('join-plan');
+  var planLabel = document.getElementById('join-plan-label');
+  var submitBtn = document.getElementById('join-submit');
+  function paintPlan() {
+    if (planBox) planBox.hidden = !plan;
+    if (planLabel) planLabel.textContent = plan ? PLANS[plan] : '';
+    if (submitBtn) submitBtn.textContent = plan === 'private' ? 'Request an invitation' : 'Join the waitlist';
+  }
+  function choosePlan(name) {
+    plan = PLANS[name] ? name : '';
+    if (plan === 'private') { role = 'Investor'; paintRoles(); }   // the invitation tier is for investors; they can change it
+    paintPlan();
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-plan-link]'), function (a) {
+    var name = a.getAttribute('data-plan-link');
+    if (PLANS[name]) a.addEventListener('click', function () { choosePlan(name); });
+  });
+  var clearBtn = document.getElementById('join-plan-clear');
+  if (clearBtn) clearBtn.addEventListener('click', function () { choosePlan(''); });
+  var fromUrl = /[?&]plan=([a-z]+)/.exec(location.search);
+  if (fromUrl) choosePlan(fromUrl[1]);
+
   var form = document.getElementById('join-form');
   if (form) {
     var status = document.getElementById('join-status');
@@ -41,11 +70,15 @@
         return;
       }
       status.textContent = 'Sending…';
+      if (submitBtn) submitBtn.disabled = true;             // no double sign-ups from a double click
       fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         // "_subject" is a Formspree convention: it becomes the subject of the notification email you receive
-        body: JSON.stringify({ email: email, role: role, source: 'landing', _subject: 'New Next Keepers waitlist signup (' + role + ')' })
+        body: JSON.stringify({
+          email: email, role: role, plan: plan || 'not chosen', source: 'landing',
+          _subject: 'New Next Keepers waitlist signup (' + role + (plan ? ', ' + plan : '') + ')'
+        })
       }).then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
         // The fields wrapper has an inline "display: contents", which beats the plain `hidden`
@@ -55,6 +88,7 @@
         sent.hidden = false;
       }).catch(function () {
         status.textContent = 'Something went wrong. Please try again in a moment.';
+        if (submitBtn) submitBtn.disabled = false;
       });
     });
   }

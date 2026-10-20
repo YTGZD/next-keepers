@@ -1,0 +1,106 @@
+/*
+ * Dashboard email gate, the "Searcher plan" lock panel, and the "Free plan" pill.
+ * Colours follow the dashboard palette, in light and dark mode.
+ */
+.nk-gate, .nk-lock, .nk-plan {
+  --g-bg: #FFFFFF; --g-field: #FFFFFF; --g-fg: #0E1F18; --g-muted: #4A5A52; --g-line: #DDE3DE;
+  --g-green: #1A5C45; --g-on: #F4F6F3; --g-gold: #C9973F; --g-gold-ink: #8A6420; --g-tint: #E3EFE9;
+  --g-bad: #B42318; --g-veil: rgba(244, 246, 243, 0.55);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .nk-gate, :root:not([data-theme="light"]) .nk-lock, :root:not([data-theme="light"]) .nk-plan {
+    --g-bg: #152B22; --g-field: #0E1F18; --g-fg: #F4F6F3; --g-muted: #A9BCB2; --g-line: #2A4538;
+    --g-green: #2E7A5C; --g-gold: #D9AE5E; --g-gold-ink: #D9AE5E; --g-tint: #1E3A2F; --g-bad: #F28B6C; --g-veil: rgba(14, 31, 24, 0.6);
+  }
+}
+:root[data-theme="dark"] .nk-gate, :root[data-theme="dark"] .nk-lock, :root[data-theme="dark"] .nk-plan {
+  --g-bg: #152B22; --g-field: #0E1F18; --g-fg: #F4F6F3; --g-muted: #A9BCB2; --g-line: #2A4538;
+  --g-green: #2E7A5C; --g-gold: #D9AE5E; --g-gold-ink: #D9AE5E; --g-tint: #1E3A2F; --g-bad: #F28B6C; --g-veil: rgba(14, 31, 24, 0.6);
+}
+
+/* While gated, the real dashboard stays visible but blurred behind the form, so visitors can see it is real. */
+html.nk-gated { overflow: hidden; }
+html.nk-gated #dash-root { filter: blur(7px); pointer-events: none; user-select: none; }
+#lx-title:focus { outline: none; }
+
+.nk-gate {
+  position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
+  padding: 20px; box-sizing: border-box; overflow-y: auto; background: var(--g-veil);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif; color: var(--g-fg);
+}
+.nk-gate[hidden], .nk-lock[hidden] { display: none !important; }
+.nk-gate-card {
+  width: 100%; max-width: 480px; margin: auto; box-sizing: border-box; padding: 32px;
+  background: var(--g-bg); border: 1px solid var(--g-line); border-radius: 16px;
+  box-shadow: 0 24px 60px -24px rgba(14, 31, 24, 0.45);
+}
+.nk-eyebrow { font: 500 0.75rem 'IBM Plex Mono', ui-monospace, monospace; letter-spacing: 0.08em; text-transform: uppercase; color: var(--g-green); }
+.nk-gate .nk-eyebrow { margin: 0 0 10px; }
+.nk-gate h2 { margin: 0 0 10px; font: 700 1.75rem/1.15 'Space Grotesk', system-ui, sans-serif; letter-spacing: -0.02em; color: var(--g-fg); }
+.nk-gate p, .nk-lock p { margin: 0; }
+.nk-gate .nk-lede { font-size: 1rem; line-height: 1.55; color: var(--g-muted); margin-bottom: 20px; }
+.nk-gate label, .nk-gate legend { display: block; padding: 0; font-size: 0.875rem; font-weight: 600; margin: 0 0 6px; }
+.nk-gate legend span { font-weight: 400; color: var(--g-muted); }
+.nk-gate fieldset { border: 0; padding: 0; margin: 16px 0 0; min-width: 0; }
+.nk-gate input[type="email"] {
+  width: 100%; box-sizing: border-box; font: inherit; font-size: 1rem; color: var(--g-fg); background: var(--g-field);
+  border: 1px solid var(--g-line); border-radius: 8px; padding: 14px 16px; min-height: 50px;
+}
+.nk-gate input:focus-visible, .nk-gate button:focus-visible, .nk-gate a:focus-visible, .nk-lock a:focus-visible { outline: 2px solid var(--g-gold); outline-offset: 2px; }
+.nk-roles { display: flex; flex-wrap: wrap; gap: 8px; }
+.nk-role {
+  font: inherit; font-size: 0.9375rem; font-weight: 600; cursor: pointer; min-height: 44px; padding: 8px 14px;
+  border-radius: 999px; border: 1.5px solid var(--g-line); background: transparent; color: var(--g-fg);
+}
+.nk-role[aria-pressed="true"] { background: var(--g-green); border-color: var(--g-green); color: var(--g-on); }
+.nk-btn {
+  display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer;
+  font: 700 1rem 'IBM Plex Sans', system-ui, sans-serif; text-decoration: none; min-height: 52px; padding: 14px 22px;
+  border-radius: 8px; border: 0; background: var(--g-green); color: var(--g-on);
+}
+.nk-gate .nk-btn { width: 100%; margin-top: 20px; }
+.nk-btn:disabled { opacity: 0.6; cursor: default; }
+.nk-link { font-weight: 600; color: var(--g-green); text-decoration: none; }
+.nk-link:hover { text-decoration: underline; }
+.nk-trap { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; }
+.nk-fine { margin-top: 14px !important; font-size: 0.8125rem; line-height: 1.5; color: var(--g-muted); }
+.nk-fine a { color: var(--g-green); font-weight: 600; }
+.nk-status { margin-top: 10px !important; min-height: 1.4em; font-size: 0.875rem; color: var(--g-muted); }
+.nk-status.err { color: var(--g-bad); }
+.nk-gate-back { margin-top: 18px !important; font-size: 0.875rem; }
+.nk-gate-back a { color: var(--g-muted); text-decoration: none; }
+.nk-gate-back a:hover { text-decoration: underline; }
+
+/* "Searcher" badge on locked sections of the section menu */
+body .lx .nk-subnav button { position: relative; }
+.nk-badge {
+  position: absolute; top: 0.5rem; right: 0.5rem; padding: 1px 7px; border-radius: 999px; border: 1px solid var(--color-border-line, #DDE3DE);
+  font: 500 0.625rem 'IBM Plex Mono', ui-monospace, monospace; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--nk-tint, #E3EFE9); color: var(--nk-green, #1A5C45);
+}
+body .lx .nk-subnav button[aria-pressed="true"] .nk-badge { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.35); color: var(--nk-on, #F4F6F3); }
+
+/* panel shown in place of a locked section */
+.nk-lock {
+  display: grid; gap: 12px; margin: 1.25rem 0 2rem; padding: 28px 28px 26px; box-sizing: border-box;
+  background: var(--g-bg); border: 1px solid var(--g-line); border-left: 5px solid var(--g-gold); border-radius: 12px; color: var(--g-fg);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+}
+.lx .nk-lock .nk-eyebrow { color: var(--g-gold-ink); margin: 0; }
+.lx .nk-lock h2 { font: 700 1.5rem/1.15 'Space Grotesk', system-ui, sans-serif; letter-spacing: -0.02em; margin: 0; color: var(--g-fg); }
+.lx .nk-lock a.nk-btn { color: var(--g-on); }
+.lx .nk-lock a.nk-link { color: var(--g-green); }
+.nk-lock .nk-lede { font-size: 1rem; line-height: 1.55; color: var(--g-muted); max-width: 62ch; }
+.nk-lock-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 4px; }
+
+/* "Free plan" pill in the dashboard's top row */
+.site-back.nk-has-plan { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; }
+.site-back .nk-plan { padding: 4px 12px; border: 1px solid var(--g-line); border-radius: 999px; background: var(--g-tint); color: var(--g-fg); font-size: 0.8125rem; }
+.site-back .nk-plan a { color: var(--g-green); font-weight: 600; }
+.site-back .nk-plan a:hover { text-decoration: underline; }
+
+@media (max-width: 520px) {
+  .nk-gate { align-items: flex-start; padding: 14px; }
+  .nk-gate-card { padding: 24px 20px; }
+  .nk-gate h2 { font-size: 1.5rem; }
+}
