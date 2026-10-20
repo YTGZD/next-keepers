@@ -44,10 +44,14 @@
       fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email: email, role: role, source: 'landing' })
+        // "_subject" is a Formspree convention: it becomes the subject of the notification email you receive
+        body: JSON.stringify({ email: email, role: role, source: 'landing', _subject: 'New Next Keepers waitlist signup (' + role + ')' })
       }).then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
+        // The fields wrapper has an inline "display: contents", which beats the plain `hidden`
+        // attribute, so hide it with an inline style as well.
         fields.hidden = true;
+        fields.style.display = 'none';
         sent.hidden = false;
       }).catch(function () {
         status.textContent = 'Something went wrong. Please try again in a moment.';

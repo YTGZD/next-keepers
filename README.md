@@ -10,6 +10,7 @@ GitHub Pages serves it directly from this repository.
 ```
 index.html                 The landing page
 privacy.html               Privacy policy (linked from the form and every footer)
+yousef/index.html          Founder page (about Yousef), linked from the landing page footer
 assets/
   img/                     Photos used on the landing page
   js/landing.js            Landing page behaviour: role buttons, waitlist form, live market numbers
@@ -55,12 +56,22 @@ files that are not valid JSON.
 To add a new table, drop `<name>.json` in `dashboard/data/` and read it in the page with
 `dash.data('<name>')`.
 
-## Turn on the waitlist form
+## The waitlist form
 
-The form on the landing page does not store anything until it is connected to a form service.
-Create a free form (Formspree, Tally, Basin or similar), copy its address, and put it in
-`assets/js/site-config.js` as `formEndpoint`. Until then the form tells visitors that sign-ups
-are not open yet, so nobody is told they are on a list when they are not.
+The form on the landing page sends each sign-up (email, chosen role, and a `source` tag) to a
+Formspree form. The address is `formEndpoint` in `assets/js/site-config.js`. Sign-ups and their
+notification emails are managed in the Formspree dashboard, not in this repository.
+
+If `formEndpoint` is empty, the form tells visitors that sign-ups are not open yet, so nobody is
+told they are on a list when they are not. To use a different service (Tally, Basin and similar),
+paste its address there instead. If you change which data the form collects, update
+`privacy.html` to match.
+
+## Adding another page or section
+
+A single page at the top level (like `privacy.html`) is published automatically. A page in its own
+folder (like `yousef/`) must also be added to the `cp -r` line in `.github/workflows/pages.yml`,
+otherwise it is not copied into the published site.
 
 ## Private data
 

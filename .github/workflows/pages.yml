@@ -46,12 +46,13 @@ jobs:
           done
 
       # Publish only the website itself (not the README, workflow files, etc.):
-      # every .html page at the top level, plus the assets and dashboard folders.
+      # every .html page at the top level, plus the assets, dashboard and yousef folders.
+      # (A new section of the site in its own folder must be added to the "cp -r" line.)
       - name: Assemble the site
         run: |
           mkdir _site
           cp ./*.html _site/
-          cp -r assets dashboard _site/
+          cp -r assets dashboard yousef _site/
           touch _site/.nojekyll
 
       - name: Set up Pages
