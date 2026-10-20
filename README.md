@@ -9,6 +9,7 @@ GitHub Pages serves it directly from this repository.
 
 ```
 index.html                 The landing page
+privacy.html               Privacy policy (linked from the form and every footer)
 assets/
   img/                     Photos used on the landing page
   js/landing.js            Landing page behaviour: role buttons, waitlist form, live market numbers

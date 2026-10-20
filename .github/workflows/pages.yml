@@ -45,11 +45,13 @@ jobs:
             python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f" || { echo "::error::Invalid JSON: $f"; exit 1; }
           done
 
-      # Publish only the website itself (not the README, workflow files, etc.).
+      # Publish only the website itself (not the README, workflow files, etc.):
+      # every .html page at the top level, plus the assets and dashboard folders.
       - name: Assemble the site
         run: |
           mkdir _site
-          cp -r index.html assets dashboard _site/
+          cp ./*.html _site/
+          cp -r assets dashboard _site/
           touch _site/.nojekyll
 
       - name: Set up Pages
