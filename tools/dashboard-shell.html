@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Market Intelligence | Next Keepers</title>
+<meta name="description" content="US small-business market data: active listings, sold deals, multiples, SBA acquisition financing and local economy, 2013 to 2026.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect x='6' y='6' width='108' height='108' rx='27' fill='%231A5C45'/%3E%3Crect x='31' y='33' width='9' height='54' fill='%23F4F6F3'/%3E%3Cpath d='M31 33H41L64 87H54z' fill='%23F4F6F3'/%3E%3Crect x='55' y='33' width='9' height='54' fill='%23C9973F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- @@FONTS@@ -->
+<style>
+html, body { margin: 0; background: #F4F6F3; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) html, :root:not([data-theme="light"]) body { background: #0E1F18; } }
+.site-back { display: block; max-width: 1280px; margin: 0 auto; padding: 14px 20px 0; box-sizing: border-box; font: 500 14px 'IBM Plex Sans', system-ui, sans-serif; }
+.site-back a { color: #4A5A52; text-decoration: none; }
+.site-back a:hover { color: #1A5C45; text-decoration: underline; }
+@media (prefers-color-scheme: dark) { .site-back a { color: #A9BCB2; } .site-back a:hover { color: #6FC29A; } }
+#dash-root {
+  --cds-font-size-caption: 0.8125rem; --cds-font-size-body: 0.9375rem; --cds-font-size-heading: 1.125rem; --cds-font-size-title: 1.625rem;
+  --cds-font-weight-medium: 500;
+  --cds-pad-xs: 0.25rem; --cds-pad-sm: 0.5rem; --cds-pad-lg: 1rem;
+  --cds-gap-sm: 0.5rem; --cds-gap-md: 1rem; --cds-gap-lg: 1.5rem;
+  --cds-shadow-popover: 0 6px 20px rgba(14, 31, 24, 0.16); --cds-dur-slow: 0.3s;
+}
+#dash-root { max-width: 1280px; margin: 0 auto; padding: 8px 20px 56px; box-sizing: border-box; }
+.site-foot { max-width: 1280px; margin: 0 auto; padding: 0 20px 40px; box-sizing: border-box; font: 400 13px/1.5 'IBM Plex Sans', system-ui, sans-serif; color: #4A5A52; }
+@media (prefers-color-scheme: dark) { .site-foot { color: #A9BCB2; } }
+.site-foot a { color: #1A5C45; font-weight: 600; }
+@media (prefers-color-scheme: dark) { .site-foot a { color: #6FC29A; } }
+</style>
+<!-- @@BRAND_STYLE@@ -->
+<!-- PUBLIC MODE: "Your listings" and "Deal finder" run on individual marketplace listings, which are
+     not published in this repo. To switch them on in a private copy, add data/listings.json and delete this block. -->
+<style id="public-mode">
+#tab-mine, #tab-deals, #pg-mine, #pg-deals { display: none !important; }
+</style>
+<script>
+  // Old shared links that pointed at the private tabs open the Market tab instead.
+  if (/[?&]page=(mine|deals)/.test(location.search) || /#(pg-deals|dl-|pg-mine|mn-)/.test(location.hash)) {
+    history.replaceState(null, '', location.pathname);
+  }
+</script>
+<!-- Email gate and plan locks: settings in ../assets/js/site-config.js, behaviour in gate.js -->
+<link rel="stylesheet" href="gate.css">
+<script src="../assets/js/site-config.js"></script>
+<script src="gate.js"></script>
+<script src="../assets/js/vendor/d3.min.js"></script>
+<script>window.DASH_SKIP = ["listings"]; // private data: not in this repo, so do not even request it</script>
+<script src="dash-runtime.js"></script>
+</head>
+<body>
+<p class="site-back"><a href="../">&larr; Next Keepers home</a></p>
+<div id="dash-root">
+<!-- @@PAGE_BODY@@ -->
+</div>
+<p class="site-foot">Sources: BizBuySell Insight Reports (listings, sold deals, multiples), SBA 7(a) loan data, U.S. Census Bureau (population, housing permits, County Business Patterns), SBA Office of Advocacy small-business profiles. Figures are for research and are not an offer or valuation. <a href="../privacy.html">Privacy</a></p>
+</body>
+</html>

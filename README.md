@@ -17,11 +17,14 @@ assets/
   js/site-config.js        Settings you may change (form address, dashboard gate, locked sections)
   js/vendor/d3.min.js      Charting library (d3 v7), kept here so the site needs no outside CDN
 dashboard/
-  index.html               The market dashboard page
+  index.html               The market dashboard page (generated: see "Update the dashboard page" below)
   dash-runtime.js          Small loader that feeds the dashboard from the JSON files below
   gate.js, gate.css        Email gate and "Searcher plan" locks (see "Free and paid" below)
   mine.js                  Code for the "Your listings" tab (switched off in the public site)
   data/*.json              The dashboard's data, one file per table
+tools/
+  port_dashboard.py        Turns the dashboard page written in Claude into dashboard/index.html
+  dashboard-shell.html     The wrapper it uses: head, back link, footer, gate tags (not published)
 .github/workflows/pages.yml   Publishes the site on every push to main
 ```
 
@@ -56,6 +59,23 @@ files that are not valid JSON.
 
 To add a new table, drop `<name>.json` in `dashboard/data/` and read it in the page with
 `dash.data('<name>')`.
+
+## Update the dashboard page
+
+The dashboard is designed and edited in Claude (the Dashboard artifact). That page is a fragment
+that relies on Claude's own dashboard host, so it cannot be copied into this repo as it is.
+`tools/port_dashboard.py` does the conversion and keeps the gate and plan locks in place:
+
+1. Save the artifact's page as a file, for example `page.html` (the `files/index.html` of the dashboard).
+2. Run `python3 tools/port_dashboard.py page.html`. It writes `dashboard/index.html`.
+3. If the dashboard uses new data tables, copy them into `dashboard/data/<name>.json`.
+   (`listings.json` stays out: it is private.)
+4. Open `dashboard/` locally (see "Run it on your computer"), look through each section, then commit and push.
+
+What the script adds around the page: the wrapper from `tools/dashboard-shell.html` (head, back link,
+footer, Privacy link, `gate.css`/`gate.js`), a function around each inline script so they do not clash,
+and one line in `applyViews` that re-applies the plan lock. If the page changes shape so that line
+cannot be placed, the script stops and says so instead of writing a broken page.
 
 ## The waitlist form
 

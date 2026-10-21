@@ -26,6 +26,8 @@ html, body { margin: 0; background: #F4F6F3; }
 #dash-root { max-width: 1280px; margin: 0 auto; padding: 8px 20px 56px; box-sizing: border-box; }
 .site-foot { max-width: 1280px; margin: 0 auto; padding: 0 20px 40px; box-sizing: border-box; font: 400 13px/1.5 'IBM Plex Sans', system-ui, sans-serif; color: #4A5A52; }
 @media (prefers-color-scheme: dark) { .site-foot { color: #A9BCB2; } }
+.site-foot a { color: #1A5C45; font-weight: 600; }
+@media (prefers-color-scheme: dark) { .site-foot a { color: #6FC29A; } }
 </style>
 <style>
 /* Next Keepers brand: deep green + gold on a sage-white ground; Space Grotesk headings, IBM Plex Sans body, Plex Mono figures */
@@ -272,6 +274,23 @@ html, body { margin: 0; background: #F4F6F3; }
 @media (max-width: 52rem) { .lx .nk-subnav { grid-template-columns: repeat(3, minmax(0, 1fr)); } .lx .nk-subnav button .d { display: none; } }
 .lx .ind-pick { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
 .lx .ind-pick input[type=search] { min-width: min(100%, 22rem); }
+.lx .hl-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+.lx .hl-card { display: flex; flex-direction: column; gap: .25rem; border-top: 3px solid var(--nk-gold); }
+.lx .hl-k { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: .6875rem; letter-spacing: .08em; text-transform: uppercase; color: var(--nk-gold-ink); }
+.lx .hl-v { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; font-size: 1.5rem; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.lx .hl-t { margin: 0; flex: 1; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); }
+.lx .hl-f { display: flex; justify-content: space-between; align-items: center; gap: .5rem; padding-top: .375rem; border-top: 1px solid var(--color-border-line); margin-top: .25rem; }
+.lx .hl-go { all: unset; cursor: pointer; font-weight: 600; font-size: var(--cds-font-size-caption); color: var(--nk-green); }
+.lx .hl-go:hover { text-decoration: underline; }
+.lx .hl-go:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+.lx .hl-src { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .lx .hl-go { color: var(--nk-c0); } }
+:root[data-theme="dark"] .lx .hl-go { color: var(--nk-c0); }
+.lx .xp-bar { gap: .5rem 1rem; }
+.lx .xp-bar label.xp { display: inline-flex; align-items: center; gap: .375rem; max-width: 100%; min-width: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.lx .xp-bar select { flex: 1 1 auto; min-width: 0; max-width: min(100%, 22rem); }
+.lx .xp-sub { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; color: var(--color-fg); }
+.lx .lx-sub a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .lx td.tl, .lx th.tl { text-align: left; }
 .lx .lx-bar .stk { display: flex; height: .8rem; }
 .lx .lx-bar .stk i { height: 100%; min-width: 1px; }
@@ -319,37 +338,39 @@ html, body { margin: 0; background: #F4F6F3; }
   <div id="pg-market">
   <header>
     <h1 id="lx-title">US small-business market, 2013 to 2026</h1>
-    <p class="lx-take" id="lx-take">Active listings reached <b data-source="kpi" data-field="latest" data-where="metric=listings" id="t-list">—</b> in 2026 Q2, <b data-source="kpi" data-field="change_pct" data-where="metric=listings" id="t-listchg">—</b> on a year earlier, while the median asking price moved <b data-source="kpi" data-field="change_pct" data-where="metric=ask" id="t-askchg">—</b> to <b data-source="kpi" data-field="latest" data-where="metric=ask" id="t-ask">—</b>. Active listings by market go back to 2018, sold deals by market and industry to 2017 (full years), and national sold deals to 2013. SBA acquisition loans show how many purchases were financed: <b data-source="sba_kpi" data-field="latest" data-where="metric=acq_loans" id="t-sba">—</b> in the last four quarters, <b data-source="sba_kpi" data-field="change_pct" data-where="metric=acq_loans" id="t-sbachg">—</b> on the four before.</p>
-    <p class="lx-sub">Source: BizBuySell Insight Report, Active Business Listings (For Sale) and Closed Transactions (Sold). National plus 64 metro markets; 2013–2020 from the Insight Report archive. SBA 7(a) loan-level data (FY2020 to present) from data.sba.gov.</p>
+    <p class="lx-sub">Sources: <a href="https://www.bizbuysell.com/insight-report/" target="_blank" rel="noopener">BizBuySell Insight Report</a> (for sale and sold, National plus 64 metros; 2013–2020 from its archive), <a href="https://data.sba.gov/dataset/7-a-504-foia" target="_blank" rel="noopener">SBA 7(a) loan data</a> (FY2020 on), <a href="https://www.census.gov/construction/bps/" target="_blank" rel="noopener">Census building permits</a>, <a href="https://www.census.gov/programs-surveys/popest.html" target="_blank" rel="noopener">Census population estimates</a> and <a href="https://advocacy.sba.gov/" target="_blank" rel="noopener">SBA Office of Advocacy</a> small business profiles. Each tab opens with its highlights; pick a location and a period to update every chart and table below them.</p>
   </header>
 
   <nav class="nk-subnav" id="lx-subnav" aria-label="Market sections">
-    <button type="button" data-cat="listings" aria-pressed="true"><span class="n">01</span>Listings for sale<span class="d">Asking prices, listings and multiples by market</span></button>
-    <button type="button" data-cat="sold" aria-pressed="false"><span class="n">02</span>Sold deals<span class="d">What businesses sold for, 2013 to 2026</span></button>
+    <button type="button" data-cat="listings" aria-pressed="true"><span class="n">01</span>Listings for sale<span class="d">Asking prices, supply and multiples by market and quarter</span></button>
+    <button type="button" data-cat="sold" aria-pressed="false"><span class="n">02</span>Sold deals<span class="d">What businesses sold for, by market, quarter and year</span></button>
     <button type="button" data-cat="financing" aria-pressed="false"><span class="n">03</span>SBA financing<span class="d">Acquisition loans by market, state and county</span></button>
     <button type="button" data-cat="industries" aria-pressed="false"><span class="n">04</span>Industries<span class="d">Sector mix and multiples by industry</span></button>
     <button type="button" data-cat="local" aria-pressed="false"><span class="n">05</span>Local economy<span class="d">Housing permits, population and small businesses</span></button>
   </nav>
 
-  <section id="lx-headline" data-cat="listings" aria-label="National headline figures">
-    <div class="lx-sechead"><h2>National, 2026 Q2</h2><p class="lx-note">Change is against 2025 Q2. Every market's trend is in the next section.</p></div>
-    <div class="lx-kpis">
-      <div class="lx-card lx-kpi"><span class="lx-label">Active listings analyzed</span><span class="lx-val" data-source="kpi" data-field="latest" data-where="metric=listings" id="k-listings">—</span><span class="lx-chg" data-source="kpi" data-field="change_pct" data-where="metric=listings" id="c-listings">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median asking price</span><span class="lx-val" data-source="kpi" data-field="latest" data-where="metric=ask" id="k-ask">—</span><span class="lx-chg" data-source="kpi" data-field="change_pct" data-where="metric=ask" id="c-ask">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median revenue</span><span class="lx-val" data-source="kpi" data-field="latest" data-where="metric=rev" id="k-rev">—</span><span class="lx-chg" data-source="kpi" data-field="change_pct" data-where="metric=rev" id="c-rev">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median cash flow</span><span class="lx-val" data-source="kpi" data-field="latest" data-where="metric=cf" id="k-cf">—</span><span class="lx-chg" data-source="kpi" data-field="change_pct" data-where="metric=cf" id="c-cf">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Avg cash flow multiple</span><span class="lx-val" data-source="kpi" data-field="latest" data-where="metric=cfx" id="k-cfx">—</span><span class="lx-chg" data-source="kpi" data-field="change_pct" data-where="metric=cfx" id="c-cfx">—</span></div>
-    </div>
+  <section id="hl-listings" data-cat="listings" aria-label="Highlights">
+    <div class="lx-sechead"><h2 id="hl-l-h">Highlights</h2><p class="lx-note">The trends that matter most right now. Each card opens the chart behind it; Source opens where the figures come from.</p></div>
+    <div class="hl-grid" id="hl-l"></div>
   </section>
 
-  <section id="lx-explore" data-cat="listings" aria-label="Active listings by market">
-    <div class="vt-head"><div><h2>Active listings, 2018 to 2026</h2><p class="lx-note">Pick a market. Each card shows the latest quarter, the change on a year earlier and since 2018. National starts in 2021, the first quarter it was published; 2020 Q4 is missing because the published table is broken.</p></div><div class="lx-seg vt" data-vt="ex" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Chart</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
-    <div class="lx-controls"><select id="sel-market" aria-label="Market"></select><span class="lx-legend" id="lg-ex"></span></div>
-    <div class="lx-grid" data-view="ex:chart">
+  <section id="lx-l" data-cat="listings" aria-label="Businesses for sale">
+    <div class="vt-head"><div><h2>Businesses for sale</h2><p class="lx-note">Pick a location and a quarter. Trend follows the location over time (the gold dashed line marks the quarter you picked), Compare markets ranks every market in that quarter, and Table lists every quarter. BizBuySell first published National in 2021; the dashed 2018–2020 line estimates it from the 64 metros, scaled by how they compared with National from 2021 on (within about 5%). 2020 Q4 is missing for every market because the published table is broken.</p></div><div class="lx-seg vt" data-vt="ex" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Trend</button><button type="button" data-v="cmp" aria-pressed="false">Compare markets</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
+    <div class="lx-controls xp-bar"><label class="xp">Location <select id="sel-market" aria-label="Location"></select></label><label class="xp">Quarter <select id="sel-lq" aria-label="Quarter"></select></label></div>
+    <p class="xp-sub" id="l-sub"></p>
+    <div class="lx-kpis" id="l-kpis" data-source="metrics active_history"></div>
+    <div data-view="ex:chart">
+      <div class="lx-legend" id="lg-ex"></div>
+      <div class="lx-grid">
       <div class="lx-card"><h3>Median asking price</h3><p class="g-line" id="g-ask"></p><div class="lx-chart dash-skeleton" id="ch-ask" data-source="metrics active_history"></div></div>
       <div class="lx-card"><h3>Active listings</h3><p class="g-line" id="g-listings"></p><div class="lx-chart dash-skeleton" id="ch-list" data-source="metrics active_history"></div></div>
       <div class="lx-card"><h3>Median revenue and cash flow</h3><p class="g-line" id="g-cf"></p><div class="lx-legend" id="lg-fin"></div><div class="lx-chart dash-skeleton" id="ch-fin" data-source="metrics active_history"></div></div>
       <div class="lx-card"><h3>Asking price to cash flow</h3><p class="g-line" id="g-cfx"></p><div class="lx-legend" id="lg-mult"></div><div class="lx-chart dash-skeleton" id="ch-mult" data-source="metrics active_history"></div></div>
+      </div>
+    </div>
+    <div data-view="ex:cmp" hidden>
+      <div class="lx-controls"><h3 id="lcmp-h">All markets</h3><input type="search" id="lcmp-q" placeholder="Search market or region" aria-label="Search markets"></div>
+      <div class="lx-tablebox"><table class="dl-click" id="tbl-lcmp" data-source="metrics active_history" data-row-key="market"><thead><tr><th><button data-k="name">Market</button></th><th><button data-k="region">Region</button></th><th><button data-k="listings">Listings</button></th><th><button data-k="l_yoy">vs year earlier</button></th><th><button data-k="ask">Median asking price</button></th><th><button data-k="a_yoy">vs year earlier</button></th><th><button data-k="rev">Median revenue</button></th><th><button data-k="cf">Median cash flow</button></th><th><button data-k="cfx">Price / cash flow</button></th></tr></thead><tbody></tbody></table></div>
     </div>
     <div class="lx-tablebox" data-view="ex:table" hidden>
       <table class="lx-table" id="tbl-ex" data-source="metrics active_history" data-row-key="quarter">
@@ -359,185 +380,84 @@ html, body { margin: 0; background: #F4F6F3; }
     </div>
   </section>
 
-  <section id="lx-markets" data-cat="listings" aria-label="Market table">
-    <div class="lx-sechead"><h2>All markets, 2026 Q2</h2><p class="lx-note">Click a column to sort. Change columns compare with 2025 Q2. Markets with few listings swing more.</p></div>
-    <div class="lx-controls"><input type="search" id="tbl-q" placeholder="Search market or region" aria-label="Search markets"></div>
-    <div class="lx-tablebox">
-      <table class="lx-table" id="tbl-markets" data-source="latest" data-row-key="market">
-        <thead><tr>
-          <th data-field="market"><button data-sort="market">Market</button></th>
-          <th data-field="region"><button data-sort="region">Region</button></th>
-          <th data-field="listings"><button data-sort="listings">Listings</button></th>
-          <th data-field="listings_yoy"><button data-sort="listings_yoy">Listings change</button></th>
-          <th data-field="ask"><button data-sort="ask">Median asking price</button></th>
-          <th data-field="ask_yoy"><button data-sort="ask_yoy">Price change</button></th>
-          <th data-field="rev"><button data-sort="rev">Median revenue</button></th>
-          <th data-field="cf"><button data-sort="cf">Median cash flow</button></th>
-          <th data-field="cfx"><button data-sort="cfx">Cash flow multiple</button></th>
-        </tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
+  <section id="hl-sold" data-cat="sold" aria-label="Highlights">
+    <div class="lx-sechead"><h2 id="hl-s-h">Highlights</h2><p class="lx-note">The trends that matter most right now. Each card opens the chart behind it; Source opens where the figures come from.</p></div>
+    <div class="hl-grid" id="hl-s"></div>
   </section>
 
-  <section id="lx-closed" data-cat="sold" aria-label="Closed deals, national headline">
-    <div class="lx-sechead"><h2>Closed deals (sold), national, 2026 Q2</h2><p class="lx-note">Businesses that actually sold, from the Closed Transactions view of the same report. Change is against 2025 Q2.</p></div>
-    <div class="lx-kpis">
-      <div class="lx-card lx-kpi"><span class="lx-label">Businesses sold</span><span class="lx-val" data-source="closed_kpi" data-field="latest" data-where="metric=sold" id="ck-sold">—</span><span class="lx-chg" data-source="closed_kpi" data-field="change_pct" data-where="metric=sold" id="cc-sold">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median sale price</span><span class="lx-val" data-source="closed_kpi" data-field="latest" data-where="metric=sale" id="ck-sale">—</span><span class="lx-chg" data-source="closed_kpi" data-field="change_pct" data-where="metric=sale" id="cc-sale">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median asking price of sold listings</span><span class="lx-val" data-source="closed_kpi" data-field="latest" data-where="metric=ask" id="ck-ask">—</span><span class="lx-chg" data-source="closed_kpi" data-field="change_pct" data-where="metric=ask" id="cc-ask">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Average sale to asking price</span><span class="lx-val" data-source="closed_kpi" data-field="latest" data-where="metric=s2a" id="ck-s2a">—</span><span class="lx-chg" data-source="closed_kpi" data-field="change_pct" data-where="metric=s2a" id="cc-s2a">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median days on market</span><span class="lx-val" data-source="closed_kpi" data-field="latest" data-where="metric=dom" id="ck-dom">—</span><span class="lx-chg" data-source="closed_kpi" data-field="change_pct" data-where="metric=dom" id="cc-dom">—</span></div>
-    </div>
-  </section>
-
-  <section id="hs-trend" data-cat="sold" aria-label="Closed deals since 2013">
-    <div class="vt-head"><div><h2>Closed deals trend, 2013 to 2026</h2><p class="lx-note">National, quarterly. Each card shows the latest quarter and its change on a year earlier and since 2013. The dashed line marks 2021, where the quarterly closed-deals table starts; before that, figures are what each report published, so some quarters are single dots or blank.</p></div><div class="lx-seg vt" data-vt="hs" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Chart</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
-    <p class="lx-take" style="margin:0" id="hs-take">Brokers reported <b data-source="hist_kpi" data-field="latest" data-where="metric=sold" id="hs-t-sold">—</b> business sales in 2025, <b data-source="hist_kpi" data-field="change_pct" data-where="metric=sold" id="hs-t-soldchg">—</b> on 2013. The median sale price went from <b data-source="hist_kpi" data-field="base" data-where="metric=sale" id="hs-t-sale0">—</b> to <b data-source="hist_kpi" data-field="latest" data-where="metric=sale" id="hs-t-sale1">—</b> (<b data-source="hist_kpi" data-field="change_pct" data-where="metric=sale" id="hs-t-salechg">—</b>). Over the same span median cash flow rose <b data-source="hist_kpi" data-field="change_pct" data-where="metric=cf" id="hs-t-cfchg">—</b> and the average cash-flow multiple went from <b data-source="hist_kpi" data-field="base" data-where="metric=cfx" id="hs-t-cfx0">—</b> to <b data-source="hist_kpi" data-field="latest" data-where="metric=cfx" id="hs-t-cfx1">—</b>, so buyers are paying more both because the businesses earn more and because each dollar of earnings is priced higher.</p>
-    <div class="lx-kpis">
-      <div class="lx-card lx-kpi"><span class="lx-label">Businesses sold, 2025</span><span class="lx-val" data-source="hist_kpi" data-field="latest" data-where="metric=sold" id="hs-k-sold">—</span><span class="lx-chg" data-source="hist_kpi" data-field="change_pct" data-where="metric=sold" id="hs-c-sold">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median sale price</span><span class="lx-val" data-source="hist_kpi" data-field="latest" data-where="metric=sale" id="hs-k-sale">—</span><span class="lx-chg" data-source="hist_kpi" data-field="change_pct" data-where="metric=sale" id="hs-c-sale">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median cash flow of sold businesses</span><span class="lx-val" data-source="hist_kpi" data-field="latest" data-where="metric=cf" id="hs-k-cf">—</span><span class="lx-chg" data-source="hist_kpi" data-field="change_pct" data-where="metric=cf" id="hs-c-cf">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Avg cash flow multiple</span><span class="lx-val" data-source="hist_kpi" data-field="latest" data-where="metric=cfx" id="hs-k-cfx">—</span><span class="lx-chg" data-source="hist_kpi" data-field="change_pct" data-where="metric=cfx" id="hs-c-cfx">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Median days on market</span><span class="lx-val" data-source="hist_kpi" data-field="latest" data-where="metric=dom" id="hs-k-dom">—</span><span class="lx-chg" data-source="hist_kpi" data-field="change_pct" data-where="metric=dom" id="hs-c-dom">—</span></div>
-    </div>
-    <div class="lx-grid" data-view="hs:chart">
-      <div class="lx-card"><h3>Businesses sold</h3><p class="g-line" id="hs-g-sold"></p><p class="lx-note">The 2020 Q2 low is the COVID shutdown.</p><div class="lx-chart dash-skeleton" id="hs-ch-sold" data-source="national_history"></div></div>
-      <div class="lx-card"><h3>Median sale price vs asking price</h3><p class="g-line" id="hs-g-sale"></p><div class="lx-legend" id="hs-lg-price"></div><div class="lx-chart dash-skeleton" id="hs-ch-price" data-source="national_history"></div></div>
-      <div class="lx-card"><h3>Median cash flow of sold businesses</h3><p class="g-line" id="hs-g-cf"></p><div class="lx-chart dash-skeleton" id="hs-ch-cf" data-source="national_history"></div></div>
-      <div class="lx-card"><h3>Average cash flow multiple</h3><p class="g-line" id="hs-g-cfx"></p><div class="lx-chart dash-skeleton" id="hs-ch-mult" data-source="national_history"></div></div>
-      <div class="lx-card"><h3>Average sale to asking price</h3><p class="g-line" id="hs-g-s2a"></p><div class="lx-chart dash-skeleton" id="hs-ch-s2a" data-source="national_history"></div></div>
-      <div class="lx-card"><h3>Median days on market</h3><p class="g-line" id="hs-g-dom"></p><div class="lx-chart dash-skeleton" id="hs-ch-dom" data-source="national_history"></div></div>
-    </div>
-    <div class="lx-tablebox" data-view="hs:table" hidden>
-      <table class="lx-table" id="hs-tbl-nat" data-source="national_history" data-row-key="quarter">
-        <thead><tr><th data-field="quarter">Quarter</th><th data-field="sold">Sold</th><th>vs year earlier</th><th data-field="sale">Median sale price</th><th data-field="ask">Median asking</th><th data-field="cf">Median cash flow</th><th data-field="cfx">Price / cash flow</th><th data-field="s2a">Sale / asking</th><th data-field="dom">Days on market</th><th data-field="source">Source</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="lx-closed-explore" data-cat="sold" aria-label="Closed deals market explorer">
-    <div class="vt-head"><div><h2>Closed deals by market, quarterly</h2><p class="lx-note">Pick a market and a measure. Gaps in a line are quarters with no sold row in the source table. National is drawn alongside, except for counts.</p></div><div class="lx-seg vt" data-vt="cex" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Chart</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
-    <div class="lx-controls">
-      <select id="sel-cmarket" aria-label="Market for closed deals"></select>
-      <select id="sel-cmetric" aria-label="Closed deals measure"></select>
-    </div>
-    <div class="lx-card" data-view="cex:chart">
-      <h3 id="ex-ctitle">—</h3>
-      <p class="g-line" id="g-cex"></p>
-      <div class="lx-legend" id="lg-cex"></div>
-      <div class="lx-chart tall dash-skeleton" id="ch-cex" data-source="closed"></div>
-    </div>
-    <div class="lx-tablebox" data-view="cex:table" hidden>
-      <table class="lx-table" id="tbl-cex" data-source="closed" data-row-key="quarter">
-        <thead><tr><th data-field="quarter">Quarter</th><th data-field="sold">Sold</th><th>vs year earlier</th><th data-field="sale">Median sale price</th><th>vs year earlier</th><th data-field="ask">Median asking</th><th data-field="s2a">Sale / asking</th><th data-field="rev">Median revenue</th><th data-field="cf">Median cash flow</th><th data-field="cfx">Price / cash flow</th><th data-field="dom">Days on market</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="hs-closed" data-cat="sold" aria-label="Sold deals by market, full years">
-    <div class="vt-head"><div><h2>Sold deals by market, full years 2017 to 2025</h2><p class="lx-note">From each year's Q4 report. Chart: one market over nine years. Table: every market, 2025 against 2019, the last year before COVID; click a row to chart it.</p></div><div class="lx-seg vt" data-vt="cm" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Chart</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
-    <div class="lx-card" data-view="cm:chart">
-      <div class="lx-controls">
-        <select id="hs-sel-cm" aria-label="Market for sold deals"></select>
-        <select id="hs-sel-cmet" aria-label="Sold deals measure"></select>
+  <section id="lx-s" data-cat="sold" aria-label="Businesses sold">
+    <div class="vt-head"><div><h2>Businesses sold</h2><p class="lx-note">What businesses actually sold for (BizBuySell Closed Transactions). Pick a location, quarterly or full year, and a period. National runs quarterly from 2013 (before 2021 only what each report published, so some quarters are single dots or blank; the 2020 Q2 low is the COVID shutdown). Markets run quarterly from 2021 and by full year from 2017. A National full year adds up the businesses sold over the four quarters and averages the quarterly prices and ratios.</p></div><div class="lx-seg vt" data-vt="sx" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Trend</button><button type="button" data-v="cmp" aria-pressed="false">Compare markets</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
+    <div class="lx-controls xp-bar"><label class="xp">Location <select id="sx-loc" aria-label="Location"></select></label><div class="lx-seg" role="group" aria-label="Frequency" id="sx-freq"><button type="button" data-f="q" aria-pressed="true">Quarterly</button><button type="button" data-f="y" aria-pressed="false">Full year</button></div><label class="xp">Period <select id="sx-per" aria-label="Period"></select></label></div>
+    <p class="xp-sub" id="sx-sub"></p>
+    <div class="lx-kpis" id="sx-kpis" data-source="national_history closed closed_annual"></div>
+    <div data-view="sx:chart">
+      <div class="lx-legend" id="sx-lg"></div>
+      <div class="lx-grid">
+      <div class="lx-card"><h3>Businesses sold</h3><p class="g-line" id="sx-g-sold"></p><div class="lx-chart dash-skeleton" id="sx-ch-sold" data-source="national_history closed closed_annual"></div></div>
+      <div class="lx-card"><h3>Sale price and asking price</h3><p class="g-line" id="sx-g-sale"></p><div class="lx-legend" id="sx-lg-sale"></div><div class="lx-chart dash-skeleton" id="sx-ch-sale" data-source="national_history closed closed_annual"></div></div>
+      <div class="lx-card"><h3>Median cash flow of sold businesses</h3><p class="g-line" id="sx-g-cf"></p><div class="lx-chart dash-skeleton" id="sx-ch-cf" data-source="national_history closed closed_annual"></div></div>
+      <div class="lx-card"><h3>Sale price to cash flow</h3><p class="g-line" id="sx-g-cfx"></p><div class="lx-chart dash-skeleton" id="sx-ch-cfx" data-source="national_history closed closed_annual"></div></div>
+      <div class="lx-card"><h3>Sale price to asking price</h3><p class="g-line" id="sx-g-s2a"></p><div class="lx-chart dash-skeleton" id="sx-ch-s2a" data-source="national_history closed closed_annual"></div></div>
+      <div class="lx-card"><h3>Median days on market</h3><p class="g-line" id="sx-g-dom"></p><div class="lx-chart dash-skeleton" id="sx-ch-dom" data-source="national_history closed closed_annual"></div></div>
       </div>
-      <h3 id="hs-cm-title">—</h3>
-      <p class="g-line" id="hs-g-cm"></p>
-      <div class="lx-chart dash-skeleton" id="hs-ch-cm" data-source="closed_annual"></div>
     </div>
-    <div class="lx-controls" data-view="cm:table" hidden><input type="search" id="hs-cm-q" placeholder="Search market" aria-label="Search markets"></div>
-    <div class="lx-tablebox" data-view="cm:table" hidden>
-      <table class="dl-click" id="hs-tbl-cm" data-source="annual_compare" data-row-key="market">
-        <thead><tr>
-          <th data-field="market"><button data-hsort="market">Market</button></th>
-          <th data-field="sold_2019"><button data-hsort="sold_2019">Sold 2019</button></th>
-          <th data-field="sold_2025"><button data-hsort="sold_2025">Sold 2025</button></th>
-          <th data-field="sold_chg"><button data-hsort="sold_chg">Change</button></th>
-          <th data-field="sale_2019"><button data-hsort="sale_2019">Median sale 2019</button></th>
-          <th data-field="sale_2025"><button data-hsort="sale_2025">Median sale 2025</button></th>
-          <th data-field="sale_chg"><button data-hsort="sale_chg">Change</button></th>
-          <th data-field="cfx_2025"><button data-hsort="cfx_2025">CF multiple 2025</button></th>
-          <th data-field="dom_2025"><button data-hsort="dom_2025">Days on market 2025</button></th>
-        </tr></thead>
-        <tbody></tbody>
-      </table>
+    <div data-view="sx:cmp" hidden>
+      <div class="lx-controls"><h3 id="sx-cmp-h">All markets</h3><input type="search" id="sx-q" placeholder="Search market or region" aria-label="Search markets"></div>
+      <div class="lx-tablebox"><table class="dl-click" id="sx-cmp" data-source="national_history closed closed_annual" data-row-key="market"><thead><tr><th><button data-k="name">Market</button></th><th><button data-k="region">Region</button></th><th><button data-k="sold">Sold</button></th><th><button data-k="s_yoy">vs year earlier</button></th><th><button data-k="sale">Median sale price</button></th><th><button data-k="p_yoy">vs year earlier</button></th><th><button data-k="s2a">Sale / asking</button></th><th><button data-k="cfx">Price / cash flow</button></th><th><button data-k="dom">Days on market</button></th></tr></thead><tbody></tbody></table></div>
+    </div>
+    <div class="lx-tablebox" data-view="sx:table" hidden>
+      <table class="lx-table" id="sx-tbl" data-source="national_history closed closed_annual" data-row-key="period"><thead><tr><th>Period</th><th>Sold</th><th>vs year earlier</th><th>Median sale price</th><th>vs year earlier</th><th>Median asking</th><th>Sale / asking</th><th>Median cash flow</th><th>Price / cash flow</th><th>Days on market</th></tr></thead><tbody></tbody></table>
     </div>
   </section>
 
-  <section id="lx-closed-markets" data-cat="sold" aria-label="Closed deals market table">
-    <div class="lx-sechead"><h2>Closed deals, all markets, 2026 Q2</h2><p class="lx-note">Click a column to sort. A dash means no sold row for 2026 Q2 or 2025 Q2. Markets with few sales swing a lot.</p></div>
-    <div class="lx-controls"><input type="search" id="tbl-cq" placeholder="Search market or region" aria-label="Search closed deals markets"></div>
-    <div class="lx-tablebox">
-      <table class="lx-table" id="tbl-closed" data-source="closed_latest" data-row-key="market">
-        <thead><tr>
-          <th data-field="market"><button data-csort="market">Market</button></th>
-          <th data-field="region"><button data-csort="region">Region</button></th>
-          <th data-field="sold"><button data-csort="sold">Sold</button></th>
-          <th data-field="sold_yoy"><button data-csort="sold_yoy">Sold change</button></th>
-          <th data-field="sale"><button data-csort="sale">Median sale price</button></th>
-          <th data-field="sale_yoy"><button data-csort="sale_yoy">Price change</button></th>
-          <th data-field="s2a"><button data-csort="s2a">Sale to asking</button></th>
-          <th data-field="dom"><button data-csort="dom">Days on market</button></th>
-        </tr></thead>
-        <tbody></tbody>
-      </table>
+  <section id="hl-fin" data-cat="financing" aria-label="Highlights">
+    <div class="lx-sechead"><h2 id="hl-f-h">Highlights</h2><p class="lx-note">The trends that matter most right now. Each card opens the chart behind it; Source opens where the figures come from.</p></div>
+    <div class="hl-grid" id="hl-f"></div>
+  </section>
+
+  <section id="lx-sba" data-cat="financing" aria-label="SBA-financed acquisitions">
+    <div class="vt-head"><div><h2>SBA-financed acquisitions</h2><p class="lx-note">Every SBA 7(a) loan approved since October 2019, from the SBA's public loan file. "Acquisition" means the SBA marked the loan as financing a change of ownership. Pick a location: the figures compare the last four quarters with the four before. Compare markets ranks every market; "per 100 sales" sets SBA acquisition loans against BizBuySell's reported sales in the same metro, so above 100 means much of the market trades off BizBuySell. BizBuySell sales start in 2021.</p></div><div class="lx-seg vt" data-vt="fx" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Trend</button><button type="button" data-v="cmp" aria-pressed="false">Compare markets</button></div></div>
+    <div class="lx-controls xp-bar"><label class="xp">Location <select id="fx-loc" aria-label="Location"></select></label></div>
+    <p class="xp-sub" id="fx-sub"></p>
+    <div class="lx-kpis" id="fx-kpis" data-source="sba_quarterly closed"></div>
+    <div class="lx-grid" data-view="fx:chart">
+      <div class="lx-card"><h3 id="h-sba-vs">SBA-financed acquisitions vs BizBuySell sales</h3><div class="lx-legend" id="lg-sba-vs"></div><div class="lx-chart dash-skeleton" id="ch-sba-vs" data-source="sba_quarterly closed"></div></div>
+      <div class="lx-card"><h3 id="h-sba-size">Median acquisition loan vs median sale price</h3><p class="lx-note">SBA-financed deals run larger than the typical BizBuySell sale, and the loan often also funds working capital, equipment or real estate.</p><div class="lx-legend" id="lg-sba-size"></div><div class="lx-chart dash-skeleton" id="ch-sba-size" data-source="sba_quarterly closed"></div></div>
+    </div>
+    <div data-view="fx:cmp" hidden>
+      <div class="lx-controls"><input type="search" id="tbl-sq" placeholder="Search market or region" aria-label="Search SBA markets"></div>
+      <div class="lx-tablebox"><table class="dl-click" id="tbl-sba" data-source="sba_markets" data-row-key="market"><thead><tr><th><button data-k="name">Market</button></th><th><button data-k="region">Region</button></th><th><button data-k="acq_loans">SBA acquisitions</button></th><th><button data-k="acq_chg">Change</button></th><th><button data-k="sold">BizBuySell sales</button></th><th><button data-k="per_100_sales">Per 100 sales</button></th><th><button data-k="acq_avg">Avg acquisition loan</button></th><th><button data-k="sale">Median sale price</button></th></tr></thead><tbody></tbody></table></div>
     </div>
   </section>
 
-  <section id="lx-sba" data-cat="financing" aria-label="SBA acquisition financing">
-    <div class="lx-sechead"><h2>Acquisition financing: SBA 7(a) loans</h2><p class="lx-note">Every SBA 7(a) loan approved since October 2019, from the SBA's public loan file. "Acquisition" means the SBA marked the loan as financing a change of ownership. Last four quarters (2025 Q3 to 2026 Q2) against the four before.</p></div>
-    <div class="lx-kpis">
-      <div class="lx-card lx-kpi"><span class="lx-label">SBA acquisition loans</span><span class="lx-val" data-source="sba_kpi" data-field="latest" data-where="metric=acq_loans" id="sk-acq_loans">—</span><span class="lx-chg" data-source="sba_kpi" data-field="change_pct" data-where="metric=acq_loans" id="sc-acq_loans">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Acquisition dollars approved</span><span class="lx-val" data-source="sba_kpi" data-field="latest" data-where="metric=acq_amount" id="sk-acq_amount">—</span><span class="lx-chg" data-source="sba_kpi" data-field="change_pct" data-where="metric=acq_amount" id="sc-acq_amount">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Average acquisition loan</span><span class="lx-val" data-source="sba_kpi" data-field="latest" data-where="metric=acq_avg" id="sk-acq_avg">—</span><span class="lx-chg" data-source="sba_kpi" data-field="change_pct" data-where="metric=acq_avg" id="sc-acq_avg">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Acquisitions as share of all 7(a) loans</span><span class="lx-val" data-source="sba_kpi" data-field="latest" data-where="metric=acq_share" id="sk-acq_share">—</span><span class="lx-chg" data-source="sba_kpi" data-field="change_pct" data-where="metric=acq_share" id="sc-acq_share">—</span></div>
-      <div class="lx-card lx-kpi"><span class="lx-label">Acquisitions in your target industries</span><span class="lx-val" data-source="sba_kpi" data-field="latest" data-where="metric=acq_target" id="sk-acq_target">—</span><span class="lx-chg" data-source="sba_kpi" data-field="change_pct" data-where="metric=acq_target" id="sc-acq_target">—</span></div>
-    </div>
-    <div class="lx-grid">
-      <div class="lx-card"><h3 id="h-sba-vs">SBA-financed acquisitions vs BizBuySell sales</h3><p class="lx-note">National, per quarter. BizBuySell counts start in 2021. The 2025 Q4 dip lines up with the federal shutdown.</p><div class="lx-legend" id="lg-sba-vs"></div><div class="lx-chart dash-skeleton" id="ch-sba-vs" data-source="sba_quarterly closed"></div></div>
-      <div class="lx-card"><h3 id="h-sba-size">Median acquisition loan vs median sale price</h3><p class="lx-note">SBA-financed deals are larger than the typical BizBuySell sale, and the loan often also funds working capital, equipment or real estate.</p><div class="lx-legend" id="lg-sba-size"></div><div class="lx-chart dash-skeleton" id="ch-sba-size" data-source="sba_quarterly closed"></div></div>
-    </div>
-    <div class="lx-card">
-      <div class="lx-controls">
-        <select id="sel-smarket" aria-label="Market for SBA loans"></select>
-        <select id="sel-smetric" aria-label="SBA measure"></select>
-      </div>
-      <h3 id="ex-stitle">—</h3>
-      <div class="lx-legend" id="lg-sex"></div>
-      <div class="lx-chart tall dash-skeleton" id="ch-sex" data-source="sba_quarterly closed"></div>
-    </div>
-  </section>
-
-  <section id="lx-sba-markets" data-cat="financing" aria-label="SBA acquisitions by market">
-    <div class="lx-sechead"><h2>Financed acquisitions by market</h2><p class="lx-note">Last four quarters. "Per 100 sales" compares SBA acquisition loans with BizBuySell's reported sales in the same metro; above 100 means more financed purchases than sales BizBuySell recorded, a hint that much of the market trades off-platform. Averages are pulled up by a few large loans (up to $5M).</p></div>
-    <div class="lx-controls"><input type="search" id="tbl-sq" placeholder="Search market or region" aria-label="Search SBA markets"></div>
-    <div class="lx-tablebox">
-      <table class="lx-table" id="tbl-sba" data-source="sba_markets" data-row-key="market">
-        <thead><tr>
-          <th data-field="market"><button data-ssort="market">Market</button></th>
-          <th data-field="region"><button data-ssort="region">Region</button></th>
-          <th data-field="acq_loans"><button data-ssort="acq_loans">SBA acquisitions</button></th>
-          <th data-field="acq_chg"><button data-ssort="acq_chg">Change</button></th>
-          <th data-field="sold"><button data-ssort="sold">BizBuySell sales</button></th>
-          <th data-field="per_100_sales"><button data-ssort="per_100_sales">Per 100 sales</button></th>
-          <th data-field="acq_avg"><button data-ssort="acq_avg">Avg acquisition loan</button></th>
-          <th data-field="sale"><button data-ssort="sale">Median sale price</button></th>
-        </tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </section>
-
-  <section id="lx-sba-states" data-cat="financing" aria-label="SBA acquisitions by state">
-    <div class="lx-sechead"><h2>Where acquisitions get financed</h2><p class="lx-note">Last four quarters, by state; darker means more. Per 10,000 businesses adjusts for state size (business counts from County Business Patterns). Hover a state for details.</p></div>
+  <section id="lx-sba-where" data-cat="financing" aria-label="Where acquisitions get financed">
+    <div class="vt-head"><div><h2>Where acquisitions get financed</h2><p class="lx-note">Last four quarters. States map: darker means more; per 10,000 businesses adjusts for state size (County Business Patterns). Counties: Last four quarters, counties with at least one SBA acquisition loan. Opportunity score (0–100) blends an older population, small businesses in your target industries, growth, income and acquisition activity (80%) with the local growth score from housing permits, population and small employers (20%, see Local economy). Shows the first 150 rows of the current sort.</p></div><div class="lx-seg vt" data-vt="sw" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">States map</button><button type="button" data-v="table" aria-pressed="false">Counties</button></div></div>
+    <div data-view="sw:chart">
     <div class="lx-card">
       <div class="lx-controls"><div class="lx-seg" role="group" aria-label="Map measure" id="seg-map"></div></div>
       <div class="lx-scale" id="map-scale"></div>
       <div class="lx-chart lx-usmap dash-skeleton" id="ch-map" data-source="sba_states us_states" style="min-height:16rem"></div>
     </div>
+    </div>
+    <div data-view="sw:table" hidden>
+    <div class="lx-controls"><input type="search" id="tbl-cty-q" placeholder="Search county, state or metro" aria-label="Search counties"></div>
+    <div class="lx-tablebox">
+      <table class="lx-table" id="tbl-cty" data-source="sba_counties" data-row-key="fips">
+        <thead><tr>
+          <th data-field="county"><button data-csort2="county">County</button></th>
+          <th data-field="state"><button data-csort2="state">State</button></th>
+          <th data-field="acq_loans"><button data-csort2="acq_loans">Acquisitions</button></th>
+          <th data-field="acq_loans_prev"><button data-csort2="acq_loans_prev">Prior 4 quarters</button></th>
+          <th data-field="acq_per_1k_estab"><button data-csort2="acq_per_1k_estab">Per 1,000 businesses</button></th>
+          <th data-field="estab"><button data-csort2="estab">Businesses</button></th>
+          <th data-field="growth"><button data-csort2="growth">Local growth</button></th>
+          <th data-field="opportunity_score"><button data-csort2="opportunity_score">Opportunity score</button></th>
+          <th data-field="bizbuysell_market"><button data-csort2="bizbuysell_market">BizBuySell market</button></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
   </section>
 
   <section id="lx-sba-detail" data-cat="financing" aria-label="SBA acquisitions by industry and lender">
@@ -560,25 +480,9 @@ html, body { margin: 0; background: #F4F6F3; }
     </div>
   </section>
 
-  <section id="lx-sba-counties" data-cat="financing" aria-label="SBA acquisitions by county">
-    <div class="lx-sechead"><h2>Counties with the most financed acquisitions</h2><p class="lx-note">Last four quarters, counties with at least one SBA acquisition loan. Opportunity score (0–100) blends an older population, small businesses in your target industries, growth, income and acquisition activity (80%) with the local growth score from housing permits, population and small employers (20%, see Local economy). Shows the first 150 rows of the current sort.</p></div>
-    <div class="lx-controls"><input type="search" id="tbl-cty-q" placeholder="Search county, state or metro" aria-label="Search counties"></div>
-    <div class="lx-tablebox">
-      <table class="lx-table" id="tbl-cty" data-source="sba_counties" data-row-key="fips">
-        <thead><tr>
-          <th data-field="county"><button data-csort2="county">County</button></th>
-          <th data-field="state"><button data-csort2="state">State</button></th>
-          <th data-field="acq_loans"><button data-csort2="acq_loans">Acquisitions</button></th>
-          <th data-field="acq_loans_prev"><button data-csort2="acq_loans_prev">Prior 4 quarters</button></th>
-          <th data-field="acq_per_1k_estab"><button data-csort2="acq_per_1k_estab">Per 1,000 businesses</button></th>
-          <th data-field="estab"><button data-csort2="estab">Businesses</button></th>
-          <th data-field="growth"><button data-csort2="growth">Local growth</button></th>
-          <th data-field="opportunity_score"><button data-csort2="opportunity_score">Opportunity score</button></th>
-          <th data-field="bizbuysell_market"><button data-csort2="bizbuysell_market">BizBuySell market</button></th>
-        </tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
+  <section id="hl-ind" data-cat="industries" aria-label="Highlights">
+    <div class="lx-sechead"><h2 id="hl-i-h">Highlights</h2><p class="lx-note">The trends that matter most right now. Each card opens the chart behind it; Source opens where the figures come from.</p></div>
+    <div class="hl-grid" id="hl-i"></div>
   </section>
 
   <section id="lx-sectors" data-cat="industries" aria-label="Sector mix">
@@ -617,30 +521,29 @@ html, body { margin: 0; background: #F4F6F3; }
     </div>
   </section>
 
-  <section id="lx-loc-head" data-cat="local" aria-label="Local economy headline figures">
-    <div class="lx-sechead"><h2>Local economy</h2><p class="lx-note">Is the market growing, and how many owners are there to buy from? Housing permits and population show where demand is heading; small-business counts show the pool of owners. Your counties are the ones in the deal finder: Erie, Niagara, Monroe, Orleans, Genesee and Allegany; New York City's five counties (New York, Kings, Queens, Bronx, Richmond); and Suffolk, MA (Boston). Sources: Census Building Permits Survey (through August 2026), Census population estimates (July 2025), SBA Office of Advocacy 2025 small business profiles.</p></div>
-    <div class="lx-kpis" id="loc-kpis" data-source="local_states local_counties"></div>
+  <section id="hl-local" data-cat="local" aria-label="Highlights">
+    <div class="lx-sechead"><h2 id="hl-loc-h">Highlights</h2><p class="lx-note">The trends that matter most right now. Each card opens the chart behind it; Source opens where the figures come from.</p></div>
+    <div class="hl-grid" id="hl-loc"></div>
   </section>
 
-  <section id="lx-loc-map" data-cat="local" aria-label="Housing permits by state">
-    <div class="vt-head"><div><h2>Where housing is growing</h2><p class="lx-note">New housing units permitted, by state. Permits lead population and household spending, so they are an early read on demand for home services, trades and local retail. Hover a state for details.</p></div><div class="lx-seg vt" data-vt="pm" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Chart</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
+  <section id="lx-loc-map" data-cat="local" aria-label="Housing permits">
+    <div class="vt-head"><div><h2>Housing permits</h2><p class="lx-note">New housing units permitted. Permits lead population and household spending, so they are an early read on demand for home services, trades and local retail. Map: every state (click one to see its trend). Trend: rolling 12-month total for the area you pick, so seasonal swings cancel out; monthly figures are as first reported and the table under the chart has the revised full years. Compare states: every state side by side.</p></div><div class="lx-seg vt" data-vt="pm" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Map</button><button type="button" data-v="trend" aria-pressed="false">Trend</button><button type="button" data-v="table" aria-pressed="false">Compare states</button></div></div>
+    <div class="lx-controls xp-bar"><label class="xp">Area <select id="sel-pt" aria-label="Area"></select></label></div>
     <div class="lx-card" data-view="pm:chart">
       <div class="lx-controls"><div class="lx-seg" role="group" aria-label="Map measure" id="seg-pm"></div></div>
       <div class="lx-scale" id="pm-scale"></div>
       <div class="lx-chart lx-usmap dash-skeleton" id="ch-pm" data-source="local_states us_states" style="min-height:16rem"></div>
+    </div>
+    <div data-view="pm:trend" hidden>
+      <div class="lx-card"><div class="lx-legend" id="lg-pt"></div><p class="g-line" id="g-pt"></p><div class="lx-chart dash-skeleton" id="ch-pt" data-source="local_monthly"></div></div>
+      <div class="lx-tablebox" style="margin-top:var(--cds-gap-md)"><table id="tbl-pt" data-source="local_states"><thead><tr><th>Period</th><th>Units permitted</th><th>Change on a year earlier</th></tr></thead><tbody></tbody></table></div>
     </div>
     <div class="lx-tablebox" data-view="pm:table" hidden>
       <table id="tbl-pm" data-source="local_states" data-row-key="st"><thead><tr><th><button data-k="state">State</button></th><th><button data-k="u2025">Units 2025</button></th><th><button data-k="per1k">Per 1,000 residents</button></th><th><button data-k="chg25">2025 vs 2024</button></th><th><button data-k="chg_ytd">Jan–Aug 2026 vs 2025</button></th><th><button data-k="one_share">Single-family share (%)</button></th><th><button data-k="pop2025">Population 2025</button></th><th><button data-k="pop_chg">Population since 2020</button></th></tr></thead><tbody></tbody></table>
     </div>
   </section>
 
-  <section id="lx-loc-trend" data-cat="local" aria-label="Housing permits over time">
-    <div class="vt-head"><div><h2>Permits month by month, 2020 to August 2026</h2><p class="lx-note">Rolling 12-month total of new housing units permitted, so seasonal swings cancel out. Monthly figures are as first reported; the table has the revised full-year totals.</p></div><div class="lx-seg vt" data-vt="pt" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Chart</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
-    <div class="lx-controls"><select id="sel-pt" aria-label="Area"></select><span class="lx-legend" id="lg-pt"></span></div>
-    <div class="lx-card" data-view="pt:chart"><p class="g-line" id="g-pt"></p><div class="lx-chart dash-skeleton" id="ch-pt" data-source="local_monthly"></div></div>
-    <div class="lx-tablebox" data-view="pt:table" hidden><table id="tbl-pt" data-source="local_states"><thead><tr><th>Period</th><th>Units permitted</th><th>Change on a year earlier</th></tr></thead><tbody></tbody></table></div>
-  </section>
-
+  
   <section id="lx-loc-cty" data-cat="local" aria-label="Local growth by county and metro">
     <div class="vt-head"><div><h2>Local growth score by county and metro</h2><p class="lx-note">The growth score (0–100) averages four percentiles against every US county with 10,000+ people: permits per 1,000 residents in 2025, the last 12 months of permits against the 2022–2024 average, population change since 2020, and the change in small employers 2012–2022 in the county's metro (SBA, 106 largest metros). 50 is a typical county; a metro's score is its counties' average weighted by population. Your counties are highlighted at the top. Click a header to sort; shows the first 150 rows.</p></div><div class="lx-seg" role="group" aria-label="Level" id="seg-lc"><button type="button" data-v="c" aria-pressed="true">Counties</button><button type="button" data-v="m" aria-pressed="false">Metros</button></div></div>
     <div class="lx-controls"><input type="search" id="lc-q" placeholder="Search county, metro or state, e.g. Erie, Rochester, OH" aria-label="Search counties and metros"></div>
@@ -934,131 +837,6 @@ html, body { margin: 0; background: #F4F6F3; }
 <script>
 (function () {
 const NKC = () => ['var(--nk-c0)', 'var(--nk-c1)', 'var(--nk-c2)', 'var(--nk-c3)', 'var(--nk-c4)'];
-dash.calc('kpi', {
-  title: 'National headline figures',
-  description: 'National values for 2026 Q2 and the same quarter a year earlier.',
-  inputs: ['metrics'],
-  fn: (metrics) => {
-    const nat = metrics.filter((r) => r.type === 'National');
-    const latest = nat.find((r) => r.quarter === '2026 Q2');
-    const prior = nat.find((r) => r.quarter === '2025 Q2');
-    return [['listings', 'Active listings analyzed'], ['ask', 'Median asking price'], ['rev', 'Median revenue'], ['cf', 'Median cash flow'], ['cfx', 'Avg cash flow multiple']]
-      .map(([metric, label]) => ({ metric, label, latest: latest[metric], prior: prior[metric], change_pct: (latest[metric] / prior[metric] - 1) * 100 }));
-  }
-});
-dash.calc('latest', {
-  title: 'Markets in 2026 Q2',
-  description: 'Each market in 2026 Q2 with its change from 2025 Q2.',
-  inputs: ['metrics'],
-  fn: (metrics) => {
-    const prev = new Map(metrics.filter((r) => r.quarter === '2025 Q2').map((r) => [r.market, r]));
-    return metrics.filter((r) => r.quarter === '2026 Q2').map((r) => {
-      const p = prev.get(r.market);
-      return { market: r.market, region: r.region, type: r.type, listings: r.listings, listings_yoy: p ? (r.listings / p.listings - 1) * 100 : null, ask: r.ask, ask_yoy: p ? (r.ask / p.ask - 1) * 100 : null, rev: r.rev, cf: r.cf, cfx: r.cfx };
-    });
-  }
-});
-dash.calc('cover', {
-  title: 'Data coverage',
-  description: 'Status of every market and quarter from 2021 Q1 to 2026 Q2.',
-  inputs: ['metrics'],
-  fn: (metrics) => {
-    const qs = [];
-    for (let y = 2021; y <= 2026; y++) for (let q = 1; q <= 4; q++) { if (y === 2026 && q > 2) break; qs.push(y + ' Q' + q); }
-    const have = new Map(metrics.map((r) => [r.market + '|' + r.quarter, r]));
-    const short = new Map(metrics.map((r) => [r.market, r.short]));
-    const out = [];
-    for (const market of short.keys()) for (const quarter of qs) {
-      const r = have.get(market + '|' + quarter);
-      const fields = r ? ['listings', 'ask', 'rev', 'revx', 'cf', 'cfx'].filter((k) => r[k] != null).length : 0;
-      const status = fields === 0 ? 'missing' : fields < 6 ? 'partial' : r.data_source === 'PDF table' ? 'complete' : 'recovered';
-      out.push({ market, short: short.get(market), quarter, fields, status });
-    }
-    return out;
-  }
-});
-dash.calc('cover_summary', {
-  title: 'Coverage totals',
-  description: 'Count of market-quarters by status.',
-  inputs: ['cover'],
-  fn: (cover) => ['complete', 'recovered', 'partial', 'missing'].map((status) => ({ status, count: cover.filter((r) => r.status === status).length }))
-});
-dash.calc('sector_cov', {
-  title: 'Sector data by quarter',
-  description: 'Markets that have sector mix data in each quarter.',
-  inputs: ['metrics', 'sectors'],
-  fn: (metrics, sectors) => {
-    const total = new Set(metrics.map((r) => r.market)).size;
-    const qs = [];
-    for (let y = 2021; y <= 2026; y++) for (let q = 1; q <= 4; q++) { if (y === 2026 && q > 2) break; qs.push(y + ' Q' + q); }
-    return qs.map((quarter) => ({ quarter, markets: new Set(sectors.filter((r) => r.quarter === quarter).map((r) => r.market)).size, total }));
-  }
-});
-
-dash.calc('closed_kpi', {
-  title: 'National closed deals',
-  description: 'National closed-deal values for 2026 Q2 and the same quarter a year earlier.',
-  inputs: ['closed'],
-  fn: (closed) => {
-    const nat = closed.filter((r) => r.type === 'National');
-    const latest = nat.find((r) => r.quarter === '2026 Q2');
-    const prior = nat.find((r) => r.quarter === '2025 Q2');
-    return ['sold', 'sale', 'ask', 's2a', 'dom'].map((metric) => ({ metric, latest: latest[metric], prior: prior[metric], change_pct: (latest[metric] / prior[metric] - 1) * 100 }));
-  }
-});
-dash.calc('closed_latest', {
-  title: 'Closed deals by market, 2026 Q2',
-  description: 'Each market in 2026 Q2 with its change from 2025 Q2. Empty where the quarter has no sold row.',
-  inputs: ['closed'],
-  fn: (closed) => {
-    const at = (q) => new Map(closed.filter((r) => r.quarter === q).map((r) => [r.market, r]));
-    const now = at('2026 Q2'), prev = at('2025 Q2');
-    const markets = new Map(closed.map((r) => [r.market, r]));
-    return [...markets.values()].map((m) => {
-      const a = now.get(m.market), b = prev.get(m.market);
-      return { market: m.market, region: m.region, type: m.type, sold: a ? a.sold : null, sold_yoy: a && b ? (a.sold / b.sold - 1) * 100 : null, sale: a ? a.sale : null, sale_yoy: a && b ? (a.sale / b.sale - 1) * 100 : null, s2a: a ? a.s2a : null, dom: a ? a.dom : null };
-    });
-  }
-});
-dash.calc('closed_cover', {
-  title: 'Closed deals coverage',
-  description: 'Status of every market and quarter in the closed-deals table.',
-  inputs: ['closed'],
-  fn: (closed) => {
-    const qs = [];
-    for (let y = 2021; y <= 2026; y++) for (let q = 1; q <= 4; q++) { if (y === 2026 && q > 2) break; qs.push(y + ' Q' + q); }
-    const have = new Map(closed.map((r) => [r.market + '|' + r.quarter, r]));
-    const short = new Map(closed.map((r) => [r.market, r.short]));
-    const out = [];
-    for (const market of short.keys()) for (const quarter of qs) {
-      const r = have.get(market + '|' + quarter);
-      const status = !r ? 'missing' : r.data_source === 'Tableau table' ? 'complete' : 'recovered';
-      out.push({ market, short: short.get(market), quarter, status });
-    }
-    return out;
-  }
-});
-dash.calc('closed_cover_summary', {
-  title: 'Closed coverage totals',
-  description: 'Count of market-quarters by status.',
-  inputs: ['closed_cover'],
-  fn: (cover) => ['complete', 'recovered', 'missing'].map((status) => ({ status, count: cover.filter((r) => r.status === status).length }))
-});
-
-dash.calc('sba_kpi', {
-  title: 'National SBA acquisition figures',
-  description: 'Last four quarters of SBA 7(a) loans against the four before, national.',
-  inputs: ['sba_quarterly'],
-  fn: (sba_quarterly) => {
-    const nat = sba_quarterly.filter((r) => r.type === 'National').sort((a, b) => a.quarter.localeCompare(b.quarter));
-    const sum = (rows, k) => rows.reduce((t, r) => t + Number(r[k]), 0);
-    const now = nat.slice(-4), prev = nat.slice(-8, -4);
-    const v = (rows) => ({ acq_loans: sum(rows, 'acq_loans'), acq_amount: sum(rows, 'acq_amount'), acq_avg: sum(rows, 'acq_amount') / sum(rows, 'acq_loans'),
-      acq_share: sum(rows, 'acq_loans') / sum(rows, 'loans') * 100, acq_target: sum(rows, 'acq_target') });
-    const a = v(now), b = v(prev);
-    return Object.keys(a).map((metric) => ({ metric, period: now[0].quarter + ' to ' + now[3].quarter, latest: a[metric], prior: b[metric], change_pct: (a[metric] / b[metric] - 1) * 100 }));
-  }
-});
 dash.calc('sba_markets', {
   title: 'SBA acquisitions vs BizBuySell sales',
   description: 'Per market, SBA acquisition loans and BizBuySell sales over the same last four quarters.',
@@ -1083,11 +861,28 @@ dash.calc('sba_markets', {
       sale: o.sale_n ? o.sale_sum / o.sale_n : null }));
   }
 });
+dash.calc('sector_trend', {
+  title: 'Industry cash-flow multiples over time',
+  description: 'Average cash-flow multiple per subsector for FY2019, FY2022 and FY2025, with sales in 2025 and the number of years the subsector appears.',
+  inputs: ['sector_annual'],
+  fn: (rows) => {
+    const by = new Map();
+    rows.slice().sort((a, b) => a.fy - b.fy).forEach((r) => {
+      const s = by.get(r.subsector) || { subsector: r.subsector, years: 0 };
+      s.sector = r.sector; s.years += 1; s[r.fy] = r; by.set(r.subsector, s);
+    });
+    return [...by.values()].map((s) => {
+      const c = (y) => (s[y] && s[y].cfx != null ? s[y].cfx : null);
+      return { subsector: s.subsector, sector: s.sector, cfx_2019: c(2019), cfx_2022: c(2022), cfx_2025: c(2025),
+        cfx_chg: c(2019) && c(2025) != null ? (c(2025) / c(2019) - 1) * 100 : null, sold_2025: s[2025] ? s[2025].sold : null, years: s.years };
+    });
+  }
+});
 
 (() => {
-  // Chart / Table switch for each section; the choice lives in the page params
-  const VIEWS = ['ex', 'cex', 'hs', 'cm', 'ind', 'pm', 'pt', 'sb'];
-  const viewOf = (k) => (dash.params()['v_' + k] === 'table' ? 'table' : 'chart');
+  // Sub-tabs and view switches live in the page params, so highlight links and table clicks can set them
+  const VIEWS = ['ex', 'sx', 'fx', 'sw', 'ind', 'pm', 'sb'];
+  const viewOf = (k) => { const v = dash.params()['v_' + k] || 'chart'; return document.querySelector('[data-view="' + k + ':' + v + '"]') ? v : 'chart'; };
   const CATS = ['listings', 'sold', 'financing', 'industries', 'local'];
   const catOf = () => (CATS.includes(dash.params().cat) ? dash.params().cat : 'listings');
   function applyViews() {
@@ -1122,30 +917,13 @@ dash.calc('sba_markets', {
     usdS: (n) => (n == null ? '—' : '$' + d3.format('.3~s')(n).replace('G', 'B')),
     pct: (v) => (v == null ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%')
   };
-  const MET = {
-    ask: { label: 'Median asking price', fmt: fmt.usd, tick: fmt.usdK },
-    listings: { label: 'Active listings analyzed', fmt: fmt.int, tick: d3.format('.3~s'), solo: true },
-    rev: { label: 'Median revenue', fmt: fmt.usd, tick: fmt.usdK },
-    cf: { label: 'Median cash flow', fmt: fmt.usd, tick: fmt.usdK },
-    revx: { label: 'Average revenue multiple', fmt: fmt.x2, tick: fmt.x2 },
-    cfx: { label: 'Average cash flow multiple', fmt: fmt.x2, tick: fmt.x2 }
-  };
-  const CMET = {
-    sale: { label: 'Median sale price', fmt: fmt.usd, tick: fmt.usdK },
-    ask: { label: 'Median asking price of sold listings', fmt: fmt.usd, tick: fmt.usdK },
-    sold: { label: 'Businesses sold', fmt: fmt.int, tick: d3.format('.3~s'), solo: true },
-    s2a: { label: 'Average sale to asking price', fmt: fmt.x2, tick: fmt.x2 },
-    dom: { label: 'Median days on market', fmt: fmt.int, tick: fmt.int },
-    rev: { label: 'Median revenue of sold businesses', fmt: fmt.usd, tick: fmt.usdK },
-    revx: { label: 'Average revenue multiple (sold)', fmt: fmt.x2, tick: fmt.x2 },
-    cf: { label: 'Median cash flow of sold businesses', fmt: fmt.usd, tick: fmt.usdK },
-    cfx: { label: 'Average cash flow multiple (sold)', fmt: fmt.x2, tick: fmt.x2 }
-  };
   const SECT = ['Service', 'Retail - Other', 'Retail - Restaurant', 'Manufacturing', 'Other'];
   const $ = (s) => document.querySelector(s);
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-  const state = { market: NAT, metric: 'ask', sector: 'Service', sortKey: 'listings', sortDir: -1, q: '', built: false, cmarket: NAT, cmetric: 'sale', csortKey: 'sold', csortDir: -1, cq: '', cbuilt: false, smarket: NAT, smetric: 'acq', ssortKey: 'acq_loans', ssortDir: -1, sq: '', sbuilt: false, mapMetric: 'acq_per_10k_estab', ctySort: 'acq_loans', ctyDir: -1, ctyQ: '' };
+  const state = { market: NAT, lq: null, lcq: '', built: false, sector: 'Service', smarket: NAT, sq: '', sbuilt: false, wbuilt: false, mapMetric: 'acq_per_10k_estab', ctySort: 'acq_loans', ctyDir: -1, ctyQ: '' };
   const MUTED = 'var(--cds-chart-muted)';
+  const HOME = 'Buffalo-Niagara Falls, NY';
+  const SRC = { bbs: 'https://www.bizbuysell.com/insight-report/', sba: 'https://data.sba.gov/dataset/7-a-504-foia', bps: 'https://www.census.gov/construction/bps/', adv: 'https://advocacy.sba.gov/' };
 
   function gate(host, ids) {
     const st = ids.map((i) => dash.data(i).status);
@@ -1159,12 +937,38 @@ dash.calc('sba_markets', {
     return false;
   }
 
+  // drop leading and trailing periods where no series has a value; fmt and xlab still get the original index
+  function trimO(o) {
+    const n0 = o.labels.length, has = (i) => o.series.some((s) => s.values[i] != null);
+    let a = 0, b = n0 - 1; while (a < b && !has(a)) a++; while (b > a && !has(b)) b--;
+    if (!a && b === n0 - 1) return o;
+    const sh = (f) => f && ((v, i) => f(v, i + a));
+    return { ...o, labels: o.labels.slice(a, b + 1), series: o.series.map((s) => ({ ...s, values: s.values.slice(a, b + 1), fmt: sh(s.fmt) })), fmt: sh(o.fmt), xlab: o.xlab && ((l, i) => o.xlab(l, i + a)),
+      band: o.band && o.band.map((i) => i - a).filter((i) => i >= 0 && i <= b - a), mark: o.mark == null || o.mark < a || o.mark > b ? null : o.mark - a };
+  }
+  // x axis: a small tick for every labelled period, text on every k-th one counting back from the latest, so labels never crowd
+  function xAxis(g, labs, x, H, x0, x1) {
+    const c = labs.map((t, i) => [i, t]).filter((d) => d[1] != null);
+    if (!c.length) return;
+    const pr = g.append('text').attr('class', 'lx-tick'), tw = d3.max(c, (d) => pr.text(d[1]).node().getComputedTextLength()); pr.remove();
+    const gap = c.length > 1 ? (x(c[c.length - 1][0]) - x(c[0][0])) / (c.length - 1) : Infinity;
+    const k = [1, 2, 3, 4, 5, 10, 20].find((v) => v * gap >= tw + 16) || 40;
+    c.forEach(([i, t], j) => {
+      const px = x(i);
+      g.append('line').attr('x1', px).attr('x2', px).attr('y1', H - 26).attr('y2', H - 22).style('stroke', 'var(--cds-chart-muted)');
+      if ((c.length - 1 - j) % k) return;
+      g.append('text').attr('class', 'lx-tick').attr('x', px).attr('y', H - 8).attr('text-anchor', px - tw / 2 < x0 - 6 ? 'start' : px + tw / 2 > x1 + 6 ? 'end' : 'middle').text(t);
+    });
+  }
+  // o: labels, series [{name, color, values, dash, fmt}], tick, fmt, zero, height, aria, xl (label -> axis text), mark (index of the picked period)
   function lineChart(host, o) {
     host.replaceChildren();
+    o = trimO(o);
     const W = Math.max(280, host.clientWidth), H = o.height || 240, n = o.labels.length;
     const all = o.series.flatMap((s) => s.values).filter((v) => v != null);
+    if (!all.length) { host.style.position = 'relative'; host.appendChild(el('div', 'lx-fail', 'No published values for this location')); return; }
     let lo = o.zero ? 0 : d3.min(all), hi = d3.max(all);
-    const pad = (hi - lo) * 0.12 || 1;
+    const pad = (hi - lo) * 0.12 || Math.abs(hi) * 0.1 || 1;
     if (!o.zero) lo = Math.max(0, lo - pad);
     hi += pad;
     const y = d3.scaleLinear().domain([lo, hi]).range([H - 26, 10]).nice(5);
@@ -1176,26 +980,25 @@ dash.calc('sba_markets', {
     probe.remove();
     ml = Math.ceil(ml) + 10;
     const mr = 12;
-    const x = d3.scaleLinear().domain([0, n - 1]).range([ml, W - mr]);
-    const step = (W - mr - ml) / (n - 1);
-    if (o.showBand && o.band && o.band.length) {
-      const i0 = d3.min(o.band), i1 = d3.max(o.band);
-      svg.append('rect').attr('x', Math.max(ml, x(i0) - step / 2)).attr('width', x(i1) - x(i0) + step).attr('y', 10).attr('height', H - 36).style('fill', 'var(--color-warn)').attr('opacity', 0.14);
-    }
+    const x = d3.scaleLinear().domain([0, Math.max(1, n - 1)]).range([ml, W - mr]);
     const g = svg.append('g');
     ticks.forEach((t) => {
       g.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', y(t)).attr('y2', y(t)).style('stroke', 'var(--cds-chart-grid)').attr('stroke-width', 1);
       g.append('text').attr('class', 'lx-tick').attr('x', ml - 6).attr('y', y(t)).attr('text-anchor', 'end').attr('dominant-baseline', 'middle').text(o.tick(t));
     });
-    o.labels.forEach((l, i) => {
-      const xt = o.xl ? o.xl(l) : l.endsWith('Q1') ? l.slice(0, 4) : null;
-      if (xt) g.append('text').attr('class', 'lx-tick').attr('x', x(i)).attr('y', H - 8).attr('text-anchor', i === 0 ? 'start' : 'middle').text(xt);
-    });
+    if (o.mark != null && o.mark >= 0 && o.mark < n - 1) g.append('line').attr('x1', x(o.mark)).attr('x2', x(o.mark)).attr('y1', 10).attr('y2', H - 26).style('stroke', 'var(--nk-gold)').attr('stroke-width', 1.5).attr('stroke-dasharray', '4 3');
+    xAxis(g, o.labels.map((l) => (o.xl ? o.xl(l) : l.endsWith('Q1') ? l.slice(0, 4) : null)), x, H, ml, W - mr);
     const line = d3.line().defined((v) => v != null).x((v, i) => x(i)).y((v) => y(v)).curve(d3.curveLinear);
+    // a dashed series (an estimate) joins its points across gaps
+    const dline = (vals) => d3.line().x((d) => x(d[0])).y((d) => y(d[1]))(vals.map((v, i) => [i, v]).filter((d) => d[1] != null));
     o.series.forEach((s) => {
-      g.append('path').attr('d', line(s.values)).attr('fill', 'none').style('stroke', s.color).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
-      const last = s.values.length - 1;
-      if (s.values[last] != null) g.append('circle').attr('cx', x(last)).attr('cy', y(s.values[last])).attr('r', 3.5).style('fill', s.color);
+      g.append('path').attr('d', s.dash ? dline(s.values) : line(s.values)).attr('fill', 'none').style('stroke', s.color).attr('stroke-width', 2).attr('stroke-dasharray', s.dash ? '5 4' : null).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
+      // dots: the latest value, values with no neighbour (otherwise invisible), and every value on short series
+      s.values.forEach((v, i) => {
+        if (v == null || s.dash) return;
+        const lone = (i === 0 || s.values[i - 1] == null) && (i === n - 1 || s.values[i + 1] == null);
+        if (lone || n <= 12 || i === n - 1) g.append('circle').attr('cx', x(i)).attr('cy', y(v)).attr('r', i === n - 1 ? 3.5 : 2.75).style('fill', s.color);
+      });
     });
     const rule = g.append('line').attr('y1', 10).attr('y2', H - 26).style('stroke', 'var(--cds-chart-reference)').attr('stroke-width', 1).attr('visibility', 'hidden');
     const dots = o.series.map((s) => g.append('circle').attr('r', 4).style('fill', s.color).attr('visibility', 'hidden'));
@@ -1203,14 +1006,15 @@ dash.calc('sba_markets', {
     svg.append('rect').attr('x', ml).attr('y', 0).attr('width', W - ml - mr).attr('height', H - 20).attr('fill', 'transparent')
       .on('mousemove', (ev) => {
         const r = host.getBoundingClientRect();
-        const px = (ev.clientX - r.left) * (W / r.width);
-        const i = Math.max(0, Math.min(n - 1, Math.round(x.invert(px))));
+        const i = Math.max(0, Math.min(n - 1, Math.round(x.invert((ev.clientX - r.left) * (W / r.width)))));
         rule.attr('x1', x(i)).attr('x2', x(i)).attr('visibility', 'visible');
-        tip.replaceChildren(el('div', 't', o.labels[i]));
+        tip.replaceChildren(el('div', 't', String(o.labels[i])));
         o.series.forEach((s, k) => {
           const v = s.values[i];
           dots[k].attr('cx', x(i)).attr('cy', v == null ? -10 : y(v)).attr('visibility', v == null ? 'hidden' : 'visible');
-          const row = el('div', 'r'); const sw = el('i'); sw.style.background = s.color; row.append(sw, el('span', null, s.name), el('b', null, v == null ? '—' : (s.fmt || o.fmt)(v)));
+          const sib = o.series.find((z) => z !== s && (s.dash ? s.name.startsWith(z.name) : z.dash && z.name.startsWith(s.name)));
+          if (s.dash ? v == null || (sib && sib.values[i] != null) : v == null && sib && sib.values[i] != null) return;
+          const row = el('div', 'r'); const sw = el('i'); sw.style.background = s.color; row.append(sw, el('span', null, s.name), el('b', null, v == null ? 'not published' : (s.fmt || o.fmt)(v, i)));
           tip.appendChild(row);
         });
         tip.hidden = false;
@@ -1250,33 +1054,6 @@ dash.calc('sba_markets', {
     host.append(a, b);
     if (g.since != null) { const c = el('span'); c.append(s(g.since), ' since ' + g.first); host.append(c); }
   }
-  function drawTrend(rows, labels) {
-    const C = NKC(), mk = state.market, isNat = mk === NAT;
-    const short = isNat ? 'National' : ((rows.find((r) => r.market === mk) || {}).short || mk);
-    const ser = (m, k) => { const s = seriesFor(rows, m, k); return labels.map((q) => (s.has(q) ? s.get(q) : null)); };
-    const two = (k, solo) => { const out = [{ name: short, color: C[0], values: ser(mk, k) }]; if (!isNat && !solo) out.push({ name: 'National', color: MUTED, values: ser(NAT, k) }); return out; };
-    legend($('#lg-ex'), isNat ? [] : [[short, C[0]], ['National', MUTED]]);
-    if (gate($('#ch-ask'), ['metrics'])) {
-      const s = two('ask'); lineChart($('#ch-ask'), { labels, aria: short + ' median asking price by quarter', tick: fmt.usdK, fmt: fmt.usd, series: s });
-      gLine($('#g-ask'), growth(s[0].values, labels, prevQ), fmt.usd);
-    }
-    if (gate($('#ch-list'), ['metrics'])) {
-      const s = two('listings', true); lineChart($('#ch-list'), { labels, zero: true, aria: short + ' active listings by quarter', tick: MET.listings.tick, fmt: fmt.int, series: s });
-      gLine($('#g-listings'), growth(s[0].values, labels, prevQ), fmt.int);
-    }
-    if (gate($('#ch-fin'), ['metrics'])) {
-      const s = [{ name: 'Median revenue', color: C[1], values: ser(mk, 'rev') }, { name: 'Median cash flow', color: C[0], values: ser(mk, 'cf') }];
-      lineChart($('#ch-fin'), { labels, zero: true, aria: short + ' median revenue and cash flow by quarter', tick: fmt.usdK, fmt: fmt.usd, series: s });
-      legend($('#lg-fin'), [['Median revenue', C[1]], ['Median cash flow (growth shown)', C[0]]]);
-      gLine($('#g-cf'), growth(s[1].values, labels, prevQ), fmt.usd);
-    }
-    if (gate($('#ch-mult'), ['metrics'])) {
-      const s = two('cfx'); lineChart($('#ch-mult'), { labels, aria: short + ' asking price to cash flow by quarter', tick: fmt.x2, fmt: fmt.x2, series: s });
-      legend($('#lg-mult'), []);
-      gLine($('#g-cfx'), growth(s[0].values, labels, prevQ), fmt.x2);
-    }
-    drawExTable(rows, labels, mk);
-  }
   function yoyCell(m, q, k) {
     const a = m.get(q), b = m.get(prevQ(q));
     const v = a && b && a[k] != null && b[k] ? (a[k] / b[k] - 1) * 100 : null;
@@ -1286,75 +1063,261 @@ dash.calc('sba_markets', {
   function drawExTable(rows, labels, mk) {
     const body = $('#tbl-ex tbody'); if (!body) return;
     const m = new Map(rows.filter((r) => r.market === mk).map((r) => [r.quarter, r]));
-    body.replaceChildren(...labels.slice().reverse().map((q) => {
+    body.replaceChildren(...labels.filter((q) => m.has(q)).reverse().map((q) => {
       const r = m.get(q) || {}, tr = el('tr'); tr.dataset.key = q;
-      tr.append(el('td', null, q), nCell(r.listings, fmt.int), yoyCell(m, q, 'listings'), nCell(r.ask, fmt.usd), yoyCell(m, q, 'ask'), nCell(r.rev, fmt.usd), nCell(r.cf, fmt.usd), yoyCell(m, q, 'cf'), nCell(r.cfx, fmt.x2), nCell(r.revx, fmt.x2));
-      return tr;
-    }));
-  }
-  function drawCexTable(rows, labels, mk) {
-    const body = $('#tbl-cex tbody'); if (!body) return;
-    const m = new Map(rows.filter((r) => r.market === mk).map((r) => [r.quarter, r]));
-    body.replaceChildren(...labels.slice().reverse().map((q) => {
-      const r = m.get(q) || {}, tr = el('tr'); tr.dataset.key = q;
-      tr.append(el('td', null, q), nCell(r.sold, fmt.int), yoyCell(m, q, 'sold'), nCell(r.sale, fmt.usd), yoyCell(m, q, 'sale'), nCell(r.ask, fmt.usd), nCell(r.s2a, fmt.x2), nCell(r.rev, fmt.usd), nCell(r.cf, fmt.usd), nCell(r.cfx, fmt.x2), nCell(r.dom, fmt.int));
+      tr.append(el('td', r.est ? 'muted' : null, q + (r.est ? ' (estimated)' : '')), nCell(r.listings, fmt.int), yoyCell(m, q, 'listings'), nCell(r.ask, fmt.usd), yoyCell(m, q, 'ask'), nCell(r.rev, fmt.usd), nCell(r.cf, fmt.usd), yoyCell(m, q, 'cf'), nCell(r.cfx, fmt.x2), nCell(r.revx, fmt.x2));
       return tr;
     }));
   }
 
-  function drawExplorer() { /* merged into drawTrend */ }
-  function drawExplorerOld(rows, labels, band) {
-    const host = $('#ch-ex'), met = MET[state.metric], C = NKC();
-    const short = (rows.find((r) => r.market === state.market) || {}).short || state.market;
-    $('#ex-title').textContent = (state.market === NAT ? 'National' : short) + ': ' + met.label.toLowerCase();
-    if (!gate(host, ['metrics'])) return;
-    const a = seriesFor(rows, state.market, state.metric);
-    const series = [{ name: state.market === NAT ? 'National' : short, color: C[0], values: labels.map((q) => (a.has(q) ? a.get(q) : null)) }];
-    if (state.market !== NAT && !met.solo) {
-      const b = seriesFor(rows, NAT, state.metric);
-      series.push({ name: 'National', color: MUTED, values: labels.map((q) => (b.has(q) ? b.get(q) : null)) });
+  const LT = {};
+  const pctTd = (v) => el('td', v == null ? 'muted' : v >= 0 ? 'g-up' : 'g-down', fmt.pct(v));
+  // sortable table: cols [{k, s: text column, f: number format or 'p' for a coloured % change}]
+  function lTable(id, rows, cols, def, draw, o = {}) {
+    const tb = $('#' + id), t = LT[id] || (LT[id] = { k: def[0], d: def[1] });
+    if (!tb.dataset.b) {
+      tb.dataset.b = '1';
+      tb.querySelectorAll('th button').forEach((b) => { if ((cols.find((x) => x.k === b.dataset.k) || {}).s) b.parentNode.className = 'tl'; });
+      tb.querySelectorAll('th button').forEach((b) => b.addEventListener('click', () => {
+        const c = cols.find((x) => x.k === b.dataset.k);
+        if (t.k === b.dataset.k) t.d *= -1; else { t.k = b.dataset.k; t.d = c && c.s ? 1 : -1; }
+        draw();
+      }));
+      if (o.click) tb.addEventListener('click', (e) => { const tr = e.target.closest('tbody tr'); if (tr) o.click(tr.dataset.key); });
     }
-    legend($('#lg-ex'), series.map((s) => [s.name, s.color]));
-    lineChart(host, { labels, band, height: 280, aria: met.label + ' for ' + state.market, tick: met.tick, fmt: met.fmt, series });
-  }
-
-  function drawKpis() {
-    const d = dash.data('kpi');
-    const f = { listings: fmt.int, ask: fmt.usd, rev: fmt.usd, cf: fmt.usd, cfx: fmt.x2 };
-    const targets = [['k-', 'latest'], ['c-', 'change_pct']];
-    if (d.status !== 'ok') return;
-    d.data.forEach((r) => {
-      $('#k-' + r.metric).textContent = f[r.metric](r.latest);
-      $('#c-' + r.metric).textContent = fmt.pct(r.change_pct) + ' vs 2025 Q2';
-    });
-    const g = (m) => d.data.find((r) => r.metric === m);
-    $('#t-list').textContent = fmt.int(g('listings').latest);
-    $('#t-listchg').textContent = fmt.pct(g('listings').change_pct);
-    $('#t-ask').textContent = fmt.usd(g('ask').latest);
-    $('#t-askchg').textContent = fmt.pct(g('ask').change_pct);
-  }
-
-  function drawTable() {
-    const d = dash.data('latest');
-    const body = $('#tbl-markets tbody');
-    if (d.status !== 'ok') { body.replaceChildren(); return; }
-    const q = state.q.trim().toLowerCase();
-    const k = state.sortKey, dir = state.sortDir;
-    const rows = d.data.filter((r) => !q || (r.market + ' ' + r.region).toLowerCase().includes(q))
-      .sort((a, b) => {
-        const x = a[k], y = b[k];
-        if (x == null) return 1; if (y == null) return -1;
-        return (typeof x === 'string' ? x.localeCompare(y) : x - y) * dir;
-      });
-    body.replaceChildren(...rows.map((r) => {
-      const tr = el('tr', r.type === 'National' ? 'nat' : ''); tr.dataset.key = r.market;
-      tr.append(el('td', null, r.market), el('td', 'muted', r.region), el('td', null, fmt.int(r.listings)), el('td', 'muted', fmt.pct(r.listings_yoy)), el('td', null, fmt.usd(r.ask)), el('td', 'muted', fmt.pct(r.ask_yoy)), el('td', null, fmt.usd(r.rev)), el('td', null, fmt.usd(r.cf)), el('td', null, fmt.x2(r.cfx)));
+    let rs = sortRows(rows.slice(), t.k, t.d);
+    if (o.pin) rs = rs.filter((r) => o.pin.has(r[o.key])).concat(rs.filter((r) => !o.pin.has(r[o.key])));
+    if (o.limit) rs = rs.slice(0, o.limit);
+    tb.querySelector('tbody').replaceChildren(...rs.map((r) => {
+      const tr = el('tr'); tr.dataset.key = r[o.key];
+      if ((o.pin && o.pin.has(r[o.key])) || (o.sel != null && o.sel === r[o.key])) tr.className = 'sel';
+      cols.forEach((c) => { const v = r[c.k]; tr.append(c.s ? el('td', c.m ? 'tl muted' : 'tl', v || '—') : c.f === 'p' ? pctTd(v) : nCell(v, c.f)); });
       return tr;
     }));
-    document.querySelectorAll('#tbl-markets th').forEach((th) => {
-      const on = th.dataset.field === k;
-      th.setAttribute('aria-sort', on ? (dir > 0 ? 'ascending' : 'descending') : 'none');
+    tb.querySelectorAll('th button').forEach((b) => b.parentNode.setAttribute('aria-sort', b.dataset.k === t.k ? (t.d > 0 ? 'ascending' : 'descending') : 'none'));
+  }
+  const one = (v) => v.toFixed(1), r0 = (v) => v.toFixed(0);
+  const kpi = (label, val, chg) => { const c = el('div', 'lx-card lx-kpi'); c.append(el('span', 'lx-label', label), el('span', 'lx-val', val), el('span', 'lx-chg', chg)); return c; };
+  const MN = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' '), mLab = (m) => MN[+m.slice(5) - 1] + ' ' + m.slice(0, 4);
+  const chg = (a, b, k) => (a && b && a[k] != null && b[k] ? (a[k] / b[k] - 1) * 100 : null);
+  // open a view, redraw it and scroll to it (highlight cards and table rows use this)
+  function jump(p, id, draw) {
+    if (draw) draw();
+    dash.setParams(p);
+    setTimeout(() => { const n = document.getElementById(id); if (n && n.scrollIntoView) n.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 80);
+  }
+  // highlight cards: kicker, figure, one sentence, a link to the chart behind it and to the source
+  function hl(sel, cards) {
+    const host = $(sel); if (!host) return;
+    host.classList.remove('dash-skeleton');
+    host.replaceChildren(...cards.filter(Boolean).map((o) => {
+      const c = el('div', 'lx-card hl-card'), f = el('div', 'hl-f');
+      const b = el('button', 'hl-go', (o.go || 'See the chart') + ' →'); b.type = 'button'; b.addEventListener('click', o.on);
+      const a = el('a', 'hl-src', 'Source ↗'); a.href = o.src; a.target = '_blank'; a.rel = 'noopener';
+      f.append(b, a); c.append(el('span', 'hl-k', o.k), el('span', 'hl-v', o.v), el('p', 'hl-t', o.t), f);
+      return c;
+    }));
+  }
+  // location picker: National first, then markets grouped by region
+  function locOpts(sel, rows, cur) {
+    const m = new Map(rows.map((r) => [r.market, r.region || 'Other'])), kids = [];
+    if (m.has(NAT)) kids.push(new Option('National', NAT));
+    d3.groups([...m].filter((d) => d[0] !== NAT), (d) => d[1]).sort((a, b) => a[0].localeCompare(b[0])).forEach(([reg, ms]) => {
+      const g = document.createElement('optgroup'); g.label = reg;
+      ms.map((d) => d[0]).sort().forEach((k) => g.appendChild(new Option(k, k)));
+      kids.push(g);
     });
+    sel.replaceChildren(...kids); sel.value = cur;
+  }
+  function perOpts(sel, list, cur) {
+    if (sel.dataset.l !== list.join()) { sel.dataset.l = list.join(); sel.replaceChildren(...list.slice().reverse().map((p) => new Option(p, p))); }
+    sel.value = cur;
+  }
+  function sortRows(rows, k, dir) {
+    return rows.sort((a, b) => {
+      const x = a[k], y = b[k];
+      if (x == null) return 1; if (y == null) return -1;
+      return (typeof x === 'string' ? x.localeCompare(y) : x - y) * dir;
+    });
+  }
+  const dash0 = (v, f) => (v == null ? '—' : f(v));
+
+  // ---------- 01 Listings for sale: one location and one quarter; trend, compare markets or table ----------
+  let L = null;
+  function lData() {
+    const m = dash.data('metrics'), ah = dash.data('active_history');
+    if (m.status !== 'ok') return null;
+    const hd = ah.status === 'ok' ? ah.data : [];
+    if (L && L.md === m.data && L.hd === hd) return L;
+    const rows = m.data.concat(hd, hd.length ? natEst(m.data, hd) : []);
+    const qs = [...new Set(rows.map((r) => r.quarter))].sort(), labels = [];
+    for (let y = +qs[0].slice(0, 4); y <= +qs[qs.length - 1].slice(0, 4); y++) for (let q = 1; q <= 4; q++) { const l = y + ' Q' + q; if (l >= qs[0] && l <= qs[qs.length - 1]) labels.push(l); }
+    L = { md: m.data, hd, rows, labels, est: new Set(rows.filter((r) => r.est).map((r) => r.quarter)), at: new Map(rows.map((r) => [r.market + '|' + r.quarter, r])) };
+    return L;
+  }
+  const lAt = (mk, q) => L.at.get(mk + '|' + q);
+  function lBuild() {
+    if (state.built) return;
+    state.built = true;
+    state.lq = state.lq || L.labels[L.labels.length - 1];
+    locOpts($('#sel-market'), L.md, state.market);
+    $('#sel-market').addEventListener('change', (e) => { state.market = e.target.value; drawL(); });
+    $('#sel-lq').addEventListener('change', (e) => { state.lq = e.target.value; drawL(); });
+    $('#lcmp-q').addEventListener('input', (e) => { state.lcq = e.target.value; drawL(); });
+  }
+  function drawTrend(rows, labels, q) {
+    const C = NKC(), mk = state.market, isNat = mk === NAT, mark = labels.indexOf(q);
+    const short = isNat ? 'National' : ((rows.find((r) => r.market === mk) || {}).short || mk);
+    const ser = (m, k) => { const s = seriesFor(rows, m, k); return labels.map((x) => (s.has(x) ? s.get(x) : null)); };
+    const estQ = L.est;
+    // split a National series into published (solid) and estimated (dashed, joined to the first published quarter)
+    const split = (s) => {
+      const f = s.values.findIndex((v, i) => v != null && !estQ.has(labels[i]));
+      const e = s.values.map((v, i) => (estQ.has(labels[i]) || i === f ? v : null));
+      return e.some((v, i) => v != null && i !== f) ? [{ ...s, values: s.values.map((v, i) => (estQ.has(labels[i]) ? null : v)) }, { ...s, name: s.name + ' (estimated)', values: e, dash: true }] : [s];
+    };
+    const two = (k, solo) => { const out = isNat ? split({ name: short, color: C[0], values: ser(mk, k) }) : [{ name: short, color: C[0], values: ser(mk, k) }]; if (!isNat && !solo) out.push(...split({ name: 'National', color: MUTED, values: ser(NAT, k) })); return out; };
+    const dsh = (c) => 'repeating-linear-gradient(90deg,' + c + ' 0 4px,transparent 4px 7px)';
+    legend($('#lg-ex'), (isNat ? [] : [[short, C[0]], ['National', MUTED]]).concat(estQ.size ? [['National estimated, 2018–2020', dsh(isNat ? C[0] : MUTED)]] : [], mark < labels.length - 1 ? [['Quarter picked: ' + q, dsh('var(--nk-gold)')]] : []));
+    $('#lg-ex').querySelectorAll('span').forEach((sp) => { if (/estimated|picked/.test(sp.textContent)) Object.assign(sp.firstChild.style, { width: '1.25rem', height: '2px', borderRadius: '0', verticalAlign: '3px' }); });
+    const ch = (id, o) => { if (gate($(id), ['metrics'])) lineChart($(id), { labels, mark, ...o }); };
+    let s = two('ask'); ch('#ch-ask', { aria: short + ' median asking price by quarter', tick: fmt.usdK, fmt: fmt.usd, series: s });
+    gLine($('#g-ask'), growth(s[0].values, labels, prevQ), fmt.usd);
+    s = two('listings', true); ch('#ch-list', { zero: true, aria: short + ' active listings by quarter', tick: d3.format('.3~s'), fmt: fmt.int, series: s });
+    gLine($('#g-listings'), growth(s[0].values, labels, prevQ), fmt.int);
+    const r = { name: 'Median revenue', color: C[1], values: ser(mk, 'rev') }, c = { name: 'Median cash flow', color: C[0], values: ser(mk, 'cf') };
+    s = isNat ? split(r).concat(split(c)) : [r, c];
+    ch('#ch-fin', { zero: true, aria: short + ' median revenue and cash flow by quarter', tick: fmt.usdK, fmt: fmt.usd, series: s });
+    legend($('#lg-fin'), [['Median revenue', C[1]], ['Median cash flow (growth shown)', C[0]]]);
+    gLine($('#g-cf'), growth(s.find((x) => x.name === 'Median cash flow').values, labels, prevQ), fmt.usd);
+    s = two('cfx'); ch('#ch-mult', { aria: short + ' asking price to cash flow by quarter', tick: fmt.x2, fmt: fmt.x2, series: s });
+    gLine($('#g-cfx'), growth(s[0].values, labels, prevQ), fmt.x2);
+    drawExTable(rows, labels, mk);
+  }
+  function drawL() {
+    if (!lData()) { ['#ch-ask', '#ch-list', '#ch-fin', '#ch-mult'].forEach((s) => gate($(s), ['metrics'])); return; }
+    lBuild();
+    perOpts($('#sel-lq'), L.labels.filter((x) => L.at.has(NAT + '|' + x)), state.lq);
+    const mk = state.market, q = state.lq, r = lAt(mk, q), p = lAt(mk, prevQ(q)), nm = mk === NAT ? 'National' : mk;
+    $('#l-sub').textContent = nm + ', ' + q + (r && r.est ? ' (estimated from the 64 metros)' : '');
+    const K = [['listings', 'Active listings', fmt.int], ['ask', 'Median asking price', fmt.usd], ['rev', 'Median revenue', fmt.usd], ['cf', 'Median cash flow', fmt.usd], ['cfx', 'Asking price / cash flow', fmt.x2]];
+    $('#l-kpis').replaceChildren(...K.map(([k, lab, f]) => kpi(lab, r && r[k] != null ? f(r[k]) : '—', r ? fmt.pct(chg(r, p, k)) + ' vs ' + prevQ(q) : 'No data for this quarter')));
+    drawTrend(L.rows, L.labels, q);
+    const cq = state.lcq.trim().toLowerCase();
+    const cmp = L.rows.filter((x) => x.quarter === q && (!cq || (x.market + ' ' + (x.region || '')).toLowerCase().includes(cq))).map((x) => {
+      const y = lAt(x.market, prevQ(q));
+      return { ...x, name: x.market === NAT ? 'National' + (x.est ? ' (estimated)' : '') : x.market, region: x.region || 'National', l_yoy: chg(x, y, 'listings'), a_yoy: chg(x, y, 'ask') };
+    });
+    $('#lcmp-h').textContent = 'All markets, ' + q;
+    lTable('tbl-lcmp', cmp, [{ k: 'name', s: 1 }, { k: 'region', s: 1, m: 1 }, { k: 'listings', f: fmt.int }, { k: 'l_yoy', f: 'p' }, { k: 'ask', f: fmt.usd }, { k: 'a_yoy', f: 'p' }, { k: 'rev', f: fmt.usd }, { k: 'cf', f: fmt.usd }, { k: 'cfx', f: fmt.x2 }], ['listings', -1], drawL,
+      { key: 'market', pin: new Set([NAT]), sel: mk, click: (k) => { state.market = k; $('#sel-market').value = k; jump({ v_ex: 'chart' }, 'lx-l', drawL); } });
+    drawLH();
+  }
+  function drawLH() {
+    const pub = L.labels.filter((x) => L.at.has(NAT + '|' + x) && !L.est.has(x)), q = pub[pub.length - 1], n = lAt(NAT, q), p = lAt(NAT, prevQ(q)), f0 = lAt(NAT, pub[0]);
+    const most = n.listings >= d3.max(L.labels, (x) => (lAt(NAT, x) || {}).listings);
+    const big = L.rows.filter((r) => r.quarter === q && r.market !== NAT && r.listings >= 150 && r.cfx != null).sort((a, b) => a.cfx - b.cfx), h = lAt(HOME, q);
+    const go = (mk, v, sort) => () => { if (sort) LT['tbl-lcmp'] = sort; state.market = mk; state.lq = q; $('#sel-market').value = mk; jump({ v_ex: v }, 'lx-l', drawL); };
+    $('#hl-l-h').textContent = 'Highlights, ' + q;
+    hl('#hl-l', [
+      { k: 'Supply', v: fmt.int(n.listings), t: 'businesses listed for sale nationally, ' + fmt.pct(chg(n, p, 'listings')) + ' on a year earlier' + (most ? ', the most since at least 2018.' : '.'), on: go(NAT, 'chart'), src: SRC.bbs },
+      { k: 'Asking prices', v: fmt.usd(n.ask), t: 'national median asking price, ' + fmt.pct(chg(n, p, 'ask')) + ' on a year earlier and ' + fmt.pct(chg(n, f0, 'ask')) + ' since ' + f0.quarter + '.', on: go(NAT, 'chart'), src: SRC.bbs },
+      big.length > 1 && { k: 'Multiples', v: fmt.x2(n.cfx) + '×', t: 'asking price to cash flow nationally. Among markets with 150+ listings, ' + big[0].short + ' is lowest at ' + fmt.x2(big[0].cfx) + '× and ' + big[big.length - 1].short + ' highest at ' + fmt.x2(big[big.length - 1].cfx) + '×.', go: 'Compare markets', on: go(NAT, 'cmp', { k: 'cfx', d: 1 }), src: SRC.bbs },
+      h && { k: 'Your market', v: fmt.usd(h.ask), t: 'median asking price in Buffalo-Niagara Falls (' + fmt.int(h.listings) + ' listings), at ' + fmt.x2(h.cfx) + '× cash flow against ' + fmt.x2(n.cfx) + '× nationally.', on: go(HOME, 'chart'), src: SRC.bbs }
+    ]);
+  }
+
+  // ---------- 02 Sold deals: one location, quarterly or full year; trend, compare markets or table ----------
+  const SKEYS = ['sold', 'sale', 'ask', 's2a', 'rev', 'revx', 'cf', 'cfx', 'dom'];
+  const sx = { loc: NAT, f: 'q', per: { q: null, y: null }, cq: '', built: false };
+  let SD = null;
+  function sData() {
+    const n = dash.data('national_history'), c = dash.data('closed'), a = dash.data('closed_annual');
+    if ([n, c, a].some((d) => d.status !== 'ok')) return null;
+    if (SD && SD.n === n.data && SD.c === c.data && SD.a === a.data) return SD;
+    const at = new Map(), put = (f, r, p) => at.set(f + '|' + r.market + '|' + p, r);
+    // National quarterly comes from the long 2013–2026 history; markets from the closed-deals table (2021 on)
+    n.data.forEach((r) => put('q', { ...r, market: NAT, region: 'National' }, r.quarter));
+    c.data.forEach((r) => { if (r.market !== NAT) put('q', r, r.quarter); });
+    a.data.forEach((r) => put('y', r, String(r.fy)));
+    // National full year: businesses sold add up the four quarters; prices and ratios average them
+    d3.groups(n.data, (r) => r.year).forEach(([y, rs]) => {
+      if (rs.length < 4) return;
+      const o = { market: NAT, region: 'National', fy: y };
+      SKEYS.forEach((k) => { const v = rs.map((r) => r[k]).filter((x) => x != null); o[k] = k === 'sold' ? (v.length === 4 ? d3.sum(v) : null) : v.length ? d3.mean(v) : null; });
+      put('y', o, String(y));
+    });
+    const per = (f) => [...new Set([...at.keys()].filter((k) => k[0] === f).map((k) => k.split('|')[2]))].sort();
+    const qs = per('q'), q = [];
+    for (let y = +qs[0].slice(0, 4); y <= +qs[qs.length - 1].slice(0, 4); y++) for (let k = 1; k <= 4; k++) { const l = y + ' Q' + k; if (l >= qs[0] && l <= qs[qs.length - 1]) q.push(l); }
+    SD = { n: n.data, c: c.data, a: a.data, at, labels: { q, y: per('y') }, rows: c.data.concat(a.data) };
+    return SD;
+  }
+  const sAt = (mk, p, f = sx.f) => SD.at.get(f + '|' + mk + '|' + p);
+  const prevP = (p, f = sx.f) => (f === 'q' ? prevQ(p) : String(+p - 1));
+  const dayF = (v) => fmt.int(v) + ' days';
+  const SCH = [['sold', 'businesses sold', fmt.int, d3.format('.3~s'), true], ['sale', 'sale and asking price', fmt.usd, fmt.usdK], ['cf', 'median cash flow', fmt.usd, fmt.usdK],
+    ['cfx', 'sale price to cash flow', fmt.x2, fmt.x2], ['s2a', 'sale to asking price', fmt.x2, fmt.x2], ['dom', 'days on market', dayF, fmt.int]];
+  function sBuild() {
+    if (sx.built) return;
+    sx.built = true;
+    sx.per.q = SD.labels.q[SD.labels.q.length - 1]; sx.per.y = SD.labels.y[SD.labels.y.length - 1];
+    locOpts($('#sx-loc'), SD.rows, sx.loc);
+    $('#sx-loc').addEventListener('change', (e) => { sx.loc = e.target.value; drawS(); });
+    $('#sx-per').addEventListener('change', (e) => { sx.per[sx.f] = e.target.value; drawS(); });
+    $('#sx-freq').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { sx.f = b.dataset.f; drawS(); } });
+    $('#sx-q').addEventListener('input', (e) => { sx.cq = e.target.value; drawS(); });
+  }
+  function drawS() {
+    if (!sData()) { SCH.forEach((d) => gate($('#sx-ch-' + d[0]), ['national_history', 'closed', 'closed_annual'])); return; }
+    sBuild();
+    const f = sx.f, list = SD.labels[f], per = sx.per[f], mk = sx.loc, isNat = mk === NAT, C = NKC();
+    const name = isNat ? 'National' : mk, pl = f === 'q' ? per : 'full year ' + per, r = sAt(mk, per), p = sAt(mk, prevP(per));
+    $('#sx-freq').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
+    perOpts($('#sx-per'), list, per);
+    $('#sx-sub').textContent = name + ', ' + pl + (isNat && f === 'y' ? ' (sales added up over the four quarters, prices and ratios averaged)' : '');
+    const K = [['sold', 'Businesses sold', fmt.int], ['sale', 'Median sale price', fmt.usd], ['s2a', 'Sale to asking price', fmt.x2], ['cfx', 'Sale price / cash flow', fmt.x2], ['dom', 'Median days on market', fmt.int]];
+    $('#sx-kpis').replaceChildren(...K.map(([k, lab, fm]) => kpi(lab, r && r[k] != null ? fm(r[k]) : '—', r ? fmt.pct(chg(r, p, k)) + ' vs ' + prevP(per) : 'No data for this period')));
+    // charts start at the location's first period, so a market is not squeezed by National's longer history
+    const lab = list.slice(isNat ? 0 : Math.max(0, list.findIndex((x) => sAt(mk, x))));
+    const v = (m, k) => lab.map((x) => { const o = sAt(m, x); return o && o[k] != null ? o[k] : null; });
+    const xl = f === 'q' ? (l) => (l.endsWith('Q1') ? l.slice(0, 4) : null) : (l) => l, mark = lab.indexOf(per);
+    SCH.forEach(([k, ttl, fm, tick, solo]) => {
+      const host = $('#sx-ch-' + k);
+      if (!gate(host, ['national_history', 'closed', 'closed_annual'])) return;
+      const series = k === 'sale' ? [{ name: 'Sale price', color: C[0], values: v(mk, 'sale') }, { name: 'Asking price', color: C[1], values: v(mk, 'ask') }] : [{ name, color: C[0], values: v(mk, k) }];
+      if (!isNat && !solo) series.push({ name: 'National' + (k === 'sale' ? ' sale price' : ''), color: MUTED, values: v(NAT, k) });
+      lineChart(host, { labels: lab, xl, mark, zero: !!solo, aria: name + ': ' + ttl + (f === 'q' ? ' by quarter' : ' by year'), tick, fmt: fm, series });
+      gLine($('#sx-g-' + k), growth(series[0].values, lab, (l) => prevP(l)), fm);
+    });
+    legend($('#sx-lg'), isNat ? [] : [[name, C[0]], ['National', MUTED]]);
+    legend($('#sx-lg-sale'), [['Sale price', C[0]], ['Asking price', C[1]]].concat(isNat ? [] : [['National sale price', MUTED]]));
+    const cq = sx.cq.trim().toLowerCase();
+    const cmp = [...SD.at.entries()].filter(([key]) => key[0] === f && key.endsWith('|' + per)).map(([, o]) => o)
+      .filter((o) => !cq || (o.market + ' ' + (o.region || '')).toLowerCase().includes(cq))
+      .map((o) => { const y = sAt(o.market, prevP(per)); return { ...o, name: o.market === NAT ? 'National' : o.market, s_yoy: chg(o, y, 'sold'), p_yoy: chg(o, y, 'sale') }; });
+    $('#sx-cmp-h').textContent = 'All markets, ' + pl;
+    lTable('sx-cmp', cmp, [{ k: 'name', s: 1 }, { k: 'region', s: 1, m: 1 }, { k: 'sold', f: fmt.int }, { k: 's_yoy', f: 'p' }, { k: 'sale', f: fmt.usd }, { k: 'p_yoy', f: 'p' }, { k: 's2a', f: fmt.x2 }, { k: 'cfx', f: fmt.x2 }, { k: 'dom', f: fmt.int }], ['sold', -1], drawS,
+      { key: 'market', pin: new Set([NAT]), sel: mk, click: (k) => { sx.loc = k; $('#sx-loc').value = k; jump({ v_sx: 'chart' }, 'lx-s', drawS); } });
+    $('#sx-tbl tbody').replaceChildren(...list.filter((x) => sAt(mk, x)).reverse().map((x) => {
+      const o = sAt(mk, x), y = sAt(mk, prevP(x)), tr = el('tr'); tr.dataset.key = x;
+      tr.append(el('td', null, x), nCell(o.sold, fmt.int), pctTd(chg(o, y, 'sold')), nCell(o.sale, fmt.usd), pctTd(chg(o, y, 'sale')), nCell(o.ask, fmt.usd), nCell(o.s2a, fmt.x2), nCell(o.cf, fmt.usd), nCell(o.cfx, fmt.x2), nCell(o.dom, fmt.int));
+      return tr;
+    }));
+    drawSH();
+  }
+  function drawSH() {
+    const q = SD.labels.q[SD.labels.q.length - 1], n = sAt(NAT, q, 'q'), p = sAt(NAT, prevQ(q), 'q');
+    const ys = SD.labels.y.filter((y) => (sAt(NAT, y, 'y') || {}).sold != null), y = ys[ys.length - 1], ny = sAt(NAT, y, 'y'), py = sAt(NAT, String(+y - 1), 'y');
+    const first = SD.labels.q.find((x) => x.endsWith(q.slice(4)) && (sAt(NAT, x, 'q') || {}).sale != null), f0 = sAt(NAT, first, 'q'), hy = sAt(HOME, y, 'y');
+    const go = (mk, f, pr) => () => { sx.loc = mk; sx.f = f; sx.per[f] = pr; $('#sx-loc').value = mk; jump({ v_sx: 'chart' }, 'lx-s', drawS); };
+    $('#hl-s-h').textContent = 'Highlights, ' + q;
+    hl('#hl-s', [
+      ny && { k: 'Deals closed', v: fmt.int(ny.sold), t: 'businesses sold in ' + y + ', ' + fmt.pct(chg(ny, py, 'sold')) + ' on ' + (+y - 1) + '. In ' + q + ': ' + fmt.int(n.sold) + ', ' + fmt.pct(chg(n, p, 'sold')) + ' on a year earlier.', on: go(NAT, 'y', y), src: SRC.bbs },
+      { k: 'Sale prices', v: fmt.usd(n.sale), t: 'national median sale price in ' + q + ', ' + fmt.pct(chg(n, p, 'sale')) + ' on a year earlier and ' + fmt.pct(chg(n, f0, 'sale')) + ' since ' + first + '.', on: go(NAT, 'q', q), src: SRC.bbs },
+      n.s2a != null && { k: 'Negotiation', v: Math.round(n.s2a * 100) + '%', t: 'of the asking price is what buyers paid on average, after a median ' + dash0(n.dom, fmt.int) + ' days on the market (' + fmt.pct(chg(n, p, 'dom')) + ' on a year earlier).', on: go(NAT, 'q', q), src: SRC.bbs },
+      hy && { k: 'Your market', v: dash0(hy.sold, fmt.int), t: 'businesses sold in Buffalo-Niagara Falls in ' + y + ', at a median ' + dash0(hy.sale, fmt.usd) + ' and ' + dash0(hy.cfx, fmt.x2) + '× cash flow (national ' + dash0(ny && ny.cfx, fmt.x2) + '×).', on: go(HOME, 'y', y), src: SRC.bbs }
+    ]);
   }
 
   function drawSectors() {
@@ -1397,262 +1360,97 @@ dash.calc('sba_markets', {
     });
   }
 
-  function drawCoverage(sel, id, label) {
-    const host = $(sel);
-    if (!gate(host, [id])) return;
-    const rows = dash.data(id).data;
-    const qs = [...new Set(rows.map((r) => r.quarter))];
-    const ms = [];
-    rows.forEach((r) => { if (!ms.find((m) => m.market === r.market)) ms.push({ market: r.market, short: r.short }); });
-    host.replaceChildren();
-    host.style.minHeight = '';
-    host.appendChild(el('div'));
-    qs.forEach((q) => host.appendChild(el('div', 'h', q.endsWith('Q1') ? q.slice(2, 4) : '')));
-    const idx = new Map(rows.map((r) => [r.market + '|' + r.quarter, r]));
-    const tip = el('div', 'lx-tip'); tip.hidden = true; tip.style.position = 'fixed';
-    ms.forEach((m) => {
-      const lab = el('div', 'm', m.market === NAT ? 'National' : m.short); lab.title = m.market; host.appendChild(lab);
-      qs.forEach((q) => {
-        const r = idx.get(m.market + '|' + q);
-        const c = el('div', 'c s-' + r.status);
-        c.addEventListener('mousemove', (ev) => {
-          tip.replaceChildren(el('div', 't', m.market + ' · ' + q), el('div', null, label[r.status]));
-          tip.hidden = false;
-          tip.style.left = Math.min(window.innerWidth - tip.offsetWidth - 8, ev.clientX + 12) + 'px';
-          tip.style.top = (ev.clientY + 14) + 'px';
-        });
-        c.addEventListener('mouseleave', () => { tip.hidden = true; });
-        host.appendChild(c);
-      });
-    });
-    host.appendChild(tip);
-  }
-
-  function drawStrip() {
-    const host = $('#ch-secq');
-    if (!gate(host, ['sector_cov'])) return;
-    const rows = dash.data('sector_cov').data;
-    host.style.minHeight = '';
-    const cells = rows.map((r) => { const c = el('div', 'c ' + (r.markets === 0 ? 's-missing' : r.markets < r.total ? 's-partial' : 's-complete')); c.title = r.quarter + ': ' + r.markets + ' of ' + r.total + ' markets'; return c; });
-    const labels = rows.map((r) => el('div', 'q', r.quarter.endsWith('Q1') ? r.quarter.slice(2, 4) : ''));
-    host.replaceChildren(...cells, ...labels);
-  }
-
-  function drawGaps() {
-    const d = dash.data('gaps');
-    const body = $('#tbl-gaps tbody');
-    if (d.status !== 'ok') { body.replaceChildren(); return; }
-    body.replaceChildren(...d.data.map((r) => {
-      const tr = el('tr'); tr.dataset.key = r.item; const s = el('td'); s.appendChild(el('span', 'pill ' + r.severity, r.severity));
-      tr.append(s, el('td', null, r.item), el('td', null, r.scope), el('td', null, r.detail), el('td', null, r.action));
-      return tr;
-    }));
-  }
-
-  function build(rows) {
-    if (state.built) return;
-    state.built = true;
-    const sm = $('#sel-market');
-    const names = [...new Map(rows.map((r) => [r.market, r])).values()].sort((a, b) => (a.type === 'National' ? -1 : b.type === 'National' ? 1 : a.market.localeCompare(b.market)));
-    names.forEach((r) => sm.appendChild(new Option(r.type === 'National' ? 'National' : r.market, r.market)));
-    sm.value = state.market;
-    sm.addEventListener('change', () => { state.market = sm.value; drawAll(); });
-
-    const ss = $('#sel-sector');
-    SECT.forEach((s) => ss.appendChild(new Option(s, s)));
-    ss.value = state.sector;
-    ss.addEventListener('change', () => { state.sector = ss.value; drawSectors(); });
-    $('#tbl-q').addEventListener('input', (e) => { state.q = e.target.value; drawTable(); });
-    document.querySelectorAll('#tbl-markets th button').forEach((b) => b.addEventListener('click', () => {
-      const k = b.dataset.sort;
-      if (state.sortKey === k) state.sortDir *= -1; else { state.sortKey = k; state.sortDir = (k === 'market' || k === 'region') ? 1 : -1; }
-      drawTable();
-    }));
-    legend($('#lg-sec'), SECT.map((s, i) => [s, NKC()[i]]));
-  }
-
-
-  function cSeries(rows, market, key, labels) {
-    const m = new Map(rows.filter((r) => r.market === market).map((r) => [r.quarter, r[key]]));
-    return labels.map((q) => (m.has(q) ? m.get(q) : null));
-  }
-
-  function drawClosedTrend() {
-    if (!$('#ch-c-price')) return;
-    const ids = ['#ch-c-price', '#ch-c-sold', '#ch-c-s2a', '#ch-c-dom'];
-    if (!ccache) { ids.forEach((s) => gate($(s), ['closed'])); return; }
-    const { rows, labels, band } = ccache, C = NKC();
-    const v = (k) => cSeries(rows, NAT, k, labels);
-    if (gate($('#ch-c-price'), ['closed'])) {
-      lineChart($('#ch-c-price'), { labels, band, zero: true, aria: 'National median sale price and asking price of sold listings', tick: fmt.usdK, fmt: fmt.usd, series: [{ name: 'Median asking price', color: C[1], values: v('ask') }, { name: 'Median sale price', color: C[0], values: v('sale') }] });
-      legend($('#lg-c-price'), [['Median sale price', C[0]], ['Median asking price', C[1]]]);
-    }
-    if (gate($('#ch-c-sold'), ['closed'])) lineChart($('#ch-c-sold'), { labels, band, aria: 'National businesses sold by quarter', tick: CMET.sold.tick, fmt: fmt.int, series: [{ name: 'Businesses sold', color: C[2], values: v('sold') }] });
-    if (gate($('#ch-c-s2a'), ['closed'])) lineChart($('#ch-c-s2a'), { labels, band, aria: 'National average sale to asking price', tick: fmt.x2, fmt: fmt.x2, series: [{ name: 'Sale to asking', color: C[0], values: v('s2a') }] });
-    if (gate($('#ch-c-dom'), ['closed'])) lineChart($('#ch-c-dom'), { labels, band, aria: 'National median days on market', tick: fmt.int, fmt: fmt.int, series: [{ name: 'Days on market', color: C[3], values: v('dom') }] });
-  }
-
-  function drawClosedExplorer() {
-    const host = $('#ch-cex');
-    if (!ccache) { gate(host, ['closed']); return; }
-    const { rows, labels, band } = ccache, met = CMET[state.cmetric], C = NKC();
-    const short = (rows.find((r) => r.market === state.cmarket) || {}).short || state.cmarket;
-    const name = state.cmarket === NAT ? 'National' : short;
-    $('#ex-ctitle').textContent = name + ': ' + met.label.toLowerCase();
-    if (!gate(host, ['closed'])) return;
-    const series = [{ name, color: C[0], values: cSeries(rows, state.cmarket, state.cmetric, labels) }];
-    if (state.cmarket !== NAT && !met.solo) series.push({ name: 'National', color: MUTED, values: cSeries(rows, NAT, state.cmetric, labels) });
-    legend($('#lg-cex'), series.map((x) => [x.name, x.color]));
-    lineChart(host, { labels, height: 280, aria: met.label + ' for ' + state.cmarket, tick: met.tick, fmt: met.fmt, series });
-    gLine($('#g-cex'), growth(series[0].values, labels, prevQ), met.fmt);
-    drawCexTable(rows, labels, state.cmarket);
-  }
-
-  function drawClosedKpis() {
-    const d = dash.data('closed_kpi');
-    if (d.status !== 'ok') return;
-    const f = { sold: fmt.int, sale: fmt.usd, ask: fmt.usd, s2a: fmt.x2, dom: fmt.int };
-    d.data.forEach((r) => {
-      $('#ck-' + r.metric).textContent = f[r.metric](r.latest);
-      $('#cc-' + r.metric).textContent = fmt.pct(r.change_pct) + ' vs 2025 Q2';
-    });
-  }
-
-  function drawClosedTable() {
-    const d = dash.data('closed_latest');
-    const body = $('#tbl-closed tbody');
-    if (d.status !== 'ok') { body.replaceChildren(); return; }
-    const q = state.cq.trim().toLowerCase(), k = state.csortKey, dir = state.csortDir;
-    const rows = d.data.filter((r) => !q || (r.market + ' ' + r.region).toLowerCase().includes(q))
-      .sort((a, b) => {
-        const x = a[k], y = b[k];
-        if (x == null) return 1; if (y == null) return -1;
-        return (typeof x === 'string' ? x.localeCompare(y) : x - y) * dir;
-      });
-    const n = (v, f) => (v == null ? '—' : f(v));
-    body.replaceChildren(...rows.map((r) => {
-      const tr = el('tr', r.type === 'National' ? 'nat' : ''); tr.dataset.key = r.market;
-      tr.append(el('td', null, r.market), el('td', 'muted', r.region), el('td', null, n(r.sold, fmt.int)), el('td', 'muted', n(r.sold_yoy, fmt.pct)), el('td', null, n(r.sale, fmt.usd)), el('td', 'muted', n(r.sale_yoy, fmt.pct)), el('td', null, n(r.s2a, fmt.x2)), el('td', null, n(r.dom, fmt.int)));
-      return tr;
-    }));
-    document.querySelectorAll('#tbl-closed th').forEach((th) => {
-      th.setAttribute('aria-sort', th.dataset.field === k ? (dir > 0 ? 'ascending' : 'descending') : 'none');
-    });
-  }
-
-  function buildClosed(rows) {
-    if (state.cbuilt) return;
-    state.cbuilt = true;
-    const sm = $('#sel-cmarket');
-    const names = [...new Map(rows.map((r) => [r.market, r])).values()].sort((a, b) => (a.type === 'National' ? -1 : b.type === 'National' ? 1 : a.market.localeCompare(b.market)));
-    names.forEach((r) => sm.appendChild(new Option(r.type === 'National' ? 'National' : r.market, r.market)));
-    sm.value = state.cmarket;
-    sm.addEventListener('change', () => { state.cmarket = sm.value; drawClosedExplorer(); });
-    const me = $('#sel-cmetric');
-    Object.entries(CMET).forEach(([k, v]) => me.appendChild(new Option(v.label, k)));
-    me.value = state.cmetric;
-    me.addEventListener('change', () => { state.cmetric = me.value; drawClosedExplorer(); });
-    $('#tbl-cq').addEventListener('input', (e) => { state.cq = e.target.value; drawClosedTable(); });
-    document.querySelectorAll('#tbl-closed th button').forEach((b) => b.addEventListener('click', () => {
-      const k = b.dataset.csort;
-      if (state.csortKey === k) state.csortDir *= -1; else { state.csortKey = k; state.csortDir = (k === 'market' || k === 'region') ? 1 : -1; }
-      drawClosedTable();
-    }));
-  }
-
-  let ccache = null;
-
-  // ---------- SBA acquisition financing ----------
-  const SMET = {
-    acq: { label: 'SBA acquisitions vs BizBuySell sales', a: ['SBA acquisition loans', (r) => r.acq_loans], b: ['BizBuySell sales', (r) => r.sold], fmt: fmt.int, tick: d3.format('.3~s') },
-    size: { label: 'Median acquisition loan vs median sale price', a: ['Median SBA acquisition loan', (r) => (r.acq_loans ? r.acq_median : null)], b: ['BizBuySell median sale price', (r) => r.sale], fmt: fmt.usd, tick: fmt.usdK },
-    all: { label: 'All SBA 7(a) loans and acquisitions', a: ['All 7(a) loans', (r) => r.loans], b: ['Acquisition loans', (r) => r.acq_loans], src: 'sba', fmt: fmt.int, tick: d3.format('.3~s') },
-    share: { label: 'Acquisitions as share of 7(a) loans (%)', a: ['Acquisition share', (r) => (r.loans ? r.acq_loans / r.loans * 100 : null)], fmt: (v) => v.toFixed(1) + '%', tick: (v) => v + '%' },
-  };
+  // ---------- 03 SBA financing: one location; trend or compare markets ----------
   let scache = null;
-
-  function sbaPair(market, key) {
-    const { sba, clo, labels } = scache, m = SMET[key];
-    const sm = new Map(sba.filter((r) => r.market === market).map((r) => [r.quarter, r]));
-    const cm = new Map(clo.filter((r) => r.market === market).map((r) => [r.quarter, r]));
-    const C = NKC();
-    const series = [{ name: m.a[0], color: C[0], values: labels.map((q) => (sm.has(q) ? m.a[1](sm.get(q)) : null)) }];
-    if (m.b) {
-      const fromSba = m.src === 'sba';
-      series.push({ name: m.b[0], color: C[2], values: labels.map((q) => { const r = fromSba ? sm.get(q) : cm.get(q); return r ? m.b[1](r) : null; }) });
+  function drawF() {
+    const s = dash.data('sba_quarterly'), c = dash.data('closed');
+    if (s.status !== 'ok' || c.status !== 'ok') { ['#ch-sba-vs', '#ch-sba-size'].forEach((x) => gate($(x), ['sba_quarterly', 'closed'])); return; }
+    if (!scache || scache.s !== s.data || scache.c !== c.data) {
+      const sba = s.data.map((r) => ({ ...r, loans: +r.loans, acq_loans: +r.acq_loans, acq_amount: +r.acq_amount, acq_target: +r.acq_target }));
+      scache = { s: s.data, c: c.data, sba, labels: [...new Set(sba.map((r) => r.quarter))].sort() };
     }
-    return series;
-  }
-
-  function drawSbaCharts() {
-    const ids = ['#ch-sba-vs', '#ch-sba-size', '#ch-sex'];
-    if (!scache) { ids.forEach((s) => gate($(s), ['sba_quarterly', 'closed'])); return; }
-    const labels = scache.labels;
-    [['#ch-sba-vs', '#lg-sba-vs', 'acq'], ['#ch-sba-size', '#lg-sba-size', 'size']].forEach(([c, l, k]) => {
-      if (!gate($(c), ['sba_quarterly', 'closed'])) return;
-      const series = sbaPair(NAT, k);
-      legend($(l), series.map((x) => [x.name, x.color]));
-      lineChart($(c), { labels, zero: k === 'acq', aria: SMET[k].label + ', national', tick: SMET[k].tick, fmt: SMET[k].fmt, series });
-    });
-    const m = SMET[state.smetric];
-    const short = (scache.sba.find((r) => r.market === state.smarket) || {}).short || state.smarket;
-    $('#ex-stitle').textContent = (state.smarket === NAT ? 'National' : short) + ': ' + m.label.toLowerCase();
-    if (!gate($('#ch-sex'), ['sba_quarterly', 'closed'])) return;
-    const series = sbaPair(state.smarket, state.smetric);
-    legend($('#lg-sex'), series.map((x) => [x.name, x.color]));
-    lineChart($('#ch-sex'), { labels, height: 280, zero: state.smetric !== 'size', aria: m.label + ' for ' + state.smarket, tick: m.tick, fmt: m.fmt, series });
-  }
-
-  function drawSbaKpis() {
-    const d = dash.data('sba_kpi');
-    if (d.status !== 'ok') return;
-    const f = { acq_loans: fmt.int, acq_amount: fmt.usdS, acq_avg: fmt.usd, acq_share: (v) => v.toFixed(1) + '%', acq_target: fmt.int };
-    d.data.forEach((r) => {
-      $('#sk-' + r.metric).textContent = f[r.metric](r.latest);
-      $('#sc-' + r.metric).textContent = fmt.pct(r.change_pct) + ' vs prior 4 quarters';
-    });
-    const a = d.data.find((r) => r.metric === 'acq_loans');
-    $('#t-sba').textContent = fmt.int(a.latest);
-    $('#t-sbachg').textContent = fmt.pct(a.change_pct);
-  }
-
-  function sortRows(rows, k, dir) {
-    return rows.sort((a, b) => {
-      const x = a[k], y = b[k];
-      if (x == null) return 1; if (y == null) return -1;
-      return (typeof x === 'string' ? x.localeCompare(y) : x - y) * dir;
-    });
-  }
-  const dash0 = (v, f) => (v == null ? '—' : f(v));
-
-  function drawSbaTable() {
+    if (!state.sbuilt) {
+      state.sbuilt = true;
+      locOpts($('#fx-loc'), scache.sba, state.smarket);
+      $('#fx-loc').addEventListener('change', (e) => { state.smarket = e.target.value; drawF(); });
+      $('#tbl-sq').addEventListener('input', (e) => { state.sq = e.target.value; drawF(); });
+    }
+    const mk = state.smarket, name = mk === NAT ? 'National' : mk, lab = scache.labels, L4 = lab.slice(-4), P4 = lab.slice(-8, -4), C = NKC();
+    const sm = new Map(scache.sba.filter((r) => r.market === mk).map((r) => [r.quarter, r])), cm = new Map(c.data.filter((r) => r.market === mk).map((r) => [r.quarter, r]));
+    const sum = (qs, k, m = sm) => d3.sum(qs, (q) => +((m.get(q) || {})[k] || 0));
+    const a = { n: sum(L4, 'acq_loans'), amt: sum(L4, 'acq_amount'), all: sum(L4, 'loans'), t: sum(L4, 'acq_target'), sold: sum(L4, 'sold', cm) };
+    const b = { n: sum(P4, 'acq_loans'), amt: sum(P4, 'acq_amount'), all: sum(P4, 'loans'), t: sum(P4, 'acq_target') };
+    const pc = (x, y) => (y ? fmt.pct((x / y - 1) * 100) : '—') + ' vs the 4 quarters before';
+    $('#fx-sub').textContent = name + ', ' + L4[0] + ' to ' + L4[3];
+    $('#fx-kpis').replaceChildren(
+      kpi('SBA acquisition loans', fmt.int(a.n), pc(a.n, b.n)),
+      kpi('Acquisition dollars', fmt.usdS(a.amt), pc(a.amt, b.amt)),
+      kpi('Average acquisition loan', a.n ? fmt.usd(a.amt / a.n) : '—', a.n && b.n ? pc(a.amt / a.n, b.amt / b.n) : '—'),
+      kpi('Share of all 7(a) loans', a.all ? one(a.n / a.all * 100) + '%' : '—', b.all ? 'from ' + one(b.n / b.all * 100) + '% the 4 quarters before' : ''),
+      kpi('In your target industries', fmt.int(a.t), pc(a.t, b.t)),
+      kpi('Per 100 BizBuySell sales', a.sold ? r0(a.n / a.sold * 100) : '—', a.sold ? fmt.int(a.sold) + ' sales on BizBuySell in the same quarters' : 'No BizBuySell sales for this location'));
+    const g = (m, f) => lab.map((q) => (m.has(q) ? f(m.get(q)) : null));
+    if (gate($('#ch-sba-vs'), ['sba_quarterly', 'closed'])) {
+      const se = [{ name: 'SBA acquisition loans', color: C[0], values: g(sm, (r) => r.acq_loans) }, { name: 'BizBuySell sales', color: C[2], values: g(cm, (r) => r.sold) }];
+      $('#h-sba-vs').textContent = name + ': SBA-financed acquisitions vs BizBuySell sales';
+      legend($('#lg-sba-vs'), se.map((x) => [x.name, x.color]));
+      lineChart($('#ch-sba-vs'), { labels: lab, zero: true, aria: name + ' SBA acquisition loans and BizBuySell sales by quarter', tick: d3.format('.3~s'), fmt: fmt.int, series: se });
+    }
+    if (gate($('#ch-sba-size'), ['sba_quarterly', 'closed'])) {
+      const se = [{ name: 'Median SBA acquisition loan', color: C[0], values: g(sm, (r) => (r.acq_loans ? r.acq_median : null)) }, { name: 'BizBuySell median sale price', color: C[2], values: g(cm, (r) => r.sale) }];
+      $('#h-sba-size').textContent = name + ': median acquisition loan vs median sale price';
+      legend($('#lg-sba-size'), se.map((x) => [x.name, x.color]));
+      lineChart($('#ch-sba-size'), { labels: lab, aria: name + ' median SBA acquisition loan and BizBuySell median sale price by quarter', tick: fmt.usdK, fmt: fmt.usd, series: se });
+    }
     const d = dash.data('sba_markets');
-    const body = $('#tbl-sba tbody');
-    if (d.status !== 'ok') { body.replaceChildren(); return; }
-    const q = state.sq.trim().toLowerCase();
-    const rows = sortRows(d.data.filter((r) => !q || (r.market + ' ' + r.region).toLowerCase().includes(q)), state.ssortKey, state.ssortDir);
-    body.replaceChildren(...rows.map((r) => {
-      const tr = el('tr', r.type === 'National' ? 'nat' : ''); tr.dataset.key = r.market;
-      tr.append(el('td', null, r.market), el('td', 'muted', r.region), el('td', null, fmt.int(r.acq_loans)), el('td', 'muted', fmt.pct(r.acq_chg)),
-        el('td', null, dash0(r.sold, fmt.int)), el('td', null, dash0(r.per_100_sales, (v) => v.toFixed(0))), el('td', null, dash0(r.acq_avg, fmt.usd)), el('td', null, dash0(r.sale, fmt.usd)));
-      return tr;
+    if (d.status === 'ok') {
+      const q = state.sq.trim().toLowerCase();
+      lTable('tbl-sba', d.data.filter((r) => !q || (r.market + ' ' + r.region).toLowerCase().includes(q)).map((r) => ({ ...r, name: r.market === NAT ? 'National' : r.market })),
+        [{ k: 'name', s: 1 }, { k: 'region', s: 1, m: 1 }, { k: 'acq_loans', f: fmt.int }, { k: 'acq_chg', f: 'p' }, { k: 'sold', f: fmt.int }, { k: 'per_100_sales', f: r0 }, { k: 'acq_avg', f: fmt.usd }, { k: 'sale', f: fmt.usd }], ['acq_loans', -1], drawF,
+        { key: 'market', pin: new Set([NAT]), sel: mk, click: (k) => { state.smarket = k; $('#fx-loc').value = k; jump({ v_fx: 'chart' }, 'lx-sba', drawF); } });
+    }
+    drawFH();
+  }
+  function drawFH() {
+    const d = dash.data('sba_markets'), st = dash.data('sba_states'), us = dash.data('us_states'), lab = scache.labels;
+    const nat = d.status === 'ok' ? d.data.find((r) => r.market === NAT) : null, home = d.status === 'ok' ? d.data.find((r) => r.market === HOME) : null;
+    const top = st.status === 'ok' ? st.data.filter((r) => r.acq_loans >= 20).sort((a, b) => b.acq_per_10k_estab - a.acq_per_10k_estab)[0] : null;
+    const topName = top && us.status === 'ok' ? (us.data.find((s) => s.abbr === top.state) || {}).name || top.state : top && top.state;
+    const med = (scache.sba.find((r) => r.market === NAT && r.quarter === lab[lab.length - 1]) || {}).acq_median;
+    const go = (mk) => () => { state.smarket = mk; $('#fx-loc').value = mk; jump({ v_fx: 'chart' }, 'lx-sba', drawF); };
+    $('#hl-f-h').textContent = 'Highlights, ' + lab[lab.length - 4] + ' to ' + lab[lab.length - 1];
+    hl('#hl-f', [
+      nat && { k: 'Financed acquisitions', v: fmt.int(nat.acq_loans), t: 'business purchases financed with SBA 7(a) loans in the last four quarters, ' + fmt.pct(nat.acq_chg) + ' on the four before.', on: go(NAT), src: SRC.sba },
+      nat && { k: 'Loan size', v: fmt.usd(nat.acq_avg), t: 'average acquisition loan; the median in ' + lab[lab.length - 1] + ' was ' + dash0(med, fmt.usd) + ', above the typical BizBuySell sale because loans also fund working capital and real estate.', on: go(NAT), src: SRC.sba },
+      top && { k: 'Where', v: topName, t: 'finances the most purchases for its size: ' + top.acq_per_10k_estab.toFixed(1) + ' acquisition loans per 10,000 businesses (' + fmt.int(top.acq_loans) + ' loans).', go: 'See the map', on: () => { state.mapMetric = 'acq_per_10k_estab'; jump({ v_sw: 'chart' }, 'lx-sba-where', drawMap); }, src: SRC.sba },
+      home && { k: 'Your market', v: fmt.int(home.acq_loans), t: 'SBA acquisition loans in Buffalo-Niagara Falls, ' + fmt.pct(home.acq_chg) + ' on the four quarters before' + (home.per_100_sales != null ? '; ' + r0(home.per_100_sales) + ' for every 100 sales BizBuySell recorded.' : '.'), on: go(HOME), src: SRC.sba }
+    ]);
+  }
+  // map of states and the county table share one section
+  function wBuild() {
+    if (state.wbuilt) return;
+    state.wbuilt = true;
+    $('#tbl-cty-q').addEventListener('input', (e) => { state.ctyQ = e.target.value; drawCounties(); });
+    document.querySelectorAll('#tbl-cty th button').forEach((b) => b.addEventListener('click', () => {
+      const k = b.dataset.csort2;
+      if (state.ctySort === k) state.ctyDir *= -1; else { state.ctySort = k; state.ctyDir = ['county', 'state', 'bizbuysell_market'].includes(k) ? 1 : -1; }
+      drawCounties();
     }));
-    document.querySelectorAll('#tbl-sba th').forEach((th) => th.setAttribute('aria-sort', th.dataset.field === state.ssortKey ? (state.ssortDir > 0 ? 'ascending' : 'descending') : 'none'));
+    const seg = $('#seg-map');
+    Object.entries(MAPM).forEach(([k, v]) => {
+      const b = el('button', null, v.label); b.type = 'button'; b.id = 'seg-' + k; b.setAttribute('aria-pressed', String(k === state.mapMetric));
+      b.addEventListener('click', () => { state.mapMetric = k; seg.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); drawMap(); });
+      seg.appendChild(b);
+    });
   }
 
-  // State tile map: fixed grid positions (row, column) for a 12 x 8 layout
-  const TILE = { AK: [0, 0], ME: [0, 11], WI: [1, 6], VT: [1, 10], NH: [1, 11], WA: [2, 1], ID: [2, 2], MT: [2, 3], ND: [2, 4], MN: [2, 5], IL: [2, 6], MI: [2, 7], NY: [2, 9], MA: [2, 10],
-    OR: [3, 1], NV: [3, 2], WY: [3, 3], SD: [3, 4], IA: [3, 5], IN: [3, 6], OH: [3, 7], PA: [3, 8], NJ: [3, 9], CT: [3, 10], RI: [3, 11],
-    CA: [4, 1], UT: [4, 2], CO: [4, 3], NE: [4, 4], MO: [4, 5], KY: [4, 6], WV: [4, 7], VA: [4, 8], MD: [4, 9], DE: [4, 10],
-    AZ: [5, 2], NM: [5, 3], KS: [5, 4], AR: [5, 5], TN: [5, 6], NC: [5, 7], SC: [5, 8], DC: [5, 9],
-    OK: [6, 4], LA: [6, 5], MS: [6, 6], AL: [6, 7], GA: [6, 8], HI: [7, 0], TX: [7, 4], FL: [7, 9], PR: [7, 11] };
   const MAPM = {
     acq_per_10k_estab: { label: 'Per 10,000 businesses', get: (r) => r.acq_per_10k_estab, f: (v) => v.toFixed(1) },
     acq_loans: { label: 'Acquisition loans', get: (r) => r.acq_loans, f: fmt.int },
     chg: { label: 'Change vs prior year', get: (r) => (r.acq_loans_prev ? (r.acq_loans / r.acq_loans_prev - 1) * 100 : null), f: fmt.pct },
   };
   // US map shaded by m.get(row); m.div = four thresholds for a red-to-green scale, otherwise five quantile steps
-  function choro(wrap, scaleHost, by, m, tipRows, aria, sub) {
+  function choro(wrap, scaleHost, by, m, tipRows, aria, sub, pick, cur) {
     const g = dash.data('us_states'), C = NKC();
     const vals = g.data.map((s) => by.get(s.abbr)).filter(Boolean).map(m.get).filter((v) => v != null);
     let col, bins;
@@ -1682,8 +1480,8 @@ dash.calc('sba_markets', {
     const cOf = (row) => { const v = row ? m.get(row) : null; return v == null ? null : col(v); };
     g.data.forEach((s) => {
       const row = by.get(s.abbr), c = cOf(row);
-      svg.append('path').attr('class', 'st').attr('d', s.d).style('fill', c ? mix(c) : 'var(--color-bg)')
-        .on('mousemove', (ev) => show(ev, s, row)).on('mouseleave', () => { tip.hidden = true; });
+      svg.append('path').attr('class', 'st' + (cur === s.abbr ? ' on' : '')).attr('d', s.d).style('fill', c ? mix(c) : 'var(--color-bg)').style('cursor', pick ? 'pointer' : null)
+        .on('mousemove', (ev) => show(ev, s, row)).on('mouseleave', () => { tip.hidden = true; }).on('click', pick ? () => pick(s.abbr) : null);
     });
     g.data.forEach((s) => {
       if (s.w < 28 || s.h < 18) return;
@@ -1754,56 +1552,74 @@ dash.calc('sba_markets', {
     document.querySelectorAll('#tbl-cty th').forEach((th) => th.setAttribute('aria-sort', th.dataset.field === state.ctySort ? (state.ctyDir > 0 ? 'ascending' : 'descending') : 'none'));
   }
 
-  function buildSba(rows) {
-    if (state.sbuilt) return;
-    state.sbuilt = true;
-    const sm = $('#sel-smarket');
-    [...new Map(rows.map((r) => [r.market, r])).values()].sort((a, b) => (a.type === 'National' ? -1 : b.type === 'National' ? 1 : a.market.localeCompare(b.market)))
-      .forEach((r) => sm.appendChild(new Option(r.type === 'National' ? 'National' : r.market, r.market)));
-    sm.value = state.smarket;
-    sm.addEventListener('change', () => { state.smarket = sm.value; drawSbaCharts(); });
-    const me = $('#sel-smetric');
-    Object.entries(SMET).forEach(([k, v]) => me.appendChild(new Option(v.label, k)));
-    me.value = state.smetric;
-    me.addEventListener('change', () => { state.smetric = me.value; drawSbaCharts(); });
-    $('#tbl-sq').addEventListener('input', (e) => { state.sq = e.target.value; drawSbaTable(); });
-    document.querySelectorAll('#tbl-sba th button').forEach((b) => b.addEventListener('click', () => {
-      const k = b.dataset.ssort;
-      if (state.ssortKey === k) state.ssortDir *= -1; else { state.ssortKey = k; state.ssortDir = (k === 'market' || k === 'region') ? 1 : -1; }
-      drawSbaTable();
+  // ---------- 04 Industries: multiples over time for a searchable subsector ----------
+  const FYS = ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
+  const is = { sub: null, q: '', k: 'sold_2025', d: -1, built: false };
+  const markRow = (sel, key) => document.querySelectorAll(sel + ' tbody tr').forEach((tr) => tr.classList.toggle('sel', tr.dataset.key === key));
+  function iBuild() {
+    const tr = dash.data('sector_trend');
+    if (is.built || tr.status !== 'ok') return;
+    is.built = true;
+    const subs = sortRows(tr.data.slice(), 'subsector', 1);
+    $('#hs-ind-list').replaceChildren(...subs.map((r) => { const o = document.createElement('option'); o.value = r.subsector; o.label = r.sector; return o; }));
+    const pick = $('#hs-ind-pick');
+    const choose = () => {
+      const v = pick.value.trim().toLowerCase(); if (!v) { $('#hs-ind-msg').textContent = ''; return; }
+      const exact = subs.find((r) => r.subsector.toLowerCase() === v);
+      const hits = exact ? [exact] : subs.filter((r) => (r.subsector + ' ' + r.sector).toLowerCase().includes(v));
+      if (hits.length === 1 || exact) { is.sub = hits[0].subsector; pick.value = is.sub; $('#hs-ind-msg').textContent = ''; drawInd(); }
+      else $('#hs-ind-msg').textContent = hits.length ? hits.length + ' matches: pick one from the list' : 'No industry matches';
+    };
+    pick.addEventListener('change', choose);
+    pick.addEventListener('input', () => { if (subs.some((r) => r.subsector.toLowerCase() === pick.value.trim().toLowerCase())) choose(); });
+    pick.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); choose(); } });
+    document.querySelectorAll('#hs-tbl-ind [data-isort]').forEach((b) => b.addEventListener('click', () => {
+      const k = b.dataset.isort; is.d = is.k === k ? -is.d : (k === 'subsector' || k === 'sector' ? 1 : -1); is.k = k; drawInd();
     }));
-    $('#tbl-cty-q').addEventListener('input', (e) => { state.ctyQ = e.target.value; drawCounties(); });
-    document.querySelectorAll('#tbl-cty th button').forEach((b) => b.addEventListener('click', () => {
-      const k = b.dataset.csort2;
-      if (state.ctySort === k) state.ctyDir *= -1; else { state.ctySort = k; state.ctyDir = ['county', 'state', 'bizbuysell_market'].includes(k) ? 1 : -1; }
-      drawCounties();
+    $('#hs-ind-q').addEventListener('input', (e) => { is.q = e.target.value; drawInd(); });
+  }
+  function drawInd() {
+    iBuild();
+    const host = $('#hs-ch-ind'), C = NKC(), t = dash.data('sector_trend');
+    if (!is.sub && t.status === 'ok') is.sub = (sortRows(t.data.slice(), 'sold_2025', -1)[0] || {}).subsector || null;
+    if (gate(host, ['sector_annual'])) {
+      const rows = dash.data('sector_annual').data;
+      $('#hs-ind-title').textContent = (is.sub || '—') + ': average cash flow multiple by year';
+      const pk = $('#hs-ind-pick'); if (pk && document.activeElement !== pk) pk.value = is.sub || '';
+      const mine = new Map(rows.filter((r) => r.subsector === is.sub).map((r) => [String(r.fy), r]));
+      const med = FYS.map((y) => { const v = rows.filter((r) => String(r.fy) === y && r.cfx != null && r.sold >= 10).map((r) => r.cfx); return v.length ? d3.median(v) : null; });
+      const series = [{ name: is.sub || '—', color: C[0], values: FYS.map((y) => (mine.has(y) ? mine.get(y).cfx : null)), fmt: (v, i) => { const r = mine.get(FYS[i]); return fmt.x2(v) + (r && r.sold != null ? ' · ' + fmt.int(r.sold) + ' sold' : ''); } },
+        { name: 'Median of all subsectors (10+ sales)', color: MUTED, values: med }];
+      legend($('#hs-lg-ind'), series.map((s) => [s.name, s.color]));
+      gLine($('#hs-g-ind'), growth(series[0].values, FYS, (l) => String(+l - 1)), fmt.x2);
+      lineChart(host, { labels: FYS, xl: (l) => l, aria: (is.sub || '') + ' cash flow multiple by year, 2017 to 2025', tick: fmt.x2, fmt: fmt.x2, series });
+    }
+    const body = $('#hs-tbl-ind tbody');
+    if (t.status !== 'ok') { body.replaceChildren(); return; }
+    const q = is.q.toLowerCase(), td = (v, f, w) => { const c = nCell(v, f); if (w) c.classList.add('warn'); return c; };
+    body.replaceChildren(...sortRows(t.data.filter((r) => !q || (r.subsector + ' ' + r.sector).toLowerCase().includes(q)), is.k, is.d).map((r) => {
+      const tr = el('tr'); tr.dataset.key = r.subsector; if (r.subsector === is.sub) tr.classList.add('sel');
+      tr.append(el('td', null, r.subsector), el('td', 'muted', r.sector), td(r.cfx_2019, fmt.x2), td(r.cfx_2022, fmt.x2), td(r.cfx_2025, fmt.x2), pctTd(r.cfx_chg), td(r.sold_2025, fmt.int, r.sold_2025 != null && r.sold_2025 < 10), td(r.years, fmt.int));
+      tr.addEventListener('click', () => { is.sub = r.subsector; markRow('#hs-tbl-ind', r.subsector); jump({ v_ind: 'chart' }, 'hs-ind', drawInd); });
+      return tr;
     }));
-    const seg = $('#seg-map');
-    Object.entries(MAPM).forEach(([k, v]) => {
-      const b = el('button', null, v.label); b.type = 'button'; b.id = 'seg-' + k; b.setAttribute('aria-pressed', String(k === state.mapMetric));
-      b.addEventListener('click', () => { state.mapMetric = k; seg.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); drawMap(); });
-      seg.appendChild(b);
-    });
+    drawIH();
   }
-
-  function drawSba() {
-    const s = dash.data('sba_quarterly'), c = dash.data('closed');
-    if (s.status === 'ok') {
-      const sba = s.data.map((r) => ({ ...r, loans: Number(r.loans), acq_loans: Number(r.acq_loans), acq_amount: Number(r.acq_amount), acq_target: Number(r.acq_target) }));
-      const labels = [...new Set(sba.map((r) => r.quarter))].sort();
-      scache = { sba, clo: c.status === 'ok' ? c.data : [], labels };
-      buildSba(sba);
-    } else scache = null;
-    if (scache && c.status !== 'ok') { ['#ch-sba-vs', '#ch-sba-size', '#ch-sex'].forEach((x) => gate($(x), ['sba_quarterly', 'closed'])); }
-    else drawSbaCharts();
-    drawSbaKpis();
-    drawSbaTable();
-    drawMap();
-    drawIndustries();
-    drawLenders();
-    drawCounties();
+  function drawIH() {
+    const t = dash.data('sector_trend'), s = dash.data('sectors');
+    if (t.status !== 'ok') return;
+    const ok = t.data.filter((r) => r.sold_2025 >= 10 && r.cfx_2025 != null).sort((a, b) => a.cfx_2025 - b.cfx_2025);
+    const up = t.data.filter((r) => r.sold_2025 >= 10 && r.cfx_chg != null).sort((a, b) => b.cfx_chg - a.cfx_chg)[0];
+    const most = t.data.filter((r) => r.sold_2025 != null).sort((a, b) => b.sold_2025 - a.sold_2025)[0];
+    const nat = s.status === 'ok' ? s.data.filter((r) => r.market === NAT).sort((a, b) => b.share_pct - a.share_pct) : [];
+    const go = (sub) => () => { is.sub = sub; jump({ v_ind: 'chart' }, 'hs-ind', drawInd); };
+    hl('#hl-i', [
+      nat.length > 1 && { k: 'For sale now', v: one(nat[0].share_pct) + '%', t: 'of national listings in ' + nat[0].quarter + ' are ' + nat[0].sector + ' businesses; ' + nat[1].sector + ' is next at ' + one(nat[1].share_pct) + '%.', go: 'See the sector mix', on: () => jump({}, 'lx-sectors'), src: SRC.bbs },
+      ok.length > 2 && { k: 'Lowest multiples', v: fmt.x2(ok[0].cfx_2025) + '×', t: ok[0].subsector + ' sold for the lowest multiple of cash flow in 2025, then ' + ok[1].subsector + ' (' + fmt.x2(ok[1].cfx_2025) + '×) and ' + ok[2].subsector + ' (' + fmt.x2(ok[2].cfx_2025) + '×). Industries with 10+ sales.', on: go(ok[0].subsector), src: SRC.bbs },
+      most && { k: 'Most traded', v: fmt.int(most.sold_2025), t: most.subsector + ' businesses sold in 2025, more than any other industry, at ' + dash0(most.cfx_2025, fmt.x2) + '× cash flow.', on: go(most.subsector), src: SRC.bbs },
+      up && { k: 'Biggest repricing', v: fmt.pct(up.cfx_chg), t: up.subsector + ': multiple from ' + fmt.x2(up.cfx_2019) + '× in 2019 to ' + fmt.x2(up.cfx_2025) + '× in 2025.', on: go(up.subsector), src: SRC.bbs }
+    ]);
   }
-
 
   // ---------- Local economy ----------
   const YOURS = ['36029', '36063', '36055', '36073', '36037', '36003', '25025', '36061', '36047', '36081', '36005', '36085'];
@@ -1814,36 +1630,6 @@ dash.calc('sba_markets', {
     pop_chg: { b: 'Population', label: 'Population change, 2020 to 2025', get: (r) => r.pop_chg, f: fmt.pct }
   };
   const ls = { pm: 'per1k', area: 'US', lvl: 'c', q: '', sb: 'Buffalo-Cheektowaga, NY', sbq: '', built: false };
-  const LT = {};
-  const pctTd = (v) => el('td', v == null ? 'muted' : v >= 0 ? 'g-up' : 'g-down', fmt.pct(v));
-  // sortable table: cols [{k, s: text column, f: number format or 'p' for a coloured % change}]
-  function lTable(id, rows, cols, def, draw, o = {}) {
-    const tb = $('#' + id), t = LT[id] || (LT[id] = { k: def[0], d: def[1] });
-    if (!tb.dataset.b) {
-      tb.dataset.b = '1';
-      tb.querySelectorAll('th button').forEach((b) => { if ((cols.find((x) => x.k === b.dataset.k) || {}).s) b.parentNode.className = 'tl'; });
-      tb.querySelectorAll('th button').forEach((b) => b.addEventListener('click', () => {
-        const c = cols.find((x) => x.k === b.dataset.k);
-        if (t.k === b.dataset.k) t.d *= -1; else { t.k = b.dataset.k; t.d = c && c.s ? 1 : -1; }
-        draw();
-      }));
-      if (o.click) tb.addEventListener('click', (e) => { const tr = e.target.closest('tbody tr'); if (tr) o.click(tr.dataset.key); });
-    }
-    let rs = sortRows(rows.slice(), t.k, t.d);
-    if (o.pin) rs = rs.filter((r) => o.pin.has(r[o.key])).concat(rs.filter((r) => !o.pin.has(r[o.key])));
-    if (o.limit) rs = rs.slice(0, o.limit);
-    tb.querySelector('tbody').replaceChildren(...rs.map((r) => {
-      const tr = el('tr'); tr.dataset.key = r[o.key];
-      if ((o.pin && o.pin.has(r[o.key])) || (o.sel != null && o.sel === r[o.key])) tr.className = 'sel';
-      cols.forEach((c) => { const v = r[c.k]; tr.append(c.s ? el('td', c.m ? 'tl muted' : 'tl', v || '—') : c.f === 'p' ? pctTd(v) : nCell(v, c.f)); });
-      return tr;
-    }));
-    tb.querySelectorAll('th button').forEach((b) => b.parentNode.setAttribute('aria-sort', b.dataset.k === t.k ? (t.d > 0 ? 'ascending' : 'descending') : 'none'));
-  }
-  const one = (v) => v.toFixed(1), r0 = (v) => v.toFixed(0);
-  const kpi = (label, val, chg) => { const c = el('div', 'lx-card lx-kpi'); c.append(el('span', 'lx-label', label), el('span', 'lx-val', val), el('span', 'lx-chg', chg)); return c; };
-  const MN = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' '), mLab = (m) => MN[+m.slice(5) - 1] + ' ' + m.slice(0, 4);
-
   function buildLocal() {
     if (ls.built) return;
     ls.built = true;
@@ -1853,7 +1639,7 @@ dash.calc('sba_markets', {
       b.addEventListener('click', () => { ls.pm = k; seg.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); drawPM(); });
       seg.appendChild(b);
     });
-    $('#sel-pt').addEventListener('change', (e) => { ls.area = e.target.value; drawPT(); });
+    $('#sel-pt').addEventListener('change', (e) => { ls.area = e.target.value; drawPT(); drawPM(); });
     $('#seg-lc').addEventListener('click', (e) => {
       const b = e.target.closest('button'); if (!b) return;
       ls.lvl = b.dataset.v; $('#seg-lc').querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); drawLC();
@@ -1872,19 +1658,19 @@ dash.calc('sba_markets', {
     pick.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); choose(); } });
   }
 
-  function drawLocKpis() {
-    const s = dash.data('local_states'), c = dash.data('local_counties'), host = $('#loc-kpis');
+  function drawLocH() {
+    const s = dash.data('local_states'), c = dash.data('local_counties'), m = dash.data('local_metros');
     if (s.status !== 'ok' || c.status !== 'ok') return;
-    const us = s.data.find((r) => r.st === 'US'), mine = c.data.filter((r) => YOURS.includes(r.fips));
-    const u25 = d3.sum(mine, (r) => r.u2025), u24 = d3.sum(mine, (r) => r.u2024), pop = d3.sum(mine, (r) => r.pop2025);
-    const pop20 = d3.sum(mine, (r) => r.pop2025 / (1 + (r.pop_chg || 0) / 100));
-    const g = d3.sum(mine, (r) => (r.growth ?? 50) * r.pop2025) / pop;
-    host.replaceChildren(
-      kpi('US housing units permitted, 2025', fmt.int(us.u2025), fmt.pct(us.chg25) + ' vs 2024'),
-      kpi('US permits, Jan–Aug 2026', fmt.int(us.ytd26), fmt.pct(us.chg_ytd) + ' vs Jan–Aug 2025'),
-      kpi('Your counties: permits 2025', fmt.int(u25), fmt.pct((u25 / u24 - 1) * 100) + ' vs 2024 · ' + (u25 / pop * 1000).toFixed(1) + ' per 1,000 residents (US ' + us.per1k.toFixed(1) + ')'),
-      kpi('Your counties: population since 2020', fmt.pct((pop / pop20 - 1) * 100), fmt.int(pop) + ' residents in 2025 · US ' + fmt.pct(us.pop_chg)),
-      kpi('Your counties: local growth score', g.toFixed(0), '50 is a typical US county · ' + mine.filter((r) => r.growth != null).map((r) => r.county.replace(' County', '') + ' ' + r.growth.toFixed(0)).join(', ')));
+    const us = s.data.find((r) => r.st === 'US'), top = s.data.filter((r) => r.st !== 'US').sort((a, b) => b.per1k - a.per1k)[0];
+    const mine = c.data.filter((r) => YOURS.includes(r.fips)), pop = d3.sum(mine, (r) => r.pop2025), g = d3.sum(mine, (r) => (r.growth ?? 50) * r.pop2025) / pop;
+    const lead = mine.filter((r) => r.growth != null).sort((a, b) => b.growth - a.growth).slice(0, 3).map((r) => r.county.replace(' County', '') + ' ' + r0(r.growth)).join(', ');
+    const b = m.status === 'ok' ? m.data.find((r) => r.metro === 'Buffalo-Cheektowaga, NY') : null;
+    hl('#hl-loc', [
+      { k: 'US housing permits', v: fmt.int(us.u2025), t: 'new homes permitted in 2025, ' + fmt.pct(us.chg25) + ' on 2024; January to August 2026 is ' + fmt.pct(us.chg_ytd) + ' on the same months of 2025.', on: () => { ls.area = 'US'; $('#sel-pt').value = 'US'; jump({ v_pm: 'trend' }, 'lx-loc-map', drawPT); }, src: SRC.bps },
+      top && { k: 'Fastest building', v: top.state, t: one(top.per1k) + ' new homes per 1,000 residents in 2025 against ' + one(us.per1k) + ' for the US; population ' + fmt.pct(top.pop_chg) + ' since 2020.', go: 'See the map', on: () => jump({ v_pm: 'chart' }, 'lx-loc-map', drawPM), src: SRC.bps },
+      mine.length && { k: 'Your counties', v: r0(g), t: 'local growth score of your counties together (50 is a typical US county); highest: ' + lead + '.', go: 'See every county', on: () => { ls.lvl = 'c'; jump({}, 'lx-loc-cty', drawLC); }, src: SRC.bps },
+      b && { k: 'Owners to buy from', v: fmt.int(b.small_businesses), t: 'small businesses in the Buffalo metro, ' + one(b.sb_per_1k) + ' per 1,000 residents; they employ ' + one(b.sb_emp_share) + '% of its workers.', on: () => { ls.sb = b.metro; jump({ v_sb: 'chart' }, 'lx-loc-sb', drawSB); }, src: SRC.adv }
+    ]);
   }
 
   function drawPM() {
@@ -1893,7 +1679,7 @@ dash.calc('sba_markets', {
     const d = dash.data('local_states').data;
     choro(wrap, $('#pm-scale'), new Map(d.map((r) => [r.st, r])), PMM[ls.pm],
       (r) => [['Units permitted 2025', fmt.int(r.u2025)], ['Per 1,000 residents', one(r.per1k)], ['2025 vs 2024', fmt.pct(r.chg25)], ['Jan–Aug 2026 vs 2025', fmt.pct(r.chg_ytd)], ['Single-family share', one(r.one_share) + '%'], ['Population since 2020', fmt.pct(r.pop_chg)]],
-      'US map of housing permits by state');
+      'US map of housing permits by state', null, (ab) => { ls.area = ab; $('#sel-pt').value = ab; jump({ v_pm: 'trend' }, 'lx-loc-map', drawPT); }, ls.area);
     lTable('tbl-pm', d, [{ k: 'state', s: 1 }, { k: 'u2025', f: fmt.int }, { k: 'per1k', f: one }, { k: 'chg25', f: 'p' }, { k: 'chg_ytd', f: 'p' }, { k: 'one_share', f: one }, { k: 'pop2025', f: fmt.int }, { k: 'pop_chg', f: 'p' }], ['per1k', -1], drawPM, { key: 'st', pin: new Set(['US']) });
   }
 
@@ -1975,52 +1761,46 @@ dash.calc('sba_markets', {
 
   function drawLocal() {
     buildLocal();
-    drawLocKpis(); drawPM(); drawPT(); drawLC(); drawSB();
+    drawLocH(); drawPM(); drawPT(); drawLC(); drawSB();
   }
 
-  let cache = null;
-  function drawAll() {
-    if (!cache) return;
-    const ah = dash.data('active_history');
-    let rows = cache.rows, labels = cache.labels;
-    if (ah.status === 'ok') {
-      rows = cache.rows.concat(ah.data); labels = [];
-      const last = cache.labels[cache.labels.length - 1];
-      for (let y = 2018; y <= +last.slice(0, 4); y++) for (let q = 1; q <= 4; q++) { const l = y + ' Q' + q; if (l <= last) labels.push(l); }
-    }
-    drawTrend(rows, labels);
+  // National was first published in 2021. For 2018–2020 take the 64 metros (listing-weighted, listings summed)
+  // and scale each measure by the metros' average gap to the published national figure from 2021 on.
+  const EK = ['listings', 'ask', 'rev', 'cf', 'revx', 'cfx'];
+  function natEst(metrics, hist) {
+    const comp = (rs) => { const o = {}; EK.forEach((k) => { const v = rs.filter((r) => r[k] != null && r.listings); const w = d3.sum(v, (r) => r.listings); o[k] = k === 'listings' ? w : w ? d3.sum(v, (r) => r.listings * r[k]) / w : null; }); return o; };
+    const byQ = (rs) => d3.group(rs.filter((r) => r.type === 'Metro'), (r) => r.quarter);
+    const nat = new Map(metrics.filter((r) => r.market === NAT).map((r) => [r.quarter, r])), ratio = {};
+    const ov = [...byQ(metrics)].filter(([q]) => nat.has(q)).map(([q, rs]) => [nat.get(q), comp(rs)]);
+    EK.forEach((k) => { ratio[k] = d3.mean(ov.filter(([a, c]) => a[k] != null && c[k]), ([a, c]) => a[k] / c[k]); });
+    return [...byQ(hist)].filter(([q]) => !nat.has(q)).map(([q, rs]) => {
+      const c = comp(rs), o = { market: NAT, short: 'National', type: 'National', quarter: q, est: true };
+      EK.forEach((k) => { o[k] = c[k] != null && ratio[k] ? c[k] * ratio[k] : null; });
+      ['listings', 'ask', 'rev', 'cf'].forEach((k) => { if (o[k] != null) o[k] = Math.round(o[k] / (k === 'listings' ? 10 : 1000)) * (k === 'listings' ? 10 : 1000); });
+      return o;
+    });
   }
-  function drawAllClosed() { drawClosedTrend(); drawClosedExplorer(); }
 
+  function secBuild() {
+    if (state.secb) return;
+    state.secb = true;
+    const ss = $('#sel-sector');
+    SECT.forEach((s) => ss.appendChild(new Option(s, s)));
+    ss.value = state.sector;
+    ss.addEventListener('change', () => { state.sector = ss.value; drawSectors(); });
+    legend($('#lg-sec'), SECT.map((s, i) => [s, NKC()[i]]));
+  }
+
+  // only the open tab is drawn, so changing a control redraws one tab, not five
   dash.onData(() => {
-    const m = dash.data('metrics');
-    if (m.status === 'ok') {
-      const rows = m.data;
-      const labels = [...new Set(rows.map((r) => r.quarter))].sort((a, b) => a.localeCompare(b));
-      const rec = new Set(rows.filter((r) => r.data_source !== 'PDF table').map((r) => r.quarter));
-      cache = { rows, labels, band: labels.map((q, i) => (rec.has(q) ? i : -1)).filter((i) => i >= 0) };
-      build(rows);
-      drawAll();
-    } else {
-      cache = null;
-      ['#ch-ask', '#ch-list', '#ch-fin', '#ch-mult'].forEach((s) => gate($(s), ['metrics']));
-    }
-    const c = dash.data('closed');
-    if (c.status === 'ok') {
-      const rows = c.data;
-      const labels = [...new Set(rows.map((r) => r.quarter))].sort((a, b) => a.localeCompare(b));
-      const inf = new Set(rows.filter((r) => r.type === 'National' && r.data_source !== 'Tableau table').map((r) => r.quarter));
-      ccache = { rows, labels, band: labels.map((q, i) => (inf.has(q) ? i : -1)).filter((i) => i >= 0) };
-      buildClosed(rows);
-    } else ccache = null;
-    drawAllClosed();
-    drawClosedKpis();
-    drawClosedTable();
-    drawSba();
-    drawKpis();
-    drawTable();
-    drawSectors();
-    drawLocal();
+    const pg = dash.params().page;
+    if (pg === 'deals' || pg === 'mine') return;
+    const cat = catOf();
+    if (cat === 'listings') drawL();
+    else if (cat === 'sold') drawS();
+    else if (cat === 'financing') { drawF(); wBuild(); drawMap(); drawIndustries(); drawLenders(); drawCounties(); }
+    else if (cat === 'industries') { secBuild(); drawSectors(); drawInd(); }
+    else drawLocal();
   });
 })();
 
@@ -2674,398 +2454,6 @@ dash.calc('listing_compare', {
 })();
 </script>
 
-<script>
-(function () {
-const NKC = () => ['var(--nk-c0)', 'var(--nk-c1)', 'var(--nk-c2)', 'var(--nk-c3)', 'var(--nk-c4)'];
-dash.calc('hist_kpi', {
-  title: 'National, then and now',
-  description: 'Latest national figure against the earliest same quarter with a published value (businesses sold: full-year totals, 2013 against the latest complete year).',
-  inputs: ['national_history'],
-  fn: (rows) => {
-    const r = rows.slice().sort((a, b) => a.quarter.localeCompare(b.quarter));
-    const last = r[r.length - 1];
-    const out = [];
-    ['sale', 'cf', 'cfx', 'dom'].forEach((k) => {
-      const lat = [...r].reverse().find((x) => x[k] != null);
-      if (!lat) return;
-      const base = r.find((x) => x[k] != null && x.qtr === lat.qtr);
-      out.push({ metric: k, base: base[k], base_label: base.quarter, latest: lat[k], latest_label: lat.quarter, change_pct: base[k] ? (lat[k] / base[k] - 1) * 100 : null });
-    });
-    const yrs = new Map();
-    r.forEach((x) => { if (x.sold != null) { const y = yrs.get(x.year) || { n: 0, s: 0 }; y.n++; y.s += x.sold; yrs.set(x.year, y); } });
-    const full = [...yrs.entries()].filter(([, v]) => v.n === 4).sort((a, b) => a[0] - b[0]);
-    if (full.length) {
-      const b = full[0], l = full[full.length - 1];
-      out.push({ metric: 'sold', base: b[1].s, base_label: String(b[0]), latest: l[1].s, latest_label: String(l[0]), change_pct: (l[1].s / b[1].s - 1) * 100 });
-    }
-    return out;
-  }
-});
-
-dash.calc('annual_compare', {
-  title: 'Sold deals by market, 2025 against 2019',
-  description: 'Full-year reported sales, median sale price, cash-flow multiple and days on market per market from the Insight Report full-year tables.',
-  inputs: ['closed_annual'],
-  fn: (rows) => {
-    const by = new Map();
-    rows.forEach((r) => { const m = by.get(r.market) || { market: r.market, short: r.short, in_tableau: r.in_tableau }; m[r.fy] = r; by.set(r.market, m); });
-    return [...by.values()].map((m) => {
-      const a = m[2019] || {}, b = m[2025] || {};
-      return { market: m.market, short: m.short, in_tableau: m.in_tableau, sold_2019: a.sold ?? null, sold_2025: b.sold ?? null,
-        sold_chg: a.sold && b.sold != null ? (b.sold / a.sold - 1) * 100 : null, sale_2019: a.sale ?? null, sale_2025: b.sale ?? null,
-        sale_chg: a.sale && b.sale != null ? (b.sale / a.sale - 1) * 100 : null, cfx_2025: b.cfx ?? null, dom_2025: b.dom ?? null };
-    });
-  }
-});
-
-dash.calc('sector_trend', {
-  title: 'Industry cash-flow multiples over time',
-  description: 'Average cash-flow multiple per subsector for FY2019, FY2022 and FY2025, with sales in 2025 and the number of years the subsector appears.',
-  inputs: ['sector_annual'],
-  fn: (rows) => {
-    const by = new Map();
-    rows.slice().sort((a, b) => a.fy - b.fy).forEach((r) => {
-      const s = by.get(r.subsector) || { subsector: r.subsector, years: 0 };
-      s.sector = r.sector; s.years += 1; s[r.fy] = r; by.set(r.subsector, s);
-    });
-    return [...by.values()].map((s) => {
-      const c = (y) => (s[y] && s[y].cfx != null ? s[y].cfx : null);
-      return { subsector: s.subsector, sector: s.sector, cfx_2019: c(2019), cfx_2022: c(2022), cfx_2025: c(2025),
-        cfx_chg: c(2019) && c(2025) != null ? (c(2025) / c(2019) - 1) * 100 : null, sold_2025: s[2025] ? s[2025].sold : null, years: s.years };
-    });
-  }
-});
-
-(() => {
-  const NAT = 'National (United States)';
-  const $ = (q) => document.querySelector(q);
-  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-  const F = {
-    int: (n) => (n == null ? '—' : d3.format(',')(Math.round(n))),
-    usd: (n) => (n == null ? '—' : '$' + d3.format(',')(Math.round(n))),
-    usdK: (n) => '$' + d3.format(',')(Math.round(n / 1000)) + 'K',
-    x2: (n) => (n == null ? '—' : d3.format('.2f')(n)),
-    pct: (v) => (v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(0) + '%')
-  };
-  const AMET = {
-    ask: { label: 'Median asking price', fmt: F.usd, tick: F.usdK },
-    listings: { label: 'Active listings', fmt: F.int, tick: d3.format('.3~s'), solo: true },
-    rev: { label: 'Median revenue', fmt: F.usd, tick: F.usdK },
-    cf: { label: 'Median cash flow', fmt: F.usd, tick: F.usdK },
-    cfx: { label: 'Average asking price to cash flow', fmt: F.x2, tick: F.x2 },
-    revx: { label: 'Average asking price to revenue', fmt: F.x2, tick: F.x2 }
-  };
-  const CMET = {
-    sold: { label: 'Businesses sold', fmt: F.int, tick: d3.format('.3~s') },
-    sale: { label: 'Median sale price', fmt: F.usd, tick: F.usdK },
-    cf: { label: 'Median cash flow of sold businesses', fmt: F.usd, tick: F.usdK },
-    cfx: { label: 'Average cash flow multiple', fmt: F.x2, tick: F.x2 },
-    s2a: { label: 'Average sale to asking price', fmt: F.x2, tick: F.x2 },
-    dom: { label: 'Median days on market', fmt: F.int, tick: F.int }
-  };
-  const FYS = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025];
-  const MUTED = 'var(--cds-chart-muted)';
-  const st = { am: 'Buffalo-Niagara Falls, NY', amet: 'ask', cm: 'Buffalo-Niagara Falls, NY', cmet: 'sold', cq: '', cs: 'sold_2025', cd: -1, iq: '', is: 'sold_2025', id: -1, sub: null, built: false };
-
-  function gate(host, ids) {
-    const s = ids.map((i) => dash.data(i).status);
-    if (s.every((x) => x === 'ok')) { host.classList.remove('dash-skeleton'); return true; }
-    host.replaceChildren();
-    if (s.some((x) => ['error', 'connect', 'declined', 'missing'].includes(x))) {
-      host.classList.remove('dash-skeleton'); host.style.position = 'relative'; host.appendChild(el('div', 'lx-fail', 'Failed to load'));
-    } else host.classList.add('dash-skeleton');
-    return false;
-  }
-
-  // labels: array; xlab(label, i) -> tick text or null
-  function chart(host, o) {
-    host.replaceChildren();
-    const W = Math.max(280, host.clientWidth), H = o.height || 240, n = o.labels.length;
-    const all = o.series.flatMap((s) => s.values).filter((v) => v != null);
-    if (!all.length) { host.appendChild(el('div', 'lx-fail', 'No published values')); host.style.position = 'relative'; return; }
-    let lo = o.zero ? 0 : d3.min(all), hi = d3.max(all);
-    const pad = (hi - lo) * 0.12 || Math.abs(hi) * 0.1 || 1;
-    if (!o.zero) lo = Math.max(0, lo - pad);
-    hi += pad;
-    const y = d3.scaleLinear().domain([lo, hi]).range([H - 26, 10]).nice(5);
-    const svg = d3.select(host).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', o.aria);
-    const ticks = y.ticks(5);
-    const probe = svg.append('text').attr('class', 'lx-tick');
-    let ml = 0;
-    ticks.forEach((t) => { probe.text(o.tick(t)); ml = Math.max(ml, probe.node().getComputedTextLength()); });
-    probe.remove();
-    ml = Math.ceil(ml) + 10;
-    const mr = 14;
-    const x = d3.scaleLinear().domain([0, Math.max(1, n - 1)]).range([ml, W - mr]);
-    const g = svg.append('g');
-    ticks.forEach((t) => {
-      g.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', y(t)).attr('y2', y(t)).style('stroke', 'var(--cds-chart-grid)').attr('stroke-width', 1);
-      g.append('text').attr('class', 'lx-tick').attr('x', ml - 6).attr('y', y(t)).attr('text-anchor', 'end').attr('dominant-baseline', 'middle').text(o.tick(t));
-    });
-    if (o.showBand && o.band && o.band.length) {
-      const st2 = (W - mr - ml) / Math.max(1, n - 1), i0 = d3.min(o.band), i1 = d3.max(o.band);
-      g.append('rect').attr('x', Math.max(ml, x(i0) - st2 / 2)).attr('width', x(i1) - x(i0) + st2).attr('y', 10).attr('height', H - 36).style('fill', 'var(--color-warn)').attr('opacity', 0.14);
-    }
-    if (o.mark != null && o.mark >= 0) {
-      g.append('line').attr('x1', x(o.mark)).attr('x2', x(o.mark)).attr('y1', 10).attr('y2', H - 26).style('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
-    }
-    let lastTx = -1e9;
-    o.labels.forEach((l, i) => {
-      const t = o.xlab(l, i); if (t == null) return;
-      const px = x(i); if (px - lastTx < 34) return; lastTx = px;
-      g.append('text').attr('class', 'lx-tick').attr('x', px).attr('y', H - 8).attr('text-anchor', i === 0 ? 'start' : i === n - 1 ? 'end' : 'middle').text(t);
-    });
-    const line = d3.line().defined((v) => v != null).x((v, i) => x(i)).y((v) => y(v));
-    o.series.forEach((s) => {
-      g.append('path').attr('d', line(s.values)).attr('fill', 'none').style('stroke', s.color).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round');
-      s.values.forEach((v, i) => {
-        if (v == null) return;
-        const lone = (i === 0 || s.values[i - 1] == null) && (i === n - 1 || s.values[i + 1] == null);
-        if (lone || n <= 12 || i === n - 1) g.append('circle').attr('cx', x(i)).attr('cy', y(v)).attr('r', lone ? 3 : 2.75).style('fill', s.color);
-      });
-    });
-    const rule = g.append('line').attr('y1', 10).attr('y2', H - 26).style('stroke', 'var(--cds-chart-reference)').attr('visibility', 'hidden');
-    const dots = o.series.map((s) => g.append('circle').attr('r', 4).style('fill', s.color).attr('visibility', 'hidden'));
-    const tip = el('div', 'lx-tip'); tip.hidden = true; host.appendChild(tip);
-    svg.append('rect').attr('x', ml).attr('y', 0).attr('width', W - ml - mr).attr('height', H - 20).attr('fill', 'transparent')
-      .on('mousemove', (ev) => {
-        const r = host.getBoundingClientRect();
-        const i = Math.max(0, Math.min(n - 1, Math.round(x.invert((ev.clientX - r.left) * (W / r.width)))));
-        rule.attr('x1', x(i)).attr('x2', x(i)).attr('visibility', 'visible');
-        tip.replaceChildren(el('div', 't', String(o.labels[i])));
-        o.series.forEach((s, k) => {
-          const v = s.values[i];
-          dots[k].attr('cx', x(i)).attr('cy', v == null ? -10 : y(v)).attr('visibility', v == null ? 'hidden' : 'visible');
-          const row = el('div', 'r'); const sw = el('i'); sw.style.background = s.color;
-          row.append(sw, el('span', null, s.name), el('b', null, v == null ? 'not published' : (s.fmt || o.fmt)(v, i)));
-          tip.appendChild(row);
-        });
-        tip.hidden = false;
-        const tw = tip.offsetWidth, cx = x(i) * (r.width / W);
-        tip.style.left = Math.max(0, Math.min(r.width - tw, cx + 12 + tw > r.width ? cx - tw - 12 : cx + 12)) + 'px';
-        tip.style.top = '6px';
-      })
-      .on('mouseleave', () => { tip.hidden = true; rule.attr('visibility', 'hidden'); dots.forEach((d) => d.attr('visibility', 'hidden')); });
-  }
-  const qLab = (l) => (l.endsWith('Q1') ? l.slice(0, 4) : null);
-  // latest value with change on the previous period and since the first value
-  function grow(vals, labels, prevOf) {
-    let i = vals.length - 1; while (i >= 0 && vals[i] == null) i--;
-    if (i < 0) return null;
-    const k = vals.findIndex((v) => v != null), j = labels.indexOf(prevOf(labels[i]));
-    return { label: labels[i], v: vals[i], first: labels[k], prev: j >= 0 && vals[j] ? (vals[i] / vals[j] - 1) * 100 : null, since: k < i && vals[k] ? (vals[i] / vals[k] - 1) * 100 : null };
-  }
-  const prevQ = (l) => (+l.slice(0, 4) - 1) + l.slice(4);
-  const prevY = (l) => String(+l - 1);
-  function gl(id, g, f, prevText) {
-    const host = $('#' + id); if (!host) return;
-    host.replaceChildren(); if (!g) return;
-    const s = (v) => el('span', v == null ? null : v >= 0 ? 'g-up' : 'g-down', F.pct(v));
-    const a = el('span'); a.append(el('b', null, f(g.v)), ' in ' + g.label);
-    const b = el('span'); b.append(s(g.prev), ' ' + prevText);
-    host.append(a, b);
-    if (g.since != null) { const c = el('span'); c.append(s(g.since), ' since ' + g.first); host.append(c); }
-  }
-
-  const legend = (host, items) => host.replaceChildren(...items.map(([name, color]) => { const s = el('span'); const i = el('i'); i.style.background = color; s.append(i, name); return s; }));
-
-  // ---------- KPIs ----------
-  function drawKpis() {
-    const d = dash.data('hist_kpi');
-    const ids = ['hs-k-sold', 'hs-c-sold', 'hs-k-sale', 'hs-c-sale', 'hs-k-cf', 'hs-c-cf', 'hs-k-cfx', 'hs-c-cfx', 'hs-k-dom', 'hs-c-dom', 'hs-t-sold', 'hs-t-soldchg', 'hs-t-sale0', 'hs-t-sale1', 'hs-t-salechg', 'hs-t-cfchg', 'hs-t-cfx0', 'hs-t-cfx1'];
-    if (d.status !== 'ok') { ids.forEach((i) => { $('#' + i).textContent = '—'; }); return; }
-    const m = new Map(d.data.map((r) => [r.metric, r]));
-    const fm = { sold: F.int, sale: F.usd, cf: F.usd, cfx: F.x2, dom: F.int };
-    ['sold', 'sale', 'cf', 'cfx', 'dom'].forEach((k) => {
-      const r = m.get(k);
-      $('#hs-k-' + k).textContent = r ? fm[k](r.latest) + (k === 'dom' ? ' days' : '') : '—';
-      $('#hs-c-' + k).textContent = r ? F.pct(r.change_pct) + ' vs ' + r.base_label + ' (' + fm[k](r.base) + ')' : '—';
-    });
-    const g = (k, f) => (m.get(k) ? f(m.get(k)) : '—');
-    $('#hs-t-sold').textContent = g('sold', (r) => F.int(r.latest));
-    $('#hs-t-soldchg').textContent = g('sold', (r) => F.pct(r.change_pct));
-    $('#hs-t-sale0').textContent = g('sale', (r) => F.usd(r.base) + ' in ' + r.base_label);
-    $('#hs-t-sale1').textContent = g('sale', (r) => F.usd(r.latest) + ' in ' + r.latest_label);
-    $('#hs-t-salechg').textContent = g('sale', (r) => F.pct(r.change_pct));
-    $('#hs-t-cfchg').textContent = g('cf', (r) => F.pct(r.change_pct));
-    $('#hs-t-cfx0').textContent = g('cfx', (r) => F.x2(r.base));
-    $('#hs-t-cfx1').textContent = g('cfx', (r) => F.x2(r.latest));
-  }
-
-  // ---------- national charts ----------
-  function drawNational() {
-    const ids = ['hs-ch-sold', 'hs-ch-price', 'hs-ch-cf', 'hs-ch-mult', 'hs-ch-s2a', 'hs-ch-dom'];
-    const ok = ids.map((i) => gate($('#' + i), ['national_history']));
-    if (!ok[0]) return;
-    const rows = dash.data('national_history').data.slice().sort((a, b) => a.quarter.localeCompare(b.quarter));
-    const labels = rows.map((r) => r.quarter), v = (k) => rows.map((r) => r[k] ?? null), C = NKC();
-    const mark = labels.indexOf('2021 Q1');
-    const cl = dash.data('closed');
-    const inf = cl.status === 'ok' ? new Set(cl.data.filter((r) => r.type === 'National' && r.data_source !== 'Tableau table').map((r) => r.quarter)) : new Set();
-    const band = labels.map((q, i) => (inf.has(q) ? i : -1)).filter((i) => i >= 0);
-    const base = { labels, xlab: qLab, mark, band };
-    chart($('#hs-ch-sold'), { ...base, zero: true, aria: 'National businesses sold per quarter, 2013 to 2026', tick: d3.format('.2~s'), fmt: F.int, series: [{ name: 'Businesses sold', color: C[0], values: v('sold') }] });
-    chart($('#hs-ch-price'), { ...base, aria: 'National median sale price and asking price of sold businesses, 2013 to 2026', tick: F.usdK, fmt: F.usd, series: [{ name: 'Median asking price', color: C[1], values: v('ask') }, { name: 'Median sale price', color: C[0], values: v('sale') }] });
-    legend($('#hs-lg-price'), [['Median sale price', C[0]], ['Median asking price', C[1]]]);
-    chart($('#hs-ch-cf'), { ...base, aria: 'National median cash flow of sold businesses, 2013 to 2026', tick: F.usdK, fmt: F.usd, series: [{ name: 'Median cash flow', color: C[2], values: v('cf') }] });
-    chart($('#hs-ch-mult'), { ...base, aria: 'National average cash flow multiple, 2013 to 2026', tick: F.x2, fmt: F.x2, series: [{ name: 'Cash flow multiple', color: C[2], values: v('cfx') }] });
-    chart($('#hs-ch-s2a'), { ...base, aria: 'National average sale to asking price, 2013 to 2026', tick: F.x2, fmt: F.x2, series: [{ name: 'Sale to asking', color: C[0], values: v('s2a') }] });
-    chart($('#hs-ch-dom'), { ...base, aria: 'National median days on market, 2013 to 2026', tick: F.int, fmt: (n) => F.int(n) + ' days', series: [{ name: 'Days on market', color: C[3] || C[1], values: v('dom') }] });
-    const pq = 'vs a year earlier';
-    gl('hs-g-sold', grow(v('sold'), labels, prevQ), F.int, pq);
-    gl('hs-g-sale', grow(v('sale'), labels, prevQ), F.usd, pq);
-    gl('hs-g-cf', grow(v('cf'), labels, prevQ), F.usd, pq);
-    gl('hs-g-cfx', grow(v('cfx'), labels, prevQ), F.x2, pq);
-    gl('hs-g-s2a', grow(v('s2a'), labels, prevQ), F.x2, pq);
-    gl('hs-g-dom', grow(v('dom'), labels, prevQ), (n) => F.int(n) + ' days', pq);
-    const body = $('#hs-tbl-nat tbody');
-    if (body) {
-      const m = new Map(rows.map((r) => [r.quarter, r]));
-      const nc = (x, f) => el('td', x == null ? 'muted' : null, x == null ? '—' : f(x));
-      body.replaceChildren(...rows.slice().reverse().map((r) => {
-        const b = m.get(prevQ(r.quarter)), y = r.sold != null && b && b.sold ? (r.sold / b.sold - 1) * 100 : null;
-        const tr = el('tr'); tr.dataset.key = r.quarter;
-        tr.append(el('td', null, r.quarter), nc(r.sold, F.int), el('td', y == null ? 'muted' : y >= 0 ? 'g-up' : 'g-down', F.pct(y)), nc(r.sale, F.usd), nc(r.ask, F.usd), nc(r.cf, F.usd), nc(r.cfx, F.x2), nc(r.s2a, F.x2), nc(r.dom, F.int), el('td', 'muted', r.source || ''));
-        return tr;
-      }));
-    }
-  }
-
-  // ---------- active by market ----------
-  function activeRows() {
-    const a = dash.data('active_history'), m = dash.data('metrics');
-    if (a.status !== 'ok' || m.status !== 'ok') return null;
-    return a.data.concat(m.data);
-  }
-  function buildControls() {
-    if (st.built) return;
-    const ca = dash.data('closed_annual');
-    if (ca.status !== 'ok' || dash.data('sector_trend').status !== 'ok') return;
-    st.built = true;
-    const cmk = [...new Set(ca.data.map((r) => r.market))].sort();
-    $('#hs-sel-cm').replaceChildren(...cmk.map((n) => new Option(n, n)));
-    $('#hs-sel-cm').value = st.cm;
-    $('#hs-sel-cmet').replaceChildren(...Object.entries(CMET).map(([k, o]) => new Option(o.label, k)));
-    $('#hs-sel-cmet').value = st.cmet;
-    $('#hs-sel-cm').addEventListener('change', (e) => { st.cm = e.target.value; drawClosedChart(); markRow('#hs-tbl-cm', st.cm); });
-    $('#hs-sel-cmet').addEventListener('change', (e) => { st.cmet = e.target.value; drawClosedChart(); });
-    const tr = dash.data('sector_trend');
-    if (tr.status === 'ok') {
-      const subs = sortBy(tr.data, 'subsector', 1);
-      $('#hs-ind-list').replaceChildren(...subs.map((r) => { const o = document.createElement('option'); o.value = r.subsector; o.label = r.sector; return o; }));
-      const pick = $('#hs-ind-pick');
-      const choose = () => {
-        const v = pick.value.trim().toLowerCase(); if (!v) { $('#hs-ind-msg').textContent = ''; return; }
-        const exact = subs.find((r) => r.subsector.toLowerCase() === v);
-        const hits = exact ? [exact] : subs.filter((r) => (r.subsector + ' ' + r.sector).toLowerCase().includes(v));
-        if (hits.length === 1 || exact) { st.sub = hits[0].subsector; pick.value = st.sub; $('#hs-ind-msg').textContent = ''; drawIndChart(); markRow('#hs-tbl-ind', st.sub); }
-        else $('#hs-ind-msg').textContent = hits.length ? hits.length + ' matches: pick one from the list' : 'No industry matches';
-      };
-      pick.addEventListener('change', choose);
-      pick.addEventListener('input', () => { if (subs.some((r) => r.subsector.toLowerCase() === pick.value.trim().toLowerCase())) choose(); });
-      pick.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); choose(); } });
-    }
-  }
-  function drawActive() {
-    const host = $('#hs-ch-am'), met = AMET[st.amet], C = NKC();
-    const short = st.am === NAT ? 'National' : st.am.split(/[-,]/)[0];
-    $('#hs-am-title').textContent = short + ': ' + met.label.toLowerCase();
-    if (!gate(host, ['active_history', 'metrics'])) return;
-    const rows = activeRows();
-    const labels = [];
-    for (let y = 2018; y <= 2026; y++) for (let q = 1; q <= 4; q++) { if (y === 2026 && q > 2) break; labels.push(y + ' Q' + q); }
-    const s = (mk) => { const m = new Map(rows.filter((r) => r.market === mk).map((r) => [r.quarter, r[st.amet]])); return labels.map((q) => (m.has(q) ? m.get(q) : null)); };
-    const series = [{ name: short, color: C[0], values: s(st.am) }];
-    if (st.am !== NAT && !met.solo) series.push({ name: 'National', color: MUTED, values: s(NAT) });
-    legend($('#hs-lg-am'), series.map((x) => [x.name, x.color]));
-    chart(host, { labels, xlab: qLab, height: 280, zero: !!met.solo, aria: short + ' ' + met.label + ' by quarter, 2018 to 2026', tick: met.tick, fmt: met.fmt, series });
-  }
-
-  // ---------- sold deals by market (annual) ----------
-  function drawClosedChart() {
-    const host = $('#hs-ch-cm'), met = CMET[st.cmet], C = NKC();
-    $('#hs-cm-title').textContent = st.cm + ': ' + met.label.toLowerCase() + ', by year';
-    if (!gate(host, ['closed_annual'])) return;
-    const m = new Map(dash.data('closed_annual').data.filter((r) => r.market === st.cm).map((r) => [r.fy, r[st.cmet]]));
-    const cmv = FYS.map((y) => (m.has(y) ? m.get(y) : null));
-    gl('hs-g-cm', grow(cmv, FYS.map(String), prevY), met.fmt, 'vs the year before');
-    chart(host, { labels: FYS.map(String), xlab: (l) => l, zero: st.cmet === 'sold', aria: st.cm + ' ' + met.label + ' by year, 2017 to 2025', tick: met.tick, fmt: met.fmt, series: [{ name: met.label, color: C[0], values: FYS.map((y) => (m.has(y) ? m.get(y) : null)) }] });
-  }
-  function sortBy(rows, k, dir) {
-    return rows.slice().sort((a, b) => {
-      const x = a[k], y = b[k];
-      if (x == null && y == null) return 0; if (x == null) return 1; if (y == null) return -1;
-      return typeof x === 'string' ? x.localeCompare(y) * dir : (x - y) * dir;
-    });
-  }
-  function markRow(sel, key) { document.querySelectorAll(sel + ' tbody tr').forEach((tr) => tr.classList.toggle('sel', tr.dataset.key === key)); }
-  function td(v, f, cls) { const c = el('td', cls || null, v == null ? '—' : f(v)); if (v == null) c.classList.add('muted'); return c; }
-  function drawClosedTable() {
-    const d = dash.data('annual_compare'), body = $('#hs-tbl-cm tbody');
-    if (d.status !== 'ok') { body.replaceChildren(); return; }
-    const q = st.cq.toLowerCase();
-    const rows = sortBy(d.data.filter((r) => !q || r.market.toLowerCase().includes(q)), st.cs, st.cd);
-    body.replaceChildren(...rows.map((r) => {
-      const tr = el('tr'); tr.dataset.key = r.market; if (r.market === st.cm) tr.classList.add('sel');
-      tr.append(el('td', null, r.market), td(r.sold_2019, F.int), td(r.sold_2025, F.int), td(r.sold_chg, F.pct), td(r.sale_2019, F.usd), td(r.sale_2025, F.usd), td(r.sale_chg, F.pct), td(r.cfx_2025, F.x2), td(r.dom_2025, F.int));
-      tr.addEventListener('click', () => { st.cm = r.market; $('#hs-sel-cm').value = r.market; markRow('#hs-tbl-cm', r.market); dash.setParams({ v_cm: 'chart' }); });
-      return tr;
-    }));
-  }
-
-  // ---------- industries ----------
-  function drawIndChart() {
-    const host = $('#hs-ch-ind'), C = NKC();
-    if (!gate(host, ['sector_annual'])) return;
-    const rows = dash.data('sector_annual').data;
-    if (!st.sub) {
-      const t = dash.data('sector_trend');
-      if (t.status === 'ok') st.sub = (sortBy(t.data, 'sold_2025', -1)[0] || {}).subsector || null;
-    }
-    $('#hs-ind-title').textContent = (st.sub || '—') + ': average cash flow multiple by year';
-    const pk = $('#hs-ind-pick'); if (pk && document.activeElement !== pk) pk.value = st.sub || '';
-    const mine = new Map(rows.filter((r) => r.subsector === st.sub).map((r) => [r.fy, r]));
-    const med = FYS.map((y) => { const v = rows.filter((r) => r.fy === y && r.cfx != null && r.sold >= 10).map((r) => r.cfx); return v.length ? d3.median(v) : null; });
-    const series = [{ name: st.sub || '—', color: C[0], values: FYS.map((y) => (mine.has(y) ? mine.get(y).cfx : null)) },
-      { name: 'Median of all subsectors (10+ sales)', color: MUTED, values: med }];
-    legend($('#hs-lg-ind'), series.map((s) => [s.name, s.color]));
-    gl('hs-g-ind', grow(series[0].values, FYS.map(String), prevY), F.x2, 'vs the year before');
-    chart(host, { labels: FYS.map(String), xlab: (l) => l, aria: (st.sub || '') + ' cash flow multiple by year, 2017 to 2025', tick: F.x2, fmt: F.x2,
-      series: series.map((s, k) => (k === 0 ? { ...s, fmt: (v, i) => { const y = FYS[i]; const r = mine.get(y); return F.x2(v) + (r && r.sold != null ? ' · ' + F.int(r.sold) + ' sold' : ''); } } : s)) });
-  }
-  function drawIndTable() {
-    const d = dash.data('sector_trend'), body = $('#hs-tbl-ind tbody');
-    if (d.status !== 'ok') { body.replaceChildren(); return; }
-    const q = st.iq.toLowerCase();
-    const rows = sortBy(d.data.filter((r) => !q || (r.subsector + ' ' + r.sector).toLowerCase().includes(q)), st.is, st.id);
-    body.replaceChildren(...rows.map((r) => {
-      const tr = el('tr'); tr.dataset.key = r.subsector; if (r.subsector === st.sub) tr.classList.add('sel');
-      const chg = td(r.cfx_chg, F.pct);
-      tr.append(el('td', null, r.subsector), el('td', 'muted', r.sector), td(r.cfx_2019, F.x2), td(r.cfx_2022, F.x2), td(r.cfx_2025, F.x2), chg, td(r.sold_2025, F.int, r.sold_2025 != null && r.sold_2025 < 10 ? 'warn' : null), td(r.years, F.int));
-      tr.addEventListener('click', () => { st.sub = r.subsector; markRow('#hs-tbl-ind', r.subsector); dash.setParams({ v_ind: 'chart' }); });
-      return tr;
-    }));
-  }
-
-  // ---------- wiring ----------
-  document.querySelectorAll('#hs-tbl-cm [data-hsort]').forEach((b) => b.addEventListener('click', () => {
-    const k = b.dataset.hsort; st.cd = st.cs === k ? -st.cd : (k === 'market' ? 1 : -1); st.cs = k; drawClosedTable();
-  }));
-  document.querySelectorAll('#hs-tbl-ind [data-isort]').forEach((b) => b.addEventListener('click', () => {
-    const k = b.dataset.isort; st.id = st.is === k ? -st.id : (k === 'subsector' || k === 'sector' ? 1 : -1); st.is = k; drawIndTable();
-  }));
-  $('#hs-cm-q').addEventListener('input', (e) => { st.cq = e.target.value; drawClosedTable(); });
-  $('#hs-ind-q').addEventListener('input', (e) => { st.iq = e.target.value; drawIndTable(); });
-
-  dash.onData(() => {
-    if (dash.params().page === 'deals' || dash.params().page === 'mine') return;
-    buildControls();
-    drawKpis(); drawNational(); drawClosedChart(); drawClosedTable(); drawIndChart(); drawIndTable();
-  });
-})();
-
-})();
-</script>
 <script src="mine.js"></script>
 </div>
 <p class="site-foot">Sources: BizBuySell Insight Reports (listings, sold deals, multiples), SBA 7(a) loan data, U.S. Census Bureau (population, housing permits, County Business Patterns), SBA Office of Advocacy small-business profiles. Figures are for research and are not an offer or valuation. <a href="../privacy.html">Privacy</a></p>
