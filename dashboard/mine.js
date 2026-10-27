@@ -1,15 +1,16 @@
-(function () {
+
 dash.calc('mine_counties', {
   title: 'Your counties against their metro',
-  description: 'Per county: listings, operating businesses, medians for operating businesses (asking, revenue, SDE, asking / SDE) and data completeness, next to the metro\'s 2026 Q2 listed medians and average cash-flow multiple.',
+  description: 'Per county: listings, operating businesses, medians for operating businesses (asking, revenue, SDE, asking / SDE) and data completeness, next to the metro\'s latest-quarter listed medians and average cash-flow multiple.',
   inputs: ['listings', 'metrics'],
   fn: (listings, metrics) => {
     const GROUP = { Erie: 'Western NY', Monroe: 'Western NY', Niagara: 'Western NY', Genesee: 'Western NY', Orleans: 'Western NY', Allegany: 'Western NY',
       'New York': 'New York City', Kings: 'New York City', Queens: 'New York City', Bronx: 'New York City', Richmond: 'New York City', Westchester: 'New York City',
-      'Suffolk (MA)': 'Boston' };
+      'Suffolk (MA)': 'Boston', Albany: 'Albany' };
     const NYM = 'New York-Northern New Jersey-Long Island, NY-NJ-PA';
     const MKT = { Erie: 'Buffalo-Niagara Falls, NY', Niagara: 'Buffalo-Niagara Falls, NY', Allegany: 'Buffalo-Niagara Falls, NY', Monroe: 'Rochester, NY', Orleans: 'Rochester, NY',
-      Genesee: 'Rochester, NY', 'Suffolk (MA)': 'Boston-Cambridge-Quincy, MA-NH', 'New York': NYM, Kings: NYM, Queens: NYM, Bronx: NYM, Richmond: NYM, Westchester: NYM };
+      Genesee: 'Rochester, NY', 'Suffolk (MA)': 'Boston-Cambridge-Quincy, MA-NH', 'New York': NYM, Kings: NYM, Queens: NYM, Bronx: NYM, Richmond: NYM, Westchester: NYM,
+      Albany: 'Albany-Schenectady-Troy, NY' };
     const med = (a) => { const s = a.filter((v) => v != null && isFinite(v)).sort((x, y) => x - y); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
     const last = new Map();
     metrics.forEach((m) => { const q = last.get(m.market); if (!q || m.quarter > q.quarter) last.set(m.market, m); });
@@ -34,14 +35,14 @@ dash.calc('mine_counties', {
 
 dash.calc('mine_groups', {
   title: 'Your listings by region',
-  description: 'Western NY, New York City, Boston and all together: listings, counties, operating businesses, how many show earnings, and medians for operating businesses.',
+  description: 'Western NY, New York City, Albany, Boston and all together: listings, counties, operating businesses, how many show earnings, and medians for operating businesses.',
   inputs: ['listings'],
   fn: (listings) => {
     const GROUP = { Erie: 'Western NY', Monroe: 'Western NY', Niagara: 'Western NY', Genesee: 'Western NY', Orleans: 'Western NY', Allegany: 'Western NY',
       'New York': 'New York City', Kings: 'New York City', Queens: 'New York City', Bronx: 'New York City', Richmond: 'New York City', Westchester: 'New York City',
-      'Suffolk (MA)': 'Boston' };
+      'Suffolk (MA)': 'Boston', Albany: 'Albany' };
     const med = (a) => { const s = a.filter((v) => v != null && isFinite(v)).sort((x, y) => x - y); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
-    return ['All', 'Western NY', 'New York City', 'Boston'].map((group) => {
+    return ['All', 'Western NY', 'New York City', 'Albany', 'Boston'].map((group) => {
       const rows = group === 'All' ? listings : listings.filter((r) => GROUP[r.county] === group);
       const op = rows.filter((r) => r.operating === 'Yes');
       const pe = op.filter((r) => r.asking > 0 && r.earnings > 0).map((r) => r.asking / r.earnings);
@@ -60,10 +61,10 @@ dash.calc('mine_industries', {
   fn: (listings) => {
     const GROUP = { Erie: 'Western NY', Monroe: 'Western NY', Niagara: 'Western NY', Genesee: 'Western NY', Orleans: 'Western NY', Allegany: 'Western NY',
       'New York': 'New York City', Kings: 'New York City', Queens: 'New York City', Bronx: 'New York City', Richmond: 'New York City', Westchester: 'New York City',
-      'Suffolk (MA)': 'Boston' };
+      'Suffolk (MA)': 'Boston', Albany: 'Albany' };
     const med = (a) => { const s = a.filter((v) => v != null && isFinite(v)).sort((x, y) => x - y); if (!s.length) return null; const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
     const out = [];
-    ['All', 'Western NY', 'New York City', 'Boston'].forEach((group) => {
+    ['All', 'Western NY', 'New York City', 'Albany', 'Boston'].forEach((group) => {
       const rows = group === 'All' ? listings : listings.filter((r) => GROUP[r.county] === group);
       const by = new Map();
       rows.forEach((r) => { const k = r.industry || 'Unclassified'; if (!by.has(k)) by.set(k, []); by.get(k).push(r); });
@@ -88,9 +89,9 @@ dash.calc('mine_industries', {
   const gap = (v) => (v == null || !isFinite(v) ? '—' : (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(0) + '%');
   const SHOWN = { 'New York': 'New York (Manhattan)', Kings: 'Kings (Brooklyn)', Richmond: 'Richmond (Staten Island)', 'Suffolk (MA)': 'Suffolk, MA (Boston)' };
   const nameOf = (c) => SHOWN[c] || c;
-  const GC = { 'Western NY': 'var(--nk-c0)', 'New York City': 'var(--nk-c1)', Boston: 'var(--nk-c3)' };
-  const GROUPS = ['Western NY', 'New York City', 'Boston'];
-  const COUNTY_GROUP = { 'Suffolk (MA)': 'Boston', 'New York': 'New York City', Kings: 'New York City', Queens: 'New York City', Bronx: 'New York City', Richmond: 'New York City', Westchester: 'New York City' };
+  const GC = { 'Western NY': 'var(--nk-c0)', 'New York City': 'var(--nk-c1)', Albany: 'var(--nk-c5)', Boston: 'var(--nk-c3)' };
+  const GROUPS = ['Western NY', 'New York City', 'Albany', 'Boston'];
+  const COUNTY_GROUP = { 'Suffolk (MA)': 'Boston', 'New York': 'New York City', Kings: 'New York City', Queens: 'New York City', Bronx: 'New York City', Richmond: 'New York City', Westchester: 'New York City', Albany: 'Albany' };
   const groupOf = (c) => COUNTY_GROUP[c] || 'Western NY';
   const grp = () => (['All', ...GROUPS].includes(dash.params().mg) ? dash.params().mg : 'All');
   const st = { sort: 'listings', dir: -1 };
@@ -129,7 +130,7 @@ dash.calc('mine_industries', {
     document.querySelectorAll('#mn-glance .mn-k').forEach((n) => { n.setAttribute('data-where', 'group=' + g); n.textContent = row ? F[n.dataset.k](row[n.dataset.k]) : '—'; });
     const t = (id, grpName, k, f) => { const r = d.status === 'ok' ? d.data.find((x) => x.group === grpName) : null; $(id).textContent = r ? f(r[k]) : '—'; };
     t('#mn-t-n', 'All', 'listings', int); t('#mn-t-c', 'All', 'counties', int); t('#mn-t-op', 'All', 'operating', int);
-    t('#mn-t-nyc', 'New York City', 'med_pe', x2); t('#mn-t-wny', 'Western NY', 'med_pe', x2); t('#mn-t-bos', 'Boston', 'med_pe', x2);
+    t('#mn-t-nyc', 'New York City', 'med_pe', x2); t('#mn-t-wny', 'Western NY', 'med_pe', x2); t('#mn-t-alb', 'Albany', 'med_pe', x2); t('#mn-t-bos', 'Boston', 'med_pe', x2);
   }
 
   function countyRows() {
@@ -144,7 +145,7 @@ dash.calc('mine_industries', {
     if (!rows) return;
     host.classList.remove('dash-skeleton');
     const pts = rows.filter((r) => r.med_pe != null).sort((a, b) => a.med_pe - b.med_pe);
-    legend($('#mn-lg-cty'), [...GROUPS.filter((gName) => pts.some((r) => r.group === gName)).map((gName) => [gName, GC[gName]]), ['Metro average, listed 2026 Q2 (tick)', 'var(--color-fg-muted)', true]]);
+    legend($('#mn-lg-cty'), [...GROUPS.filter((gName) => pts.some((r) => r.group === gName)).map((gName) => [gName, GC[gName]]), ['Metro average, listed in the latest quarter (tick)', 'var(--color-fg-muted)', true]]);
     if (!pts.length) { host.append(el('p', 'lx-note', 'No county in this region has a listing that shows earnings.')); return; }
     const W = Math.max(300, host.clientWidth), rowH = 26, top = 6, bottom = 26;
     const H = top + bottom + pts.length * rowH;
@@ -280,7 +281,7 @@ dash.calc('mine_industries', {
     });
     host.style.position = 'relative';
     const tip = el('div', 'lx-tip'); tip.hidden = true; host.appendChild(tip);
-    const order = ['New York City', 'Western NY', 'Boston'];
+    const order = ['New York City', 'Western NY', 'Albany', 'Boston'];
     pts.sort((a, b) => order.indexOf(a.grp) - order.indexOf(b.grp)).forEach((p) => {
       svg.append('circle').attr('cx', x(p.r.earnings)).attr('cy', y(p.r.asking)).attr('r', 3.6).style('fill', GC[p.grp]).style('fill-opacity', 0.72)
         .style('stroke', 'var(--color-panel)').attr('stroke-width', 0.6)
@@ -301,5 +302,4 @@ dash.calc('mine_industries', {
     if (!on) return;
     drawGlance(); drawCountyChart(); drawCountyTable(); drawIndustries(); drawScatter(); drawQuality();
   });
-})();
 })();

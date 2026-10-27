@@ -292,6 +292,11 @@ html, body { margin: 0; background: #F4F6F3; }
 .lx .xp-sub { margin: 0; font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; color: var(--color-fg); }
 .lx .lx-sub a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .lx td.tl, .lx th.tl { text-align: left; }
+.lx .pc-card { margin-bottom: var(--cds-gap-md); }
+.lx .pc-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 1rem; }
+.lx .pc-head h3 { margin: 0; }
+.lx .pc-box { max-height: 34rem; overflow-y: auto; overscroll-behavior: contain; }
+.lx .pc-box .lx-chart { min-height: 6rem; }
 .lx .lx-bar .stk { display: flex; height: .8rem; }
 .lx .lx-bar .stk i { height: 100%; min-width: 1px; }
 .lx .lx-bar .stk i:first-child { border-radius: 2px 0 0 2px; }
@@ -355,8 +360,8 @@ html, body { margin: 0; background: #F4F6F3; }
   </section>
 
   <section id="lx-l" data-cat="listings" aria-label="Businesses for sale">
-    <div class="vt-head"><div><h2>Businesses for sale</h2><p class="lx-note">Pick a location and a quarter. Trend follows the location over time (the gold dashed line marks the quarter you picked), Compare markets ranks every market in that quarter, and Table lists every quarter. BizBuySell first published National in 2021; the dashed 2018–2020 line estimates it from the 64 metros, scaled by how they compared with National from 2021 on (within about 5%). 2020 Q4 is missing for every market because the published table is broken.</p></div><div class="lx-seg vt" data-vt="ex" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Trend</button><button type="button" data-v="cmp" aria-pressed="false">Compare markets</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
-    <div class="lx-controls xp-bar"><label class="xp">Location <select id="sel-market" aria-label="Location"></select></label><label class="xp">Quarter <select id="sel-lq" aria-label="Quarter"></select></label></div>
+    <div class="vt-head"><div><h2>Businesses for sale</h2><p class="lx-note">Pick a location, quarterly or full year, a period, and what to compare it with: a year earlier unless you choose another quarter or year. Trend follows the location over time (gold dashed line: the period you picked; grey dotted line: the one you compare with), Compare markets sets every market's two periods side by side, and Table lists every period. A full year averages the year's quarters, so listings are the average number on the market; 2020 has three quarters and the current year only the quarters published so far, so those are compared with the same quarters a year earlier. BizBuySell first published National in 2021; the dashed 2018–2020 line estimates it from the 64 metros, scaled by how they compared with National from 2021 on (within about 5%). 2020 Q4 is missing for every market because the published table is broken.</p></div><div class="lx-seg vt" data-vt="ex" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Trend</button><button type="button" data-v="cmp" aria-pressed="false">Compare markets</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
+    <div class="lx-controls xp-bar"><label class="xp">Location <select id="sel-market" aria-label="Location"></select></label><div class="lx-seg" role="group" aria-label="Frequency" id="l-freq"><button type="button" data-f="q" aria-pressed="true">Quarterly</button><button type="button" data-f="y" aria-pressed="false">Full year</button></div><label class="xp" id="l-per-lab">Quarter <select id="sel-lq" aria-label="Period"></select></label><label class="xp">Compare with <select id="sel-lcmp" aria-label="Compare with"></select></label></div>
     <p class="xp-sub" id="l-sub"></p>
     <div class="lx-kpis" id="l-kpis" data-source="metrics active_history"></div>
     <div data-view="ex:chart">
@@ -370,6 +375,7 @@ html, body { margin: 0; background: #F4F6F3; }
     </div>
     <div data-view="ex:cmp" hidden>
       <div class="lx-controls"><h3 id="lcmp-h">All markets</h3><input type="search" id="lcmp-q" placeholder="Search market or region" aria-label="Search markets"></div>
+      <div class="lx-card pc-card"><div class="pc-head"><h3 id="lpc-h">Two periods side by side</h3><div class="lx-seg" role="group" aria-label="Measure" id="lpc-m"><button type="button" data-m="listings" aria-pressed="false">Listings</button><button type="button" data-m="ask" aria-pressed="false">Asking price</button><button type="button" data-m="cf" aria-pressed="false">Cash flow</button><button type="button" data-m="cfx" aria-pressed="false">Price / cash flow</button></div></div><p class="lx-note" id="lpc-note"></p><div class="lx-legend" id="lpc-lg"></div><div class="pc-box"><div class="lx-chart" id="ch-lpc" data-source="metrics active_history"></div></div></div>
       <div class="lx-tablebox"><table class="dl-click" id="tbl-lcmp" data-source="metrics active_history" data-row-key="market"><thead><tr><th><button data-k="name">Market</button></th><th><button data-k="region">Region</button></th><th><button data-k="listings">Listings</button></th><th><button data-k="l_yoy">vs year earlier</button></th><th><button data-k="ask">Median asking price</button></th><th><button data-k="a_yoy">vs year earlier</button></th><th><button data-k="rev">Median revenue</button></th><th><button data-k="cf">Median cash flow</button></th><th><button data-k="cfx">Price / cash flow</button></th></tr></thead><tbody></tbody></table></div>
     </div>
     <div class="lx-tablebox" data-view="ex:table" hidden>
@@ -386,8 +392,8 @@ html, body { margin: 0; background: #F4F6F3; }
   </section>
 
   <section id="lx-s" data-cat="sold" aria-label="Businesses sold">
-    <div class="vt-head"><div><h2>Businesses sold</h2><p class="lx-note">What businesses actually sold for (BizBuySell Closed Transactions). Pick a location, quarterly or full year, and a period. National runs quarterly from 2013 (before 2021 only what each report published, so some quarters are single dots or blank; the 2020 Q2 low is the COVID shutdown). Markets run quarterly from 2021 and by full year from 2017. A National full year adds up the businesses sold over the four quarters and averages the quarterly prices and ratios.</p></div><div class="lx-seg vt" data-vt="sx" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Trend</button><button type="button" data-v="cmp" aria-pressed="false">Compare markets</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
-    <div class="lx-controls xp-bar"><label class="xp">Location <select id="sx-loc" aria-label="Location"></select></label><div class="lx-seg" role="group" aria-label="Frequency" id="sx-freq"><button type="button" data-f="q" aria-pressed="true">Quarterly</button><button type="button" data-f="y" aria-pressed="false">Full year</button></div><label class="xp">Period <select id="sx-per" aria-label="Period"></select></label></div>
+    <div class="vt-head"><div><h2>Businesses sold</h2><p class="lx-note">What businesses actually sold for (BizBuySell Closed Transactions). Pick a location, quarterly or full year, a period, and what to compare it with (a year earlier unless you choose another quarter or year); Compare markets sets every market's two periods side by side. National runs quarterly from 2013 (before 2021 only what each report published, so some quarters are single dots or blank; the 2020 Q2 low is the COVID shutdown). Markets run quarterly from 2021 and by full year from 2017. A National full year adds up the businesses sold over the four quarters and averages the quarterly prices and ratios. 2025 Q3 uses the figures BizBuySell revised with its 2026 Q3 report.</p></div><div class="lx-seg vt" data-vt="sx" role="group" aria-label="Show as"><button type="button" data-v="chart" aria-pressed="true">Trend</button><button type="button" data-v="cmp" aria-pressed="false">Compare markets</button><button type="button" data-v="table" aria-pressed="false">Table</button></div></div>
+    <div class="lx-controls xp-bar"><label class="xp">Location <select id="sx-loc" aria-label="Location"></select></label><div class="lx-seg" role="group" aria-label="Frequency" id="sx-freq"><button type="button" data-f="q" aria-pressed="true">Quarterly</button><button type="button" data-f="y" aria-pressed="false">Full year</button></div><label class="xp">Period <select id="sx-per" aria-label="Period"></select></label><label class="xp">Compare with <select id="sx-cmpp" aria-label="Compare with"></select></label></div>
     <p class="xp-sub" id="sx-sub"></p>
     <div class="lx-kpis" id="sx-kpis" data-source="national_history closed closed_annual"></div>
     <div data-view="sx:chart">
@@ -403,6 +409,7 @@ html, body { margin: 0; background: #F4F6F3; }
     </div>
     <div data-view="sx:cmp" hidden>
       <div class="lx-controls"><h3 id="sx-cmp-h">All markets</h3><input type="search" id="sx-q" placeholder="Search market or region" aria-label="Search markets"></div>
+      <div class="lx-card pc-card"><div class="pc-head"><h3 id="spc-h">Two periods side by side</h3><div class="lx-seg" role="group" aria-label="Measure" id="spc-m"><button type="button" data-m="sold" aria-pressed="false">Businesses sold</button><button type="button" data-m="sale" aria-pressed="false">Sale price</button><button type="button" data-m="cfx" aria-pressed="false">Price / cash flow</button><button type="button" data-m="dom" aria-pressed="false">Days on market</button></div></div><p class="lx-note" id="spc-note"></p><div class="lx-legend" id="spc-lg"></div><div class="pc-box"><div class="lx-chart" id="ch-spc" data-source="national_history closed closed_annual"></div></div></div>
       <div class="lx-tablebox"><table class="dl-click" id="sx-cmp" data-source="national_history closed closed_annual" data-row-key="market"><thead><tr><th><button data-k="name">Market</button></th><th><button data-k="region">Region</button></th><th><button data-k="sold">Sold</button></th><th><button data-k="s_yoy">vs year earlier</button></th><th><button data-k="sale">Median sale price</button></th><th><button data-k="p_yoy">vs year earlier</button></th><th><button data-k="s2a">Sale / asking</button></th><th><button data-k="cfx">Price / cash flow</button></th><th><button data-k="dom">Days on market</button></th></tr></thead><tbody></tbody></table></div>
     </div>
     <div class="lx-tablebox" data-view="sx:table" hidden>
@@ -486,7 +493,7 @@ html, body { margin: 0; background: #F4F6F3; }
   </section>
 
   <section id="lx-sectors" data-cat="industries" aria-label="Sector mix">
-    <div class="lx-sechead"><h2>Sector mix, 2026 Q2</h2><p class="lx-note">Share of active listings by sector. Only the latest quarter exists in the PDFs. Shares come from the pie slices, so they are exact to about a tenth of a point.</p></div>
+    <div class="lx-sechead"><h2 id="sec-h">Sector mix</h2><p class="lx-note">Share of active listings by sector in the latest quarter, as labelled on BizBuySell's market charts (whole percents, so a market's shares can add up to 99 or 101).</p></div>
     <div class="lx-card">
       <div class="lx-controls"><label for="sel-sector" class="lx-note">Sort by</label><select id="sel-sector"></select></div>
       <div class="lx-legend" id="lg-sec"></div>
@@ -573,16 +580,21 @@ html, body { margin: 0; background: #F4F6F3; }
   </section>
 
   </div>
+  <style>
+  #dash-root { --nk-c5: #3D6A99; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) #dash-root { --nk-c5: #8FB5DD; } }
+  :root[data-theme="dark"] #dash-root { --nk-c5: #8FB5DD; }
+  </style>
   <div id="pg-mine" hidden>
   <header>
-    <h1 id="mn-title">Your listings: Western New York, New York City and Boston</h1>
-    <p class="lx-take" id="mn-take">Your file holds <b data-source="mine_groups" data-field="listings" data-where="group=All" id="mn-t-n">—</b> listings from <b data-source="mine_groups" data-field="counties" data-where="group=All" id="mn-t-c">—</b> counties, and <b data-source="mine_groups" data-field="operating" data-where="group=All" id="mn-t-op">—</b> of them are operating businesses. Where a listing shows its earnings, the median asking price is <b data-source="mine_groups" data-field="med_pe" data-where="group=New York City" id="mn-t-nyc">—</b> earnings in New York City, <b data-source="mine_groups" data-field="med_pe" data-where="group=Western NY" id="mn-t-wny">—</b> in Western New York and <b data-source="mine_groups" data-field="med_pe" data-where="group=Boston" id="mn-t-bos">—</b> in Boston. Below, each county is set against its own metro.</p>
-    <p class="lx-sub">Listings: your cleaned BizBuySell file (v8). Medians use operating businesses only; price / earnings is asking price over SDE (cash flow, else EBITDA) as listed, the same basis BizBuySell uses for its metro figures. Metro figures: BizBuySell Active Business Listings, 2026 Q2. Genesee and Allegany are outside any BizBuySell metro and use the nearest one.</p>
+    <h1 id="mn-title">Your listings: Western New York, New York City, Albany and Boston</h1>
+    <p class="lx-take" id="mn-take">Your file holds <b data-source="mine_groups" data-field="listings" data-where="group=All" id="mn-t-n">—</b> listings from <b data-source="mine_groups" data-field="counties" data-where="group=All" id="mn-t-c">—</b> counties, and <b data-source="mine_groups" data-field="operating" data-where="group=All" id="mn-t-op">—</b> of them are operating businesses. Where a listing shows its earnings, the median asking price is <b data-source="mine_groups" data-field="med_pe" data-where="group=New York City" id="mn-t-nyc">—</b> earnings in New York City, <b data-source="mine_groups" data-field="med_pe" data-where="group=Western NY" id="mn-t-wny">—</b> in Western New York, <b data-source="mine_groups" data-field="med_pe" data-where="group=Albany" id="mn-t-alb">—</b> in Albany County and <b data-source="mine_groups" data-field="med_pe" data-where="group=Boston" id="mn-t-bos">—</b> in Boston. Below, each county is set against its own metro.</p>
+    <p class="lx-sub">Listings: your cleaned BizBuySell file (v9). Medians use operating businesses only; price / earnings is asking price over SDE (cash flow, else EBITDA) as listed, the same basis BizBuySell uses for its metro figures. Metro figures: BizBuySell Active Business Listings, latest quarter. Albany County uses Albany-Schenectady-Troy. Genesee and Allegany are outside any BizBuySell metro and use the nearest one.</p>
   </header>
 
   <section id="mn-glance" aria-label="Your listings at a glance">
     <div class="vt-head"><div><h2 id="mn-glance-h">At a glance</h2><p class="lx-note">Pick a region. Asking price and earnings are medians of operating businesses.</p></div>
-      <div class="lx-seg" role="group" aria-label="Region" id="mn-seg"><button type="button" data-g="All" aria-pressed="true">All</button><button type="button" data-g="Western NY" aria-pressed="false">Western NY</button><button type="button" data-g="New York City" aria-pressed="false">New York City</button><button type="button" data-g="Boston" aria-pressed="false">Boston</button></div></div>
+      <div class="lx-seg" role="group" aria-label="Region" id="mn-seg"><button type="button" data-g="All" aria-pressed="true">All</button><button type="button" data-g="Western NY" aria-pressed="false">Western NY</button><button type="button" data-g="New York City" aria-pressed="false">New York City</button><button type="button" data-g="Albany" aria-pressed="false">Albany</button><button type="button" data-g="Boston" aria-pressed="false">Boston</button></div></div>
     <div class="lx-kpis">
       <div class="lx-card lx-kpi"><span class="lx-label">Listings</span><span class="lx-val mn-k" data-k="listings" data-source="mine_groups" data-field="listings" data-where="group=All">—</span><span class="lx-chg"><span class="mn-k" data-k="counties" data-source="mine_groups" data-field="counties" data-where="group=All">—</span> counties</span></div>
       <div class="lx-card lx-kpi"><span class="lx-label">Operating businesses</span><span class="lx-val mn-k" data-k="operating" data-source="mine_groups" data-field="operating" data-where="group=All">—</span><span class="lx-chg">the rest are spaces, licenses, real estate or asset sales</span></div>
@@ -594,7 +606,7 @@ html, body { margin: 0; background: #F4F6F3; }
   </section>
 
   <section id="mn-counties" aria-label="Counties against their metro">
-    <div class="lx-sechead"><h2>Each county against its metro</h2><p class="lx-note">The dot is the county's median price / earnings; the tick is BizBuySell's average for listed businesses in its metro, 2026 Q2. Green: county priced at or below its metro; amber: above. Counties with no listing that shows earnings are left out of the chart.</p></div>
+    <div class="lx-sechead"><h2>Each county against its metro</h2><p class="lx-note">The dot is the county's median price / earnings; the tick is BizBuySell's average for listed businesses in its metro in the latest quarter. Green: county priced at or below its metro; amber: above. Counties with no listing that shows earnings are left out of the chart.</p></div>
     <div class="lx-card">
       <div class="lx-legend" id="mn-lg-cty"></div>
       <div class="lx-chart dash-skeleton" id="mn-ch-cty" data-source="mine_counties" style="min-height:8rem"></div>
@@ -654,8 +666,8 @@ html, body { margin: 0; background: #F4F6F3; }
   <div id="pg-deals" hidden>
   <header class="dl-head">
     <h1 id="dl-title">Deal finder</h1>
-    <p class="lx-take" id="dl-take">Search industry multiples, set your deal box, and see which of your listings (Western New York: Erie, Monroe, Niagara, Genesee, Orleans, Allegany; New York City's five boroughs; and Boston, MA) fit and how they are priced against what businesses in their industry actually sold for in 2025. Every listing gets a 0–100 score; <b id="dl-take-n">—</b> listings are shown.</p>
-    <p class="lx-sub">Industry multiples: BizBuySell reported sales, full year 2025, national, by subsector. Listings: your cleaned BizBuySell file (v8; Erie checked October 13, the other Western New York counties read from the live listing pages October 14, Boston and New York City on October 16, 2026; 384 New York City rows have search-card figures only). Multiples use price without real estate divided by SDE or cash flow.</p>
+    <p class="lx-take" id="dl-take">Search industry multiples, set your deal box, and see which of your listings (Western New York: Erie, Monroe, Niagara, Genesee, Orleans, Allegany; New York City's five boroughs; Albany County; and Boston, MA) fit and how they are priced against what businesses in their industry actually sold for in 2025. Every listing gets a 0–100 score; <b id="dl-take-n">—</b> listings are shown.</p>
+    <p class="lx-sub">Industry multiples: BizBuySell reported sales, full year 2025, national, by subsector. Listings: your cleaned BizBuySell file (v9; Erie checked October 13, the other Western New York counties read from the live listing pages October 14, Boston and New York City on October 16, Albany County on October 27, 2026; 384 New York City rows have search-card figures only). Multiples use price without real estate divided by SDE or cash flow.</p>
   </header>
 
   <section id="dl-box" aria-label="Deal box">
@@ -920,7 +932,7 @@ dash.calc('sector_trend', {
   const SECT = ['Service', 'Retail - Other', 'Retail - Restaurant', 'Manufacturing', 'Other'];
   const $ = (s) => document.querySelector(s);
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
-  const state = { market: NAT, lq: null, lcq: '', built: false, sector: 'Service', smarket: NAT, sq: '', sbuilt: false, wbuilt: false, mapMetric: 'acq_per_10k_estab', ctySort: 'acq_loans', ctyDir: -1, ctyQ: '' };
+  const state = { market: NAT, lf: 'q', lq: null, ly: null, lc: { q: '', y: '' }, lpm: 'ask', lcq: '', built: false, sector: 'Service', smarket: NAT, sq: '', sbuilt: false, wbuilt: false, mapMetric: 'acq_per_10k_estab', ctySort: 'acq_loans', ctyDir: -1, ctyQ: '' };
   const MUTED = 'var(--cds-chart-muted)';
   const HOME = 'Buffalo-Niagara Falls, NY';
   const SRC = { bbs: 'https://www.bizbuysell.com/insight-report/', sba: 'https://data.sba.gov/dataset/7-a-504-foia', bps: 'https://www.census.gov/construction/bps/', adv: 'https://advocacy.sba.gov/' };
@@ -944,7 +956,8 @@ dash.calc('sector_trend', {
     if (!a && b === n0 - 1) return o;
     const sh = (f) => f && ((v, i) => f(v, i + a));
     return { ...o, labels: o.labels.slice(a, b + 1), series: o.series.map((s) => ({ ...s, values: s.values.slice(a, b + 1), fmt: sh(s.fmt) })), fmt: sh(o.fmt), xlab: o.xlab && ((l, i) => o.xlab(l, i + a)),
-      band: o.band && o.band.map((i) => i - a).filter((i) => i >= 0 && i <= b - a), mark: o.mark == null || o.mark < a || o.mark > b ? null : o.mark - a };
+      band: o.band && o.band.map((i) => i - a).filter((i) => i >= 0 && i <= b - a), mark: o.mark == null || o.mark < a || o.mark > b ? null : o.mark - a,
+      mark2: o.mark2 == null || o.mark2 < a || o.mark2 > b ? null : o.mark2 - a };
   }
   // x axis: a small tick for every labelled period, text on every k-th one counting back from the latest, so labels never crowd
   function xAxis(g, labs, x, H, x0, x1) {
@@ -986,7 +999,21 @@ dash.calc('sector_trend', {
       g.append('line').attr('x1', ml).attr('x2', W - mr).attr('y1', y(t)).attr('y2', y(t)).style('stroke', 'var(--cds-chart-grid)').attr('stroke-width', 1);
       g.append('text').attr('class', 'lx-tick').attr('x', ml - 6).attr('y', y(t)).attr('text-anchor', 'end').attr('dominant-baseline', 'middle').text(o.tick(t));
     });
-    if (o.mark != null && o.mark >= 0 && o.mark < n - 1) g.append('line').attr('x1', x(o.mark)).attr('x2', x(o.mark)).attr('y1', 10).attr('y2', H - 26).style('stroke', 'var(--nk-gold)').attr('stroke-width', 1.5).attr('stroke-dasharray', '4 3');
+    // the picked period (gold dashes) and, when one is chosen, the period it is compared with (grey dots), each named at the top
+    const two = o.mark2 != null && o.mark2 >= 0 && o.mark2 < n;
+    const vmark = (i, col, dash, txt, other, ty, tcol) => {
+      g.append('line').attr('x1', x(i)).attr('x2', x(i)).attr('y1', 10).attr('y2', H - 26).style('stroke', col).attr('stroke-width', 1.5).attr('stroke-dasharray', dash);
+      if (!txt) return;
+      const t = g.append('text').attr('class', 'lx-tick').attr('y', ty).attr('dominant-baseline', 'hanging').attr('paint-order', 'stroke').style('stroke', 'var(--color-panel)')
+        .attr('stroke-width', 3).style('fill', tcol || col).style('font-weight', 600).text(txt);
+      const w = t.node().getComputedTextLength();
+      let right = other == null || i >= other;
+      if (right && x(i) + 4 + w > W - 2) right = false;
+      if (!right && x(i) - 4 - w < ml) right = true;
+      t.attr('x', x(i) + (right ? 4 : -4)).attr('text-anchor', right ? 'start' : 'end');
+    };
+    if (o.mark != null && o.mark >= 0 && (o.mark < n - 1 || two)) vmark(o.mark, 'var(--nk-gold)', '4 3', two ? o.labels[o.mark] : null, two ? o.mark2 : null, 4, 'var(--nk-gold-ink)');
+    if (two) vmark(o.mark2, 'var(--color-fg-muted)', '1.5 3', o.labels[o.mark2], o.mark, 18);
     xAxis(g, o.labels.map((l) => (o.xl ? o.xl(l) : l.endsWith('Q1') ? l.slice(0, 4) : null)), x, H, ml, W - mr);
     const line = d3.line().defined((v) => v != null).x((v, i) => x(i)).y((v) => y(v)).curve(d3.curveLinear);
     // a dashed series (an estimate) joins its points across gaps
@@ -1050,25 +1077,11 @@ dash.calc('sector_trend', {
     if (!g) return;
     const s = (v) => el('span', v == null ? null : v >= 0 ? 'g-up' : 'g-down', fmt.pct(v));
     const a = el('span'); a.append(el('b', null, f(g.v)), pre + g.label);
-    const b = el('span'); b.append(s(g.yoy), ' vs a year earlier');
+    const b = el('span'); b.append(s(g.yoy), g.vs || ' vs a year earlier');
     host.append(a, b);
     if (g.since != null) { const c = el('span'); c.append(s(g.since), ' since ' + g.first); host.append(c); }
   }
-  function yoyCell(m, q, k) {
-    const a = m.get(q), b = m.get(prevQ(q));
-    const v = a && b && a[k] != null && b[k] ? (a[k] / b[k] - 1) * 100 : null;
-    return el('td', v == null ? 'muted' : v >= 0 ? 'g-up' : 'g-down', fmt.pct(v));
-  }
   const nCell = (v, f) => el('td', v == null ? 'muted' : null, v == null ? '—' : f(v));
-  function drawExTable(rows, labels, mk) {
-    const body = $('#tbl-ex tbody'); if (!body) return;
-    const m = new Map(rows.filter((r) => r.market === mk).map((r) => [r.quarter, r]));
-    body.replaceChildren(...labels.filter((q) => m.has(q)).reverse().map((q) => {
-      const r = m.get(q) || {}, tr = el('tr'); tr.dataset.key = q;
-      tr.append(el('td', r.est ? 'muted' : null, q + (r.est ? ' (estimated)' : '')), nCell(r.listings, fmt.int), yoyCell(m, q, 'listings'), nCell(r.ask, fmt.usd), yoyCell(m, q, 'ask'), nCell(r.rev, fmt.usd), nCell(r.cf, fmt.usd), yoyCell(m, q, 'cf'), nCell(r.cfx, fmt.x2), nCell(r.revx, fmt.x2));
-      return tr;
-    }));
-  }
 
   const LT = {};
   const pctTd = (v) => el('td', v == null ? 'muted' : v >= 0 ? 'g-up' : 'g-down', fmt.pct(v));
@@ -1133,6 +1146,58 @@ dash.calc('sector_trend', {
     if (sel.dataset.l !== list.join()) { sel.dataset.l = list.join(); sel.replaceChildren(...list.slice().reverse().map((p) => new Option(p, p))); }
     sel.value = cur;
   }
+
+  // "Compare with" picker: a year earlier by default, or any other period of the same frequency
+  function cmpOpts(sel, list, per, cur, defLab) {
+    const key = list.join() + '|' + per + '|' + defLab;
+    if (sel.dataset.l !== key) { sel.dataset.l = key; sel.replaceChildren(new Option(defLab, ''), ...list.filter((p) => p !== per).reverse().map((p) => new Option(p, p))); }
+    sel.value = cur && cur !== per && list.includes(cur) ? cur : '';
+    return sel.value;
+  }
+  // two periods side by side for every market: hollow dot = the period compared with, solid dot = the period picked, sorted by the change
+  function periodChart(host, rows, o) {
+    host.replaceChildren(); host.classList.remove('dash-skeleton'); host.style.position = 'relative';
+    const C = NKC();
+    const pts = rows.filter((r) => r.a != null || r.b != null).map((r) => ({ ...r, c: r.a != null && r.b ? (r.a / r.b - 1) * 100 : null }))
+      .sort((p, q) => (p.pin ? -1 : q.pin ? 1 : (q.c == null ? -1e9 : q.c) - (p.c == null ? -1e9 : p.c)));
+    if (!pts.length) { host.appendChild(el('div', 'lx-fail', 'No values for these two periods')); return; }
+    const W = Math.max(300, host.clientWidth), rh = 20, top = 24, H = top + pts.length * rh + 4;
+    const svg = d3.select(host).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', o.aria);
+    const probe = svg.append('text').attr('class', 'lx-tick');
+    let lw = 0; pts.forEach((p) => { probe.text(p.name); lw = Math.max(lw, probe.node().getComputedTextLength()); }); probe.remove();
+    const ml = Math.min(Math.round(W * 0.36), Math.ceil(lw) + 12), mr = 60;
+    const vals = pts.flatMap((p) => [p.a, p.b]).filter((v) => v != null);
+    const lo = d3.min(vals), hi = d3.max(vals), pad = (hi - lo) * 0.06 || hi * 0.05 || 1;
+    const x = d3.scaleLinear([o.zero ? 0 : Math.max(0, lo - pad), hi + pad], [ml + 6, W - mr]).nice(W < 520 ? 3 : 5);
+    x.ticks(W < 520 ? 3 : 5).forEach((t) => {
+      svg.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', top - 4).attr('y2', H - 2).style('stroke', 'var(--cds-chart-grid)');
+      svg.append('text').attr('class', 'lx-tick').attr('x', x(t)).attr('y', top - 10).attr('text-anchor', 'middle').text(o.tick(t));
+    });
+    const tip = el('div', 'lx-tip'); tip.hidden = true; host.appendChild(tip);
+    pts.forEach((p, i) => {
+      const y = top + i * rh + rh / 2, on = p.pin || p.key === o.sel;
+      if (on) svg.append('rect').attr('x', 0).attr('y', y - rh / 2).attr('width', W).attr('height', rh).style('fill', 'var(--nk-tint, transparent)');
+      svg.append('text').attr('class', 'lx-tick').attr('x', ml).attr('y', y).attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
+        .style('fill', 'var(--color-fg)').style('font-weight', on ? 600 : null).text(p.name);
+      if (p.a != null && p.b != null) svg.append('line').attr('x1', x(p.b)).attr('x2', x(p.a)).attr('y1', y).attr('y2', y).style('stroke', 'var(--cds-chart-reference)').attr('stroke-width', 2);
+      if (p.b != null) svg.append('circle').attr('cx', x(p.b)).attr('cy', y).attr('r', 4).style('fill', 'var(--color-panel)').style('stroke', MUTED).attr('stroke-width', 1.75);
+      if (p.a != null) svg.append('circle').attr('cx', x(p.a)).attr('cy', y).attr('r', 4.5).style('fill', C[0]);
+      svg.append('text').attr('class', 'lx-tick').attr('x', W - mr + 8).attr('y', y).attr('dominant-baseline', 'middle')
+        .style('fill', p.c == null ? 'var(--color-fg-muted)' : p.c >= 0 ? 'var(--color-ok)' : 'var(--color-bad)').text(p.c == null ? '—' : fmt.pct(p.c));
+      svg.append('rect').attr('x', 0).attr('y', y - rh / 2).attr('width', W).attr('height', rh).attr('fill', 'transparent').style('cursor', o.click ? 'pointer' : null)
+        .on('mousemove', (ev) => {
+          const r = host.getBoundingClientRect();
+          tip.replaceChildren(el('div', 't', p.full || p.name));
+          [[o.a, p.a, C[0]], [o.b, p.b, MUTED]].forEach(([lab, v, c]) => { const row = el('div', 'r'), sw = el('i'); sw.style.background = c; row.append(sw, el('span', null, lab), el('b', null, v == null ? '—' : o.fmt(v))); tip.appendChild(row); });
+          const row = el('div', 'r'); row.append(el('i'), el('span', null, 'Change'), el('b', null, p.c == null ? '—' : fmt.pct(p.c))); tip.appendChild(row);
+          tip.hidden = false;
+          const tw = tip.offsetWidth, cx = ev.clientX - r.left;
+          tip.style.left = Math.max(0, Math.min(r.width - tw, cx + 12)) + 'px'; tip.style.top = Math.max(0, y * (r.width / W) - 50) + 'px';
+        })
+        .on('mouseleave', () => { tip.hidden = true; })
+        .on('click', o.click ? () => o.click(p.key) : null);
+    });
+  }
   function sortRows(rows, k, dir) {
     return rows.sort((a, b) => {
       const x = a[k], y = b[k];
@@ -1142,7 +1207,7 @@ dash.calc('sector_trend', {
   }
   const dash0 = (v, f) => (v == null ? '—' : f(v));
 
-  // ---------- 01 Listings for sale: one location and one quarter; trend, compare markets or table ----------
+  // ---------- 01 Listings for sale: one location, quarterly or full year; trend, compare markets or table ----------
   let L = null;
   function lData() {
     const m = dash.data('metrics'), ah = dash.data('active_history');
@@ -1152,24 +1217,63 @@ dash.calc('sector_trend', {
     const rows = m.data.concat(hd, hd.length ? natEst(m.data, hd) : []);
     const qs = [...new Set(rows.map((r) => r.quarter))].sort(), labels = [];
     for (let y = +qs[0].slice(0, 4); y <= +qs[qs.length - 1].slice(0, 4); y++) for (let q = 1; q <= 4; q++) { const l = y + ' Q' + q; if (l >= qs[0] && l <= qs[qs.length - 1]) labels.push(l); }
-    L = { md: m.data, hd, rows, labels, est: new Set(rows.filter((r) => r.est).map((r) => r.quarter)), at: new Map(rows.map((r) => [r.market + '|' + r.quarter, r])) };
+    // full years: each measure is the average of the year's published quarters (listings: the average count on the market)
+    const yrows = d3.rollups(rows, (v) => {
+      const o = { market: v[0].market, short: v[0].short, type: v[0].type, region: v[0].region, quarter: v[0].quarter.slice(0, 4), nq: v.length, qs: v.map((r) => +r.quarter.slice(-1)).sort(), est: v.some((r) => r.est) };
+      EK.forEach((k) => { const x = v.map((r) => r[k]).filter((z) => z != null); o[k] = x.length ? d3.mean(x) : null; });
+      if (o.listings != null) o.listings = Math.round(o.listings);
+      return o;
+    }, (r) => r.market, (r) => r.quarter.slice(0, 4)).flatMap(([, ys]) => ys.map(([, o]) => o));
+    const ylabels = [...new Set(yrows.map((r) => r.quarter))].sort();
+    L = { md: m.data, hd, rows, labels, est: new Set(rows.filter((r) => r.est).map((r) => r.quarter)), at: new Map(rows.map((r) => [r.market + '|' + r.quarter, r])),
+      yrows, ylabels, yest: new Set(yrows.filter((r) => r.est).map((r) => r.quarter)), yat: new Map(yrows.map((r) => [r.market + '|' + r.quarter, r])) };
     return L;
   }
   const lAt = (mk, q) => L.at.get(mk + '|' + q);
+  // a year with fewer than four quarters (the current one, or 2020) is compared with the same quarters a year earlier
+  const qSpan = (qs) => (qs.length === 1 ? 'Q' + qs[0] : 'Q' + qs[0] + '–Q' + qs[qs.length - 1]);
+  const yPart = (mk, y) => { const r = L.yat.get(mk + '|' + y); return r && r.nq < 4 ? r : null; };
+  function ytdPrev(mk, y, cy) {
+    cy = cy || String(+y - 1);
+    const r = yPart(mk, y);
+    if (!r) return L.yat.get(mk + '|' + cy);
+    const v = r.qs.map((n) => lAt(mk, cy + ' Q' + n)).filter(Boolean);
+    if (!v.length) return null;
+    const o = { nq: v.length };
+    EK.forEach((k) => { const x = v.map((z) => z[k]).filter((z) => z != null); o[k] = x.length ? d3.mean(x) : null; });
+    if (o.listings != null) o.listings = Math.round(o.listings);
+    return o;
+  }
+  const ytdLab = (mk, y, cy) => { cy = cy || String(+y - 1); const r = yPart(mk, y), c = yPart(mk, cy); return cy + (r ? ' ' + qSpan(r.qs) : c ? ' (' + qSpan(c.qs) + ')' : ''); };
+  // the frequency picked: quarterly rows, or one row per year
+  // yoy: the same period a year earlier (Table rows); cmp / vs: the period picked under "Compare with" ('' = a year earlier)
+  const LF = () => {
+    if (state.lf === 'y') { const cp = state.lc.y;
+      return { y: 1, rows: L.yrows, labels: L.ylabels, est: L.yest, at: (mk, p) => L.yat.get(mk + '|' + p), prev: (p) => String(+p - 1), per: state.ly, cp,
+        yoy: (mk, p) => ytdPrev(mk, p), cmp: (mk, p) => ytdPrev(mk, p, cp), vs: (mk, p) => ytdLab(mk, p, cp) }; }
+    const cp = state.lc.q;
+    return { y: 0, rows: L.rows, labels: L.labels, est: L.est, at: lAt, prev: prevQ, per: state.lq, cp,
+      yoy: (mk, p) => lAt(mk, prevQ(p)), cmp: (mk, p) => lAt(mk, cp || prevQ(p)), vs: (mk, p) => cp || prevQ(p) };
+  };
   function lBuild() {
     if (state.built) return;
     state.built = true;
     state.lq = state.lq || L.labels[L.labels.length - 1];
+    state.ly = state.ly || L.ylabels[L.ylabels.length - 1];
     locOpts($('#sel-market'), L.md, state.market);
     $('#sel-market').addEventListener('change', (e) => { state.market = e.target.value; drawL(); });
-    $('#sel-lq').addEventListener('change', (e) => { state.lq = e.target.value; drawL(); });
+    $('#sel-lq').addEventListener('change', (e) => { if (state.lf === 'y') state.ly = e.target.value; else state.lq = e.target.value; drawL(); });
+    $('#l-freq').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { state.lf = b.dataset.f; drawL(); } });
+    $('#sel-lcmp').addEventListener('change', (e) => { state.lc[state.lf === 'y' ? 'y' : 'q'] = e.target.value; drawL(); });
+    $('#lpc-m').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { state.lpm = b.dataset.m; drawL(); } });
     $('#lcmp-q').addEventListener('input', (e) => { state.lcq = e.target.value; drawL(); });
   }
-  function drawTrend(rows, labels, q) {
-    const C = NKC(), mk = state.market, isNat = mk === NAT, mark = labels.indexOf(q);
+  function drawTrend(F) {
+    const rows = F.rows, labels = F.labels, q = F.per, by = F.y ? ' by year' : ' by quarter';
+    const C = NKC(), mk = state.market, isNat = mk === NAT, mark = labels.indexOf(q), mark2 = F.cp ? labels.indexOf(F.cp) : null;
     const short = isNat ? 'National' : ((rows.find((r) => r.market === mk) || {}).short || mk);
     const ser = (m, k) => { const s = seriesFor(rows, m, k); return labels.map((x) => (s.has(x) ? s.get(x) : null)); };
-    const estQ = L.est;
+    const estQ = F.est;
     // split a National series into published (solid) and estimated (dashed, joined to the first published quarter)
     const split = (s) => {
       const f = s.values.findIndex((v, i) => v != null && !estQ.has(labels[i]));
@@ -1178,37 +1282,64 @@ dash.calc('sector_trend', {
     };
     const two = (k, solo) => { const out = isNat ? split({ name: short, color: C[0], values: ser(mk, k) }) : [{ name: short, color: C[0], values: ser(mk, k) }]; if (!isNat && !solo) out.push(...split({ name: 'National', color: MUTED, values: ser(NAT, k) })); return out; };
     const dsh = (c) => 'repeating-linear-gradient(90deg,' + c + ' 0 4px,transparent 4px 7px)';
-    legend($('#lg-ex'), (isNat ? [] : [[short, C[0]], ['National', MUTED]]).concat(estQ.size ? [['National estimated, 2018–2020', dsh(isNat ? C[0] : MUTED)]] : [], mark < labels.length - 1 ? [['Quarter picked: ' + q, dsh('var(--nk-gold)')]] : []));
-    $('#lg-ex').querySelectorAll('span').forEach((sp) => { if (/estimated|picked/.test(sp.textContent)) Object.assign(sp.firstChild.style, { width: '1.25rem', height: '2px', borderRadius: '0', verticalAlign: '3px' }); });
-    const ch = (id, o) => { if (gate($(id), ['metrics'])) lineChart($(id), { labels, mark, ...o }); };
-    let s = two('ask'); ch('#ch-ask', { aria: short + ' median asking price by quarter', tick: fmt.usdK, fmt: fmt.usd, series: s });
-    gLine($('#g-ask'), growth(s[0].values, labels, prevQ), fmt.usd);
-    s = two('listings', true); ch('#ch-list', { zero: true, aria: short + ' active listings by quarter', tick: d3.format('.3~s'), fmt: fmt.int, series: s });
-    gLine($('#g-listings'), growth(s[0].values, labels, prevQ), fmt.int);
+    legend($('#lg-ex'), (isNat ? [] : [[short, C[0]], ['National', MUTED]]).concat(estQ.size ? [['National estimated, 2018–2020', dsh(isNat ? C[0] : MUTED)]] : [], mark < labels.length - 1 || F.cp ? [[(F.y ? 'Year' : 'Quarter') + ' picked: ' + q, dsh('var(--nk-gold)')]] : [], F.cp ? [['Compared with: ' + F.vs(mk, q), 'repeating-linear-gradient(90deg,var(--color-fg-muted) 0 2px,transparent 2px 5px)']] : []));
+    $('#lg-ex').querySelectorAll('span').forEach((sp) => { if (/estimated|picked|Compared/.test(sp.textContent)) Object.assign(sp.firstChild.style, { width: '1.25rem', height: '2px', borderRadius: '0', verticalAlign: '3px' }); });
+    const ch = (id, o) => { if (gate($(id), ['metrics'])) lineChart($(id), { labels, mark, mark2, xl: F.y ? (l) => l : null, ...o }); };
+    const gr = (vals, k, f) => {
+      if (F.cp) { const a = F.at(mk, q), b = F.cmp(mk, q); return a && a[k] != null ? { label: q, v: a[k], yoy: chg(a, b, k), vs: ' vs ' + F.vs(mk, q) + (b && b[k] != null ? ' (' + f(b[k]) + ')' : '') } : null; }
+      const g = growth(vals, labels, F.prev); if (g && F.y && yPart(mk, g.label)) { g.yoy = chg(F.at(mk, g.label), F.yoy(mk, g.label), k); g.vs = ' vs ' + ytdLab(mk, g.label); } return g;
+    };
+    let s = two('ask'); ch('#ch-ask', { aria: short + ' median asking price' + by, tick: fmt.usdK, fmt: fmt.usd, series: s });
+    gLine($('#g-ask'), gr(s[0].values, 'ask', fmt.usd), fmt.usd);
+    s = two('listings', true); ch('#ch-list', { zero: true, aria: short + ' active listings' + by, tick: d3.format('.3~s'), fmt: fmt.int, series: s });
+    gLine($('#g-listings'), gr(s[0].values, 'listings', fmt.int), fmt.int);
     const r = { name: 'Median revenue', color: C[1], values: ser(mk, 'rev') }, c = { name: 'Median cash flow', color: C[0], values: ser(mk, 'cf') };
     s = isNat ? split(r).concat(split(c)) : [r, c];
-    ch('#ch-fin', { zero: true, aria: short + ' median revenue and cash flow by quarter', tick: fmt.usdK, fmt: fmt.usd, series: s });
+    ch('#ch-fin', { zero: true, aria: short + ' median revenue and cash flow' + by, tick: fmt.usdK, fmt: fmt.usd, series: s });
     legend($('#lg-fin'), [['Median revenue', C[1]], ['Median cash flow (growth shown)', C[0]]]);
-    gLine($('#g-cf'), growth(s.find((x) => x.name === 'Median cash flow').values, labels, prevQ), fmt.usd);
-    s = two('cfx'); ch('#ch-mult', { aria: short + ' asking price to cash flow by quarter', tick: fmt.x2, fmt: fmt.x2, series: s });
-    gLine($('#g-cfx'), growth(s[0].values, labels, prevQ), fmt.x2);
-    drawExTable(rows, labels, mk);
+    gLine($('#g-cf'), gr(s.find((x) => x.name === 'Median cash flow').values, 'cf', fmt.usd), fmt.usd);
+    s = two('cfx'); ch('#ch-mult', { aria: short + ' asking price to cash flow' + by, tick: fmt.x2, fmt: fmt.x2, series: s });
+    gLine($('#g-cfx'), gr(s[0].values, 'cfx', fmt.x2), fmt.x2);
+    // table: every period for the location
+    const lab = F.y ? (x) => x + (yPart(mk, x) ? ' (' + qSpan(yPart(mk, x).qs) + ')' : '') : (x) => x;
+    $('#tbl-ex tbody').replaceChildren(...labels.filter((x) => F.at(mk, x)).reverse().map((x) => {
+      const r = F.at(mk, x), y = F.yoy(mk, x), tr = el('tr'); tr.dataset.key = x; if (x === q || (F.cp && x === F.cp)) tr.className = 'sel';
+      tr.append(el('td', r.est ? 'muted' : null, lab(x) + (r.est ? ' (estimated)' : '')), nCell(r.listings, fmt.int), pctTd(chg(r, y, 'listings')), nCell(r.ask, fmt.usd), pctTd(chg(r, y, 'ask')), nCell(r.rev, fmt.usd), nCell(r.cf, fmt.usd), pctTd(chg(r, y, 'cf')), nCell(r.cfx, fmt.x2), nCell(r.revx, fmt.x2));
+      return tr;
+    }));
   }
   function drawL() {
     if (!lData()) { ['#ch-ask', '#ch-list', '#ch-fin', '#ch-mult'].forEach((s) => gate($(s), ['metrics'])); return; }
     lBuild();
-    perOpts($('#sel-lq'), L.labels.filter((x) => L.at.has(NAT + '|' + x)), state.lq);
-    const mk = state.market, q = state.lq, r = lAt(mk, q), p = lAt(mk, prevQ(q)), nm = mk === NAT ? 'National' : mk;
-    $('#l-sub').textContent = nm + ', ' + q + (r && r.est ? ' (estimated from the 64 metros)' : '');
+    let F = LF();
+    $('#l-freq').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.f === (F.y ? 'y' : 'q'))));
+    $('#l-per-lab').firstChild.textContent = F.y ? 'Year ' : 'Quarter ';
+    const plist = F.labels.filter((x) => F.at(NAT, x));
+    perOpts($('#sel-lq'), plist, F.per);
+    const cpv = cmpOpts($('#sel-lcmp'), plist, F.per, F.cp, F.y ? 'The year before (' + (+F.per - 1) + ')' : 'A year earlier (' + prevQ(F.per) + ')');
+    if (cpv !== F.cp) { state.lc[F.y ? 'y' : 'q'] = cpv; F = LF(); }
+    const mk = state.market, q = F.per, r = F.at(mk, q), p = F.cmp(mk, q), nm = mk === NAT ? 'National' : mk;
+    $('#l-sub').textContent = nm + ', ' + (F.y ? 'full year ' : '') + q + (r && F.y ? ' (average of ' + (r.nq < 4 ? qSpan(r.qs) + '; compared with ' + F.vs(mk, q) : 'the four quarters') + ')' : '') + (r && r.est ? ', estimated from the 64 metros' : '');
     const K = [['listings', 'Active listings', fmt.int], ['ask', 'Median asking price', fmt.usd], ['rev', 'Median revenue', fmt.usd], ['cf', 'Median cash flow', fmt.usd], ['cfx', 'Asking price / cash flow', fmt.x2]];
-    $('#l-kpis').replaceChildren(...K.map(([k, lab, f]) => kpi(lab, r && r[k] != null ? f(r[k]) : '—', r ? fmt.pct(chg(r, p, k)) + ' vs ' + prevQ(q) : 'No data for this quarter')));
-    drawTrend(L.rows, L.labels, q);
+    $('#l-kpis').replaceChildren(...K.map(([k, lab, f]) => kpi(lab, r && r[k] != null ? f(r[k]) : '—', r ? fmt.pct(chg(r, p, k)) + ' vs ' + F.vs(mk, q) + (p && p[k] != null ? ' (' + f(p[k]) + ')' : '') : 'No data for this period')));
+    drawTrend(F);
     const cq = state.lcq.trim().toLowerCase();
-    const cmp = L.rows.filter((x) => x.quarter === q && (!cq || (x.market + ' ' + (x.region || '')).toLowerCase().includes(cq))).map((x) => {
-      const y = lAt(x.market, prevQ(q));
+    const cmp = F.rows.filter((x) => x.quarter === q && (!cq || (x.market + ' ' + (x.region || '')).toLowerCase().includes(cq))).map((x) => {
+      const y = F.cmp(x.market, q);
       return { ...x, name: x.market === NAT ? 'National' + (x.est ? ' (estimated)' : '') : x.market, region: x.region || 'National', l_yoy: chg(x, y, 'listings'), a_yoy: chg(x, y, 'ask') };
     });
-    $('#lcmp-h').textContent = 'All markets, ' + q;
+    const vsN = F.vs(NAT, q);
+    $('#lcmp-h').textContent = 'All markets, ' + (F.y ? 'full year ' : '') + q + ' vs ' + vsN;
+    ['l_yoy', 'a_yoy'].forEach((k) => { const b = $('#tbl-lcmp th button[data-k="' + k + '"]'); if (b) b.textContent = 'vs ' + (F.cp ? vsN : 'year earlier'); });
+    const PM = { listings: ['active listings', fmt.int, d3.format('.3~s'), true], ask: ['median asking price', fmt.usd, fmt.usdK], cf: ['median cash flow', fmt.usd, fmt.usdK], cfx: ['asking price to cash flow', fmt.x2, fmt.x2] };
+    const pm = PM[state.lpm] ? state.lpm : 'ask', [pmLab, pmF, pmT, pmZ] = PM[pm];
+    $('#lpc-m').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.m === pm)));
+    $('#lpc-h').textContent = (F.y ? 'Full year ' : '') + q + ' against ' + vsN + ': ' + pmLab;
+    $('#lpc-note').textContent = 'Every market in both periods, biggest rise first' + (pm === 'listings' ? '' : '; National is pinned at the top') + '. Click a market to open its trend.';
+    legend($('#lpc-lg'), [[(F.y ? 'Full year ' : '') + q, NKC()[0]], [vsN, MUTED]]);
+    periodChart($('#ch-lpc'), cmp.filter((x) => pm !== 'listings' || x.market !== NAT).map((x) => ({ key: x.market, name: x.market === NAT ? 'National' : (x.short || x.market), full: x.name, pin: x.market === NAT, a: x[pm], b: (F.cmp(x.market, q) || {})[pm] })),
+      { a: (F.y ? 'Full year ' : '') + q, b: vsN, fmt: pmF, tick: pmT, zero: pmZ, sel: mk, aria: 'Every market: ' + pmLab + ', ' + q + ' against ' + vsN,
+        click: (k) => { state.market = k; $('#sel-market').value = k; jump({ v_ex: 'chart' }, 'lx-l', drawL); } });
     lTable('tbl-lcmp', cmp, [{ k: 'name', s: 1 }, { k: 'region', s: 1, m: 1 }, { k: 'listings', f: fmt.int }, { k: 'l_yoy', f: 'p' }, { k: 'ask', f: fmt.usd }, { k: 'a_yoy', f: 'p' }, { k: 'rev', f: fmt.usd }, { k: 'cf', f: fmt.usd }, { k: 'cfx', f: fmt.x2 }], ['listings', -1], drawL,
       { key: 'market', pin: new Set([NAT]), sel: mk, click: (k) => { state.market = k; $('#sel-market').value = k; jump({ v_ex: 'chart' }, 'lx-l', drawL); } });
     drawLH();
@@ -1217,7 +1348,7 @@ dash.calc('sector_trend', {
     const pub = L.labels.filter((x) => L.at.has(NAT + '|' + x) && !L.est.has(x)), q = pub[pub.length - 1], n = lAt(NAT, q), p = lAt(NAT, prevQ(q)), f0 = lAt(NAT, pub[0]);
     const most = n.listings >= d3.max(L.labels, (x) => (lAt(NAT, x) || {}).listings);
     const big = L.rows.filter((r) => r.quarter === q && r.market !== NAT && r.listings >= 150 && r.cfx != null).sort((a, b) => a.cfx - b.cfx), h = lAt(HOME, q);
-    const go = (mk, v, sort) => () => { if (sort) LT['tbl-lcmp'] = sort; state.market = mk; state.lq = q; $('#sel-market').value = mk; jump({ v_ex: v }, 'lx-l', drawL); };
+    const go = (mk, v, sort) => () => { if (sort) LT['tbl-lcmp'] = sort; state.market = mk; state.lf = 'q'; state.lq = q; state.lc.q = ''; $('#sel-market').value = mk; jump({ v_ex: v }, 'lx-l', drawL); };
     $('#hl-l-h').textContent = 'Highlights, ' + q;
     hl('#hl-l', [
       { k: 'Supply', v: fmt.int(n.listings), t: 'businesses listed for sale nationally, ' + fmt.pct(chg(n, p, 'listings')) + ' on a year earlier' + (most ? ', the most since at least 2018.' : '.'), on: go(NAT, 'chart'), src: SRC.bbs },
@@ -1229,7 +1360,7 @@ dash.calc('sector_trend', {
 
   // ---------- 02 Sold deals: one location, quarterly or full year; trend, compare markets or table ----------
   const SKEYS = ['sold', 'sale', 'ask', 's2a', 'rev', 'revx', 'cf', 'cfx', 'dom'];
-  const sx = { loc: NAT, f: 'q', per: { q: null, y: null }, cq: '', built: false };
+  const sx = { loc: NAT, f: 'q', per: { q: null, y: null }, cp: { q: '', y: '' }, pm: 'sale', cq: '', built: false };
   let SD = null;
   function sData() {
     const n = dash.data('national_history'), c = dash.data('closed'), a = dash.data('closed_annual');
@@ -1244,7 +1375,7 @@ dash.calc('sector_trend', {
     d3.groups(n.data, (r) => r.year).forEach(([y, rs]) => {
       if (rs.length < 4) return;
       const o = { market: NAT, region: 'National', fy: y };
-      SKEYS.forEach((k) => { const v = rs.map((r) => r[k]).filter((x) => x != null); o[k] = k === 'sold' ? (v.length === 4 ? d3.sum(v) : null) : v.length ? d3.mean(v) : null; });
+      SKEYS.forEach((k) => { const v = rs.map((r) => r[k]).filter((x) => x != null); o[k] = k === 'sold' ? (v.length === 4 ? d3.sum(v) : null) : v.length ? d3.mean(v) : null; if (k === 'dom' && o[k] != null) o[k] = Math.round(o[k]); });
       put('y', o, String(y));
     });
     const per = (f) => [...new Set([...at.keys()].filter((k) => k[0] === f).map((k) => k.split('|')[2]))].sort();
@@ -1267,40 +1398,57 @@ dash.calc('sector_trend', {
     $('#sx-per').addEventListener('change', (e) => { sx.per[sx.f] = e.target.value; drawS(); });
     $('#sx-freq').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { sx.f = b.dataset.f; drawS(); } });
     $('#sx-q').addEventListener('input', (e) => { sx.cq = e.target.value; drawS(); });
+    $('#sx-cmpp').addEventListener('change', (e) => { sx.cp[sx.f] = e.target.value; drawS(); });
+    $('#spc-m').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) { sx.pm = b.dataset.m; drawS(); } });
   }
   function drawS() {
     if (!sData()) { SCH.forEach((d) => gate($('#sx-ch-' + d[0]), ['national_history', 'closed', 'closed_annual'])); return; }
     sBuild();
     const f = sx.f, list = SD.labels[f], per = sx.per[f], mk = sx.loc, isNat = mk === NAT, C = NKC();
-    const name = isNat ? 'National' : mk, pl = f === 'q' ? per : 'full year ' + per, r = sAt(mk, per), p = sAt(mk, prevP(per));
     $('#sx-freq').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.f === f)));
     perOpts($('#sx-per'), list, per);
+    // "Compare with": a year earlier unless another period is picked
+    const cp = sx.cp[f] = cmpOpts($('#sx-cmpp'), list, per, sx.cp[f], f === 'q' ? 'A year earlier (' + prevQ(per) + ')' : 'The year before (' + (+per - 1) + ')');
+    const cmpP = cp || prevP(per);
+    const name = isNat ? 'National' : mk, pl = f === 'q' ? per : 'full year ' + per, r = sAt(mk, per), p = sAt(mk, cmpP);
     $('#sx-sub').textContent = name + ', ' + pl + (isNat && f === 'y' ? ' (sales added up over the four quarters, prices and ratios averaged)' : '');
     const K = [['sold', 'Businesses sold', fmt.int], ['sale', 'Median sale price', fmt.usd], ['s2a', 'Sale to asking price', fmt.x2], ['cfx', 'Sale price / cash flow', fmt.x2], ['dom', 'Median days on market', fmt.int]];
-    $('#sx-kpis').replaceChildren(...K.map(([k, lab, fm]) => kpi(lab, r && r[k] != null ? fm(r[k]) : '—', r ? fmt.pct(chg(r, p, k)) + ' vs ' + prevP(per) : 'No data for this period')));
+    $('#sx-kpis').replaceChildren(...K.map(([k, lab, fm]) => kpi(lab, r && r[k] != null ? fm(r[k]) : '—', r ? fmt.pct(chg(r, p, k)) + ' vs ' + cmpP + (p && p[k] != null ? ' (' + fm(p[k]) + ')' : '') : 'No data for this period')));
     // charts start at the location's first period, so a market is not squeezed by National's longer history
     const lab = list.slice(isNat ? 0 : Math.max(0, list.findIndex((x) => sAt(mk, x))));
     const v = (m, k) => lab.map((x) => { const o = sAt(m, x); return o && o[k] != null ? o[k] : null; });
-    const xl = f === 'q' ? (l) => (l.endsWith('Q1') ? l.slice(0, 4) : null) : (l) => l, mark = lab.indexOf(per);
+    const xl = f === 'q' ? (l) => (l.endsWith('Q1') ? l.slice(0, 4) : null) : (l) => l, mark = lab.indexOf(per), mark2 = cp ? lab.indexOf(cp) : null;
     SCH.forEach(([k, ttl, fm, tick, solo]) => {
       const host = $('#sx-ch-' + k);
       if (!gate(host, ['national_history', 'closed', 'closed_annual'])) return;
       const series = k === 'sale' ? [{ name: 'Sale price', color: C[0], values: v(mk, 'sale') }, { name: 'Asking price', color: C[1], values: v(mk, 'ask') }] : [{ name, color: C[0], values: v(mk, k) }];
       if (!isNat && !solo) series.push({ name: 'National' + (k === 'sale' ? ' sale price' : ''), color: MUTED, values: v(NAT, k) });
-      lineChart(host, { labels: lab, xl, mark, zero: !!solo, aria: name + ': ' + ttl + (f === 'q' ? ' by quarter' : ' by year'), tick, fmt: fm, series });
-      gLine($('#sx-g-' + k), growth(series[0].values, lab, (l) => prevP(l)), fm);
+      lineChart(host, { labels: lab, xl, mark, mark2, zero: !!solo, aria: name + ': ' + ttl + (f === 'q' ? ' by quarter' : ' by year'), tick, fmt: fm, series });
+      gLine($('#sx-g-' + k), cp ? (r && r[k] != null ? { label: per, v: r[k], yoy: chg(r, p, k), vs: ' vs ' + cmpP + (p && p[k] != null ? ' (' + fm(p[k]) + ')' : '') } : null) : growth(series[0].values, lab, (l) => prevP(l)), fm);
     });
-    legend($('#sx-lg'), isNat ? [] : [[name, C[0]], ['National', MUTED]]);
+    const dsh = (c, a, b) => 'repeating-linear-gradient(90deg,' + c + ' 0 ' + a + 'px,transparent ' + a + 'px ' + b + 'px)';
+    legend($('#sx-lg'), (isNat ? [] : [[name, C[0]], ['National', MUTED]]).concat(cp || mark < lab.length - 1 ? [[(f === 'q' ? 'Quarter' : 'Year') + ' picked: ' + per, dsh('var(--nk-gold)', 4, 7)]] : [], cp ? [['Compared with: ' + cmpP, dsh('var(--color-fg-muted)', 2, 5)]] : []));
+    $('#sx-lg').querySelectorAll('span').forEach((sp) => { if (/picked|Compared/.test(sp.textContent)) Object.assign(sp.firstChild.style, { width: '1.25rem', height: '2px', borderRadius: '0', verticalAlign: '3px' }); });
     legend($('#sx-lg-sale'), [['Sale price', C[0]], ['Asking price', C[1]]].concat(isNat ? [] : [['National sale price', MUTED]]));
     const cq = sx.cq.trim().toLowerCase();
     const cmp = [...SD.at.entries()].filter(([key]) => key[0] === f && key.endsWith('|' + per)).map(([, o]) => o)
       .filter((o) => !cq || (o.market + ' ' + (o.region || '')).toLowerCase().includes(cq))
-      .map((o) => { const y = sAt(o.market, prevP(per)); return { ...o, name: o.market === NAT ? 'National' : o.market, s_yoy: chg(o, y, 'sold'), p_yoy: chg(o, y, 'sale') }; });
-    $('#sx-cmp-h').textContent = 'All markets, ' + pl;
+      .map((o) => { const y = sAt(o.market, cmpP); return { ...o, name: o.market === NAT ? 'National' : o.market, s_yoy: chg(o, y, 'sold'), p_yoy: chg(o, y, 'sale') }; });
+    $('#sx-cmp-h').textContent = 'All markets, ' + pl + ' vs ' + cmpP;
+    ['s_yoy', 'p_yoy'].forEach((k) => { const b = $('#sx-cmp th button[data-k="' + k + '"]'); if (b) b.textContent = 'vs ' + (cp ? cmpP : 'year earlier'); });
+    const PM = { sold: ['businesses sold', fmt.int, d3.format('.3~s'), true], sale: ['median sale price', fmt.usd, fmt.usdK], cfx: ['sale price to cash flow', fmt.x2, fmt.x2], dom: ['median days on market', dayF, fmt.int] };
+    const pm = PM[sx.pm] ? sx.pm : 'sale', [pmLab, pmF, pmT, pmZ] = PM[pm];
+    $('#spc-m').querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.m === pm)));
+    $('#spc-h').textContent = (f === 'q' ? '' : 'Full year ') + per + ' against ' + cmpP + ': ' + pmLab;
+    $('#spc-note').textContent = 'Every market in both periods, biggest rise first' + (pm === 'sold' ? '' : '; National is pinned at the top') + '. Markets with few sales swing a lot. Click a market to open its trend.';
+    legend($('#spc-lg'), [[(f === 'q' ? '' : 'Full year ') + per, C[0]], [cmpP, MUTED]]);
+    periodChart($('#ch-spc'), cmp.filter((o) => pm !== 'sold' || o.market !== NAT).map((o) => ({ key: o.market, name: o.market === NAT ? 'National' : (o.short || o.market), full: o.name, pin: o.market === NAT, a: o[pm], b: (sAt(o.market, cmpP) || {})[pm] })),
+      { a: (f === 'q' ? '' : 'Full year ') + per, b: cmpP, fmt: pmF, tick: pmT, zero: pmZ, sel: mk, aria: 'Every market: ' + pmLab + ', ' + per + ' against ' + cmpP,
+        click: (k) => { sx.loc = k; $('#sx-loc').value = k; jump({ v_sx: 'chart' }, 'lx-s', drawS); } });
     lTable('sx-cmp', cmp, [{ k: 'name', s: 1 }, { k: 'region', s: 1, m: 1 }, { k: 'sold', f: fmt.int }, { k: 's_yoy', f: 'p' }, { k: 'sale', f: fmt.usd }, { k: 'p_yoy', f: 'p' }, { k: 's2a', f: fmt.x2 }, { k: 'cfx', f: fmt.x2 }, { k: 'dom', f: fmt.int }], ['sold', -1], drawS,
       { key: 'market', pin: new Set([NAT]), sel: mk, click: (k) => { sx.loc = k; $('#sx-loc').value = k; jump({ v_sx: 'chart' }, 'lx-s', drawS); } });
     $('#sx-tbl tbody').replaceChildren(...list.filter((x) => sAt(mk, x)).reverse().map((x) => {
-      const o = sAt(mk, x), y = sAt(mk, prevP(x)), tr = el('tr'); tr.dataset.key = x;
+      const o = sAt(mk, x), y = sAt(mk, prevP(x)), tr = el('tr'); tr.dataset.key = x; if (x === per || x === cp) tr.className = 'sel';
       tr.append(el('td', null, x), nCell(o.sold, fmt.int), pctTd(chg(o, y, 'sold')), nCell(o.sale, fmt.usd), pctTd(chg(o, y, 'sale')), nCell(o.ask, fmt.usd), nCell(o.s2a, fmt.x2), nCell(o.cf, fmt.usd), nCell(o.cfx, fmt.x2), nCell(o.dom, fmt.int));
       return tr;
     }));
@@ -1310,7 +1458,7 @@ dash.calc('sector_trend', {
     const q = SD.labels.q[SD.labels.q.length - 1], n = sAt(NAT, q, 'q'), p = sAt(NAT, prevQ(q), 'q');
     const ys = SD.labels.y.filter((y) => (sAt(NAT, y, 'y') || {}).sold != null), y = ys[ys.length - 1], ny = sAt(NAT, y, 'y'), py = sAt(NAT, String(+y - 1), 'y');
     const first = SD.labels.q.find((x) => x.endsWith(q.slice(4)) && (sAt(NAT, x, 'q') || {}).sale != null), f0 = sAt(NAT, first, 'q'), hy = sAt(HOME, y, 'y');
-    const go = (mk, f, pr) => () => { sx.loc = mk; sx.f = f; sx.per[f] = pr; $('#sx-loc').value = mk; jump({ v_sx: 'chart' }, 'lx-s', drawS); };
+    const go = (mk, f, pr) => () => { sx.loc = mk; sx.f = f; sx.per[f] = pr; sx.cp[f] = ''; $('#sx-loc').value = mk; jump({ v_sx: 'chart' }, 'lx-s', drawS); };
     $('#hl-s-h').textContent = 'Highlights, ' + q;
     hl('#hl-s', [
       ny && { k: 'Deals closed', v: fmt.int(ny.sold), t: 'businesses sold in ' + y + ', ' + fmt.pct(chg(ny, py, 'sold')) + ' on ' + (+y - 1) + '. In ' + q + ': ' + fmt.int(n.sold) + ', ' + fmt.pct(chg(n, p, 'sold')) + ' on a year earlier.', on: go(NAT, 'y', y), src: SRC.bbs },
@@ -1323,18 +1471,19 @@ dash.calc('sector_trend', {
   function drawSectors() {
     const host = $('#ch-sec');
     if (!gate(host, ['sectors'])) return;
-    const rows = dash.data('sectors').data;
+    const all = dash.data('sectors').data, sq = d3.max(all, (r) => r.quarter), rows = all.filter((r) => r.quarter === sq);
+    $('#sec-h').textContent = 'Sector mix, ' + sq;
     const by = new Map();
     rows.forEach((r) => { if (!by.has(r.market)) by.set(r.market, { market: r.market, short: r.short, v: {} }); by.get(r.market).v[r.sector] = r.share_pct; });
     const list = [...by.values()].sort((a, b) => (a.market === NAT ? -1 : b.market === NAT ? 1 : (b.v[state.sector] || 0) - (a.v[state.sector] || 0)));
     const C = NKC(), col = (i) => C[i];
     const W = Math.max(300, host.clientWidth), rh = 16, gap = 4, H = list.length * (rh + gap) + 4;
     host.replaceChildren();
-    const svg = d3.select(host).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Sector mix by market, 2026 Q2');
+    const svg = d3.select(host).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Sector mix by market, ' + sq);
     const probe = svg.append('text').attr('class', 'lx-tick');
     let ml = 0; list.forEach((m) => { probe.text(m.market === NAT ? 'National' : m.short); ml = Math.max(ml, probe.node().getComputedTextLength()); }); probe.remove();
     ml = Math.ceil(ml) + 10;
-    const x = d3.scaleLinear().domain([0, 100]).range([ml, W - 8]);
+    const x = d3.scaleLinear().domain([0, Math.max(100, d3.max(list, (m) => d3.sum(SECT, (s) => m.v[s] || 0)))]).range([ml, W - 8]);
     const tip = el('div', 'lx-tip'); tip.hidden = true; host.style.position = 'relative'; host.appendChild(tip);
     list.forEach((m, i) => {
       const yy = 2 + i * (rh + gap);
@@ -1351,7 +1500,7 @@ dash.calc('sector_trend', {
         .on('mousemove', (ev) => {
           const r = host.getBoundingClientRect();
           tip.replaceChildren(el('div', 't', m.market));
-          SECT.forEach((s, k) => { const row = el('div', 'r'); const sw = el('i'); sw.style.background = col(k); row.append(sw, el('span', null, s), el('b', null, (m.v[s] || 0).toFixed(1) + '%')); tip.appendChild(row); });
+          SECT.forEach((s, k) => { const row = el('div', 'r'); const sw = el('i'); sw.style.background = col(k); row.append(sw, el('span', null, s), el('b', null, String(+(m.v[s] || 0).toFixed(1)) + '%')); tip.appendChild(row); });
           tip.hidden = false;
           const tw = tip.offsetWidth;
           tip.style.left = Math.max(0, Math.min(r.width - tw, ev.clientX - r.left + 14)) + 'px';
@@ -1611,10 +1760,11 @@ dash.calc('sector_trend', {
     const ok = t.data.filter((r) => r.sold_2025 >= 10 && r.cfx_2025 != null).sort((a, b) => a.cfx_2025 - b.cfx_2025);
     const up = t.data.filter((r) => r.sold_2025 >= 10 && r.cfx_chg != null).sort((a, b) => b.cfx_chg - a.cfx_chg)[0];
     const most = t.data.filter((r) => r.sold_2025 != null).sort((a, b) => b.sold_2025 - a.sold_2025)[0];
-    const nat = s.status === 'ok' ? s.data.filter((r) => r.market === NAT).sort((a, b) => b.share_pct - a.share_pct) : [];
+    const sq = s.status === 'ok' ? d3.max(s.data, (r) => r.quarter) : null, nat = s.status === 'ok' ? s.data.filter((r) => r.market === NAT && r.quarter === sq).sort((a, b) => b.share_pct - a.share_pct) : [];
     const go = (sub) => () => { is.sub = sub; jump({ v_ind: 'chart' }, 'hs-ind', drawInd); };
+    const pc = (v) => String(+v.toFixed(1));
     hl('#hl-i', [
-      nat.length > 1 && { k: 'For sale now', v: one(nat[0].share_pct) + '%', t: 'of national listings in ' + nat[0].quarter + ' are ' + nat[0].sector + ' businesses; ' + nat[1].sector + ' is next at ' + one(nat[1].share_pct) + '%.', go: 'See the sector mix', on: () => jump({}, 'lx-sectors'), src: SRC.bbs },
+      nat.length > 1 && { k: 'For sale now', v: pc(nat[0].share_pct) + '%', t: 'of national listings in ' + nat[0].quarter + ' are ' + nat[0].sector + ' businesses; ' + nat[1].sector + ' is next at ' + pc(nat[1].share_pct) + '%.', go: 'See the sector mix', on: () => jump({}, 'lx-sectors'), src: SRC.bbs },
       ok.length > 2 && { k: 'Lowest multiples', v: fmt.x2(ok[0].cfx_2025) + '×', t: ok[0].subsector + ' sold for the lowest multiple of cash flow in 2025, then ' + ok[1].subsector + ' (' + fmt.x2(ok[1].cfx_2025) + '×) and ' + ok[2].subsector + ' (' + fmt.x2(ok[2].cfx_2025) + '×). Industries with 10+ sales.', on: go(ok[0].subsector), src: SRC.bbs },
       most && { k: 'Most traded', v: fmt.int(most.sold_2025), t: most.subsector + ' businesses sold in 2025, more than any other industry, at ' + dash0(most.cfx_2025, fmt.x2) + '× cash flow.', on: go(most.subsector), src: SRC.bbs },
       up && { k: 'Biggest repricing', v: fmt.pct(up.cfx_chg), t: up.subsector + ': multiple from ' + fmt.x2(up.cfx_2019) + '× in 2019 to ' + fmt.x2(up.cfx_2025) + '× in 2025.', on: go(up.subsector), src: SRC.bbs }
@@ -1622,7 +1772,7 @@ dash.calc('sector_trend', {
   }
 
   // ---------- Local economy ----------
-  const YOURS = ['36029', '36063', '36055', '36073', '36037', '36003', '25025', '36061', '36047', '36081', '36005', '36085'];
+  const YOURS = ['36029', '36063', '36055', '36073', '36037', '36003', '25025', '36061', '36047', '36081', '36005', '36085', '36001'];
   const PMM = {
     per1k: { b: 'Per 1,000 residents', label: 'Units per 1,000 residents, 2025', get: (r) => r.per1k, f: (v) => v.toFixed(1) },
     chg_ytd: { b: '2026 so far', label: 'Jan–Aug 2026 vs Jan–Aug 2025', get: (r) => r.chg_ytd, f: fmt.pct, div: [-15, -5, 5, 15] },
@@ -2041,7 +2191,8 @@ dash.calc('listing_compare', {
   const NYC_MKT = 'New York-Northern New Jersey-Long Island, NY-NJ-PA';
   // BizBuySell market for each county in the listings file (Allegany has none: national level, no location score)
   const COUNTY_MKT = { Erie: HOME, Niagara: HOME, Monroe: 'Rochester, NY', Orleans: 'Rochester, NY', Genesee: 'Rochester, NY', 'Suffolk (MA)': 'Boston-Cambridge-Quincy, MA-NH',
-    'New York': NYC_MKT, Kings: NYC_MKT, Queens: NYC_MKT, Bronx: NYC_MKT, Richmond: NYC_MKT, Westchester: NYC_MKT };
+    'New York': NYC_MKT, Kings: NYC_MKT, Queens: NYC_MKT, Bronx: NYC_MKT, Richmond: NYC_MKT, Westchester: NYC_MKT,
+    Albany: 'Albany-Schenectady-Troy, NY' };
   // county + state key into local_counties; 'Suffolk (MA)' style names carry their own state, plain names are New York
   const gKey = (county, st) => { const m = /^(.*) \(([A-Z]{2})\)$/.exec(county || ''); return m ? m[1] + '|' + m[2] : county + '|' + (st || 'NY'); };
   const marketOf = (county) => (county in COUNTY_MKT ? COUNTY_MKT[county] : county ? 'none' : HOME);
@@ -2126,11 +2277,11 @@ dash.calc('listing_compare', {
   function locLine(C) {
     if (!C || !C.loc.size) return '';
     const f = (m) => { const a = C.loc.get(m); return a ? a.factor.toFixed(2) + '× the national level, ' + Math.round(a.n) + ' sales in 2023–2025' : 'no data'; };
-    return 'Erie and Niagara listings use Buffalo-Niagara Falls (' + f(HOME) + '); Monroe, Orleans and Genesee use Rochester (' + f('Rochester, NY') + '); Boston (Suffolk, MA) uses Boston-Cambridge-Quincy (' + f('Boston-Cambridge-Quincy, MA-NH') + '); New York City\'s five counties use New York-Northern New Jersey-Long Island (' + f(NYC_MKT) + '); Allegany has no BizBuySell market, so it is priced at the national level and its location score is local growth alone.' + growLine(C);
+    return 'Erie and Niagara listings use Buffalo-Niagara Falls (' + f(HOME) + '); Monroe, Orleans and Genesee use Rochester (' + f('Rochester, NY') + '); Boston (Suffolk, MA) uses Boston-Cambridge-Quincy (' + f('Boston-Cambridge-Quincy, MA-NH') + '); New York City\'s five counties use New York-Northern New Jersey-Long Island (' + f(NYC_MKT) + '); Albany County uses Albany-Schenectady-Troy (' + f('Albany-Schenectady-Troy, NY') + '); Allegany has no BizBuySell market, so it is priced at the national level and its location score is local growth alone.' + growLine(C);
   }
   function growLine(C) {
     const SHOWN = { 'Suffolk (MA)': 'Boston (Suffolk)', 'New York': 'Manhattan', Kings: 'Brooklyn', Richmond: 'Staten Island' };
-    const g = ['Erie', 'Niagara', 'Monroe', 'Orleans', 'Genesee', 'Allegany', 'Suffolk (MA)', 'New York', 'Kings', 'Queens', 'Bronx', 'Richmond'].map((n) => { const r = C.gc.get(gKey(n)); return r && r.growth != null ? (SHOWN[n] || n) + ' ' + Math.round(r.growth) : null; }).filter(Boolean);
+    const g = ['Erie', 'Niagara', 'Monroe', 'Orleans', 'Genesee', 'Allegany', 'Albany', 'Suffolk (MA)', 'New York', 'Kings', 'Queens', 'Bronx', 'Richmond'].map((n) => { const r = C.gc.get(gKey(n)); return r && r.growth != null ? (SHOWN[n] || n) + ' ' + Math.round(r.growth) : null; }).filter(Boolean);
     return g.length ? ' Local growth scores (50 is a typical US county): ' + g.join(', ') + '.' : '';
   }
   function drawScoring() {
